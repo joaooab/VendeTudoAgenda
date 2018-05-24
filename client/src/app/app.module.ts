@@ -7,8 +7,8 @@ import {ClienteRoutes} from './app.routes';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
-import { CadastroComponent } from './base/usuario/cadastro/cadastro.component';
-import { ListagemComponent } from './base/usuario/listagem/listagem.component';
+import { CadastroUsuarioComponent } from './base/usuario/cadastro/cadastro-usuario.component';
+import { ListagemUsuarioComponent } from './base/usuario/listagem/listagem-usuario.component';
 
 
 @NgModule({
@@ -16,8 +16,8 @@ import { ListagemComponent } from './base/usuario/listagem/listagem.component';
     AppComponent,
     DashboardComponent,
     BreadcrumbComponent,
-    CadastroComponent,
-    ListagemComponent
+    CadastroUsuarioComponent,
+    ListagemUsuarioComponent
   ],
   imports: [
     BrowserModule,

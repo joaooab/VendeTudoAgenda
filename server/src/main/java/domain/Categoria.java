@@ -10,8 +10,21 @@ public class Categoria {
     @GeneratedValue
     private Long id;
 
-    @Column(name = "categoria_nome")
+    @Column(name = "categoria_nome", nullable = false)
     private String nome;
+
+    public Categoria(Long id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+
+    @Override
+    public String toString() {
+        return "Categoria{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                '}';
+    }
 
     public Categoria(final String nome) {
         this.nome = nome;

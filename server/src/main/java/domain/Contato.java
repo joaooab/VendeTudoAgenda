@@ -1,21 +1,24 @@
 package domain;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "contato")
 public class Contato {
 
     @Id
     @GeneratedValue
     private Long id;
 
+    @Column(name = "categoria_id", nullable = false)
+    private Categoria categoria;
+
     @Column(name = "contato_nome", nullable = false)
     private String nome;
 
-    @Column(name = "contato_cpf", nullable = false)
-    private Long cpf;
+    @Column(name = "contato_cpf_cnpj", nullable = false)
+    private Long cpfcnpj;
 
     @Column(name = "contato_email")
     private String email;
@@ -23,7 +26,7 @@ public class Contato {
     @Column(name = "contato_data_nascimento", nullable = false)
     private Date dataNascimento;
 
-    @Column(name = "contato_endereco")
+    @Column(name = "contato_endereco", nullable = false)
     private String endereco;
 
     @Column(name = "contato_telefone_fixo")
@@ -32,18 +35,15 @@ public class Contato {
     @Column(name = "contato_celular", nullable = false)
     private Long celular;
 
-    @Column(name = "contato_celular", nullable = false)
-    private Categoria categoria;
-
-    @Column(name = "autoriza_email", nullable = false)
+    @Column(name = "contato_autoriza_email", nullable = false)
     private Boolean autorizaEmail;
 
-    public Contato(Long id, String nome, Long cpf, String email,
+    public Contato(Long id, String nome, Long cpfcnpj, String email,
                    Date dataNascimento, String endereco, Long telefoneFixo,
                    Long celular, Categoria categoria, Boolean autorizaEmail) {
         this.id = id;
         this.nome = nome;
-        this.cpf = cpf;
+        this.cpfcnpj = cpfcnpj;
         this.email = email;
         this.dataNascimento = dataNascimento;
         this.endereco = endereco;
@@ -58,7 +58,7 @@ public class Contato {
         return "Contato{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
-                ", cpf=" + cpf +
+                ", cpfcnpj=" + cpfcnpj +
                 '}';
     }
 
@@ -79,11 +79,11 @@ public class Contato {
     }
 
     public Long getCpf() {
-        return cpf;
+        return cpfcnpj;
     }
 
     public void setCpf(final Long cpf) {
-        this.cpf = cpf;
+        this.cpfcnpj = cpf;
     }
 
     public String getEmail() {

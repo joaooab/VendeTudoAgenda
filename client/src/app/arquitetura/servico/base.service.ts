@@ -3,7 +3,8 @@ import {Http, RequestOptionsArgs , Headers} from "@angular/http";
 
 export function getUsuarioLogado() {
 
-    return localStorage.getItem('user')
+    return true;
+    //return localStorage.getItem('user')
 }
 
 export function setUsuarioLogado(usuario: any) {

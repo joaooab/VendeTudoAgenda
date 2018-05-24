@@ -1,14 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { RouterModule, Routes } from '@angular/router';
+//imports do primeng
+import {ButtonModule} from 'primeng/button';
+
+//end imports primeng
+
+import { Routes } from '@angular/router';
 import {ClienteRoutes} from './app.routes';
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
-import { CadastroUsuarioComponent } from './base/usuario/cadastro/cadastro-usuario.component';
-import { ListagemUsuarioComponent } from './base/usuario/listagem/listagem-usuario.component';
+
+import {LoginComponent} from '../app/login/login.component';
+import {UsuarioModule} from './base/usuario/usuario.module';
+import { LoginGuard } from './login/login.guard';
 
 
 @NgModule({
@@ -16,15 +23,18 @@ import { ListagemUsuarioComponent } from './base/usuario/listagem/listagem-usuar
     AppComponent,
     DashboardComponent,
     BreadcrumbComponent,
-    CadastroUsuarioComponent,
-    ListagemUsuarioComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
-    RouterModule,
+    ButtonModule,
+    UsuarioModule,
     ClienteRoutes
   ],
-  providers: [],
+  providers: [
+    LoginGuard,
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

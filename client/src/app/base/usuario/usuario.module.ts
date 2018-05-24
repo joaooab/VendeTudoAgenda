@@ -1,13 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CadastroComponent } from './cadastro/cadastro.component';
+import { ListagemComponent } from './listagem/listagem.component';
+import { UsuarioService } from './usuario.service';
 
-import { UsuarioRoutingModule } from './usuario-routing.module';
 
 @NgModule({
   imports: [
-    CommonModule,
-    UsuarioRoutingModule
   ],
-  declarations: []
+  declarations: [
+    CadastroComponent,
+    ListagemComponent
+  ],
+  providers:[
+    UsuarioService
+  ]
 })
 export class UsuarioModule { }

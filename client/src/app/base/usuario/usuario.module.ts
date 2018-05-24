@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CadastroComponent } from './cadastro/cadastro.component';
-import { ListagemComponent } from './listagem/listagem.component';
+import { CadastroUsuarioComponent } from './cadastro/cadastro-usuario.component';
+import { ListagemUsuarioComponent } from './listagem/listagem-usuario.component';
 import { UsuarioService } from './usuario.service';
 
 
@@ -9,8 +9,8 @@ import { UsuarioService } from './usuario.service';
   imports: [
   ],
   declarations: [
-    CadastroComponent,
-    ListagemComponent
+    CadastroUsuarioComponent,
+    ListagemUsuarioComponent
   ],
   providers:[
     UsuarioService

@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
     moduleId: module.id,
@@ -8,4 +9,12 @@ import { Component } from "@angular/core";
 export class BreadcrumbComponent {
 
     pagina = "Dashboard"
+
+    constructor(private router: Router){
+
+    }
+
+    sair(){
+        this.router.navigate(['/login'])
+    }
 }

@@ -1,8 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
 //imports do primeng
 import {ButtonModule} from 'primeng/button';
+import {InputTextModule} from 'primeng/inputtext';
+import {GrowlModule} from 'primeng/growl';
+import { MessageService } from "primeng/components/common/messageservice";
 
 //end imports primeng
 
@@ -28,11 +31,15 @@ import { LoginGuard } from './login/login.guard';
   imports: [
     BrowserModule,
     ButtonModule,
+    FormsModule,
+    GrowlModule,
     UsuarioModule,
+    InputTextModule,
     ClienteRoutes
   ],
   providers: [
     LoginGuard,
+    MessageService
 
   ],
   bootstrap: [AppComponent]

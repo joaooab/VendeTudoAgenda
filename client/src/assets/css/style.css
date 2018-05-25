@@ -1,0 +1,26 @@
+body{
+    min-width: 320px;
+    background-color: gray !important;
+}
+
+
+.page-login{
+    
+    position: absolute;
+    left: 43%;
+    top:25%;
+    text-align: center;
+
+}
+
+.page-login input{
+    display: block;
+    width: 100%;
+}
+
+.page-login button{
+    width: 100%;
+}
+
+
+

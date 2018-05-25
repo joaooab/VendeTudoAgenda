@@ -7,6 +7,7 @@ import { CadastroUsuarioComponent } from './base/usuario/cadastro/cadastro-usuar
 
 import {UsuarioRoute} from '../app/base/usuario/usuario.route';
 import {LoginComponent} from './login/login.component';
+import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 
 export const routes: Routes = [
     {
@@ -17,7 +18,8 @@ export const routes: Routes = [
         ]
     },
 
-    {path: 'login', component: LoginComponent}
+    {path: 'login', component: LoginComponent},
+    {path: 'principal', component: BreadcrumbComponent}
     
 ];
 

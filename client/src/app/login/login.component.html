@@ -1,14 +1,27 @@
-<section>
+<section >
+    
     <form role="form" >
+        
         <div class="page-login">
+            <p-growl [(value)]="msgs"></p-growl>
+            <img src="../../assets/imagens/network.png" width="100" height="100">
+            <br/>
+            <br/>
+            <span class="ui-float-label">
+                    <input id="float-input" class="form-control user" [(ngModel)]="loginRequest.usuario" name="usuario" type="text" size="30" (keyup.enter)="logar()" maxlength="24" pInputText> 
+                    <label for="float-input">Usuário</label>
+            </span>
+            <br/>
+            <span class="ui-float-label" >
+                    <input id="float-input"  class="form-control senha" [(ngModel)]="loginRequest.senha" name="senha" type="password" (keyup.enter)="logar()"  maxlength="16" size="30" pInputText> 
+                    <label for="float-input">Senha</label>
+            </span>
+            <br/>
+            <a style="color: #2399e5;">Esqueci minha senha</a>
+            <br/>
+            <br/>
 
-
-            <input type="text" required />
-            <input type="password" required />
-
-            <button pButton type="button" label="Entrar"></button>
-
-
+            <button (click) = "logar()"  pButton type="button" label="Entrar" [disabled]="!loginRequest.usuario || !loginRequest.senha" ></button>
         </div>
     </form>
 </section>

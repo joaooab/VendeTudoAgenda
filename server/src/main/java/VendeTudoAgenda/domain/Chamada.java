@@ -1,6 +1,9 @@
 package VendeTudoAgenda.domain;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Time;
@@ -10,6 +13,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonRootName("chamada")
 @Table(name = "chamada")
 public class Chamada {
 

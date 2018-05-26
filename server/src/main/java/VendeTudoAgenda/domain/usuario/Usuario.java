@@ -1,16 +1,21 @@
 package VendeTudoAgenda.domain.usuario;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonRootName("usuario")
 @Table(name = "usuario")
-public class Usuario {
+public class Usuario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -54,4 +59,14 @@ public class Usuario {
         this.funcao = funcao;
         this.senha = senha;
     }
+
+    public Usuario(String email, String senha) {
+        this.email = email;
+        this.senha = senha;
+    }
+
+    public Usuario(String email){
+        this.email = email;
+    }
+
 }

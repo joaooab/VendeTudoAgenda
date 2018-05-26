@@ -1,4 +1,4 @@
-package VendeTudoAgenda.controller;
+package VendeTudoAgenda.api.controller;
 
 import VendeTudoAgenda.core.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;

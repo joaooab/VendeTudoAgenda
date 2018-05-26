@@ -1,11 +1,10 @@
-package VendeTudoAgenda.controller;
+package VendeTudoAgenda.api.controller;
 
 import VendeTudoAgenda.core.repository.UsuarioRepository;
 import VendeTudoAgenda.domain.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class UsuarioController {
@@ -22,15 +21,20 @@ public class UsuarioController {
         usuarioRepository.save(usuario);
     }
 
-    @DeleteMapping("/usuarios/{id}")
+    @GetMapping("/usuarios/{id}")
+    public Usuario obterUsuario(@PathVariable Long id) {
+        return usuarioRepository.findOne(id);
+    }
+
+    @PutMapping("/usuarios/{id}")
     public void deletarUsuario(@PathVariable Long id) {
         Usuario usuario = usuarioRepository.findOne(id);
         usuarioRepository.delete(usuario);
     }
 
     @GetMapping("/usuarios")
-    public List<Usuario> listarUsuario(){
-        return (List<Usuario>) usuarioRepository.findAll();
+    public ResponseEntity listarUsuario() {
+        return ResponseEntity.ok(usuarioRepository.findAll());
     }
 
 }

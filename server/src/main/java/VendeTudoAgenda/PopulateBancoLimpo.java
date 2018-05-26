@@ -33,7 +33,7 @@ public class PopulateBancoLimpo implements ApplicationRunner {
         Categoria categoria = new Categoria("Favoritos");
         categoria = incluirCategoria(categoria);
 
-        Contato contato = new Contato(categoria, "Joao", 11111111111L, "joao@email", new Date(), "rua12", 123132132L, 3522625L, true);
+        Contato contato = new Contato(categoria, "Joao", 11111111111L, null, "joao@email", new Date(), "rua12", 123132132L, 3522625L, true);
         contato = incluirContato(contato);
 
         Chamada chamada = new Chamada(contato, "Chamada - 1", new Date(), new Time(System.currentTimeMillis()), "Descricao da Chamada");

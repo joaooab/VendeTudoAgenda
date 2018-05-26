@@ -1,6 +1,9 @@
 package VendeTudoAgenda.domain;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,6 +12,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonRootName("contato")
 @Table(name = "contato")
 public class Contato {
 
@@ -23,8 +27,11 @@ public class Contato {
     @Column(name = "nome", nullable = false)
     private String nome;
 
-    @Column(name = "cpf_cnpj", nullable = false)
-    private Long cpfcnpj;
+    @Column(name = "cpf")
+    private Long cpf;
+
+    @Column(name = "cnpj")
+    private Long cnpj;
 
     @Column(name = "email")
     private String email;
@@ -44,10 +51,11 @@ public class Contato {
     @Column(name = "autoriza_email", nullable = false)
     private Boolean autorizaEmail;
 
-    public Contato(Categoria categoria, String nome, Long cpfcnpj, String email, Date dataNascimento, String endereco, Long telefoneFixo, Long celular, Boolean autorizaEmail) {
+    public Contato(Categoria categoria, String nome, Long cpf, Long cnpj, String email, Date dataNascimento, String endereco, Long telefoneFixo, Long celular, Boolean autorizaEmail) {
         this.categoria = categoria;
         this.nome = nome;
-        this.cpfcnpj = cpfcnpj;
+        this.cpf = cpf;
+        this.cnpj = cnpj;
         this.email = email;
         this.dataNascimento = dataNascimento;
         this.endereco = endereco;
@@ -56,12 +64,4 @@ public class Contato {
         this.autorizaEmail = autorizaEmail;
     }
 
-    @Override
-    public String toString() {
-        return "Contato{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", cpfcnpj=" + cpfcnpj +
-                '}';
-    }
 }

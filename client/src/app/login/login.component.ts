@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit{
                 private messageService: MessageService,
                 private router: Router){
 
+        
     }
 
     logar(event?) {
@@ -32,7 +33,11 @@ export class LoginComponent implements OnInit{
             this.msgs.push({severity:'error', summary:'Error Message', detail:'Usuário e/ou Senha incorretos'});
         }
             
-        this.document.body.classList.remove('back-login');
+        //this.document.body.classList.remove('back-login');
+    }
+
+    esqueciSenha(){
+        console.log("esqueci senha");
     }
 
     ngOnInit(): void {

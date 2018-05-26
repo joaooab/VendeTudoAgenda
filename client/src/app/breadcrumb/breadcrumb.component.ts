@@ -1,6 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, Inject } from "@angular/core";
 import { Router } from "@angular/router";
-
+import { DOCUMENT } from '@angular/platform-browser'
 @Component({
     moduleId: module.id,
     selector: 'breadcrumb',
@@ -10,8 +10,10 @@ export class BreadcrumbComponent {
 
     pagina = "Dashboard"
 
-    constructor(private router: Router){
+    constructor(private router: Router,
+                @Inject(DOCUMENT) private document: Document){
 
+                this.document.body.classList.add('back-login');
     }
 
     sair(){

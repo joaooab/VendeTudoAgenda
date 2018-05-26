@@ -1,27 +1,29 @@
 <section >
     
-    <form role="form" >
-        
-        <div class="page-login">
-            <p-growl [(value)]="msgs"></p-growl>
-            <img src="../../assets/imagens/network.png" width="100" height="100">
-            <br/>
-            <br/>
-            <span class="ui-float-label">
-                    <input id="float-input" class="form-control user" [(ngModel)]="loginRequest.usuario" name="usuario" type="text" size="30" (keyup.enter)="logar()" maxlength="24" pInputText> 
-                    <label for="float-input">Usuário</label>
-            </span>
-            <br/>
-            <span class="ui-float-label" >
-                    <input id="float-input"  class="form-control senha" [(ngModel)]="loginRequest.senha" name="senha" type="password" (keyup.enter)="logar()"  maxlength="16" size="30" pInputText> 
-                    <label for="float-input">Senha</label>
-            </span>
-            <br/>
-            <a style="color: #2399e5;">Esqueci minha senha</a>
-            <br/>
-            <br/>
+    <form role="form" #form="ngForm" >
+        <div class="row page-login">
+            <div class="col-md-5"></div>
+            <div class="col-md-3 shadow" style="background-color: rgb(139, 138, 138);">
+                <p-growl [(value)]="msgs"></p-growl>
+                <img src="../../assets/imagens/network.png" style="margin-top: 10px;" width="100" height="100">
+                <br/>
+                <br/>
+                <span class="ui-float-label">
+                        <input id="float-input" class="form-control user" [(ngModel)]="loginRequest.usuario" name="usuario" type="text" size="30" (keyup.enter)="logar()" maxlength="24" pInputText> 
+                        <label for="float-input">Usuário</label>
+                </span>
+                <br/>
+                <span class="ui-float-label" >
+                        <input id="float-input"  class="form-control senha" [(ngModel)]="loginRequest.senha" name="senha" type="password" (keyup.enter)="logar()"  maxlength="16" size="30" pInputText> 
+                        <label for="float-input">Senha</label>
+                </span>
+                <br/>
+                <a  class="btn btn-default" style="color: white;" [ngClass]="{disabled:!loginRequest.usuario}" (click)="esqueciSenha()">Esqueci minha senha</a>
+                <br/>
+                <br/>
 
-            <button (click) = "logar()"  pButton type="button" label="Entrar" [disabled]="!loginRequest.usuario || !loginRequest.senha" ></button>
+                <button  class="btn btn-default"  style="margin-bottom: 10px;" (click) = "logar()"  pButton type="button" label="Entrar" [disabled]="!loginRequest.usuario || !loginRequest.senha" ></button>
+            </div>
         </div>
     </form>
 </section>

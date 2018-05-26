@@ -13,6 +13,7 @@ export class CadastroUsuarioComponent implements OnInit {
   constructor(private usuarioService: UsuarioService) { }
 
   ngOnInit() {
+
   }
 
   salvar(){

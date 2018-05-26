@@ -4,12 +4,8 @@ import { Usuario } from '../modelo/usuario.model';
 import { Http } from '@angular/http';
 
 @Injectable()
-export class UsuarioService extends Servico<Usuario> {
+export class UsuarioService  {
 
-  constructor(http: Http) { 
-    
-    super('usuario', http)
-  
-  }
+
 
 }

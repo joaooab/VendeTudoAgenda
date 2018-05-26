@@ -33,7 +33,6 @@ export abstract class Servico<E extends Entidade> extends BaseService {
     }
 
     salvar(entidade: E): Observable<string>{
-
         return this.http.post(`${environment.baseUrl}/${this.path}`, entidade, this.config())
         .map(this.mapper)
     }

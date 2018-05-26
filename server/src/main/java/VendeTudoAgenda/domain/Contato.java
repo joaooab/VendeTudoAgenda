@@ -1,5 +1,6 @@
 package VendeTudoAgenda.domain;
 
+import VendeTudoAgenda.domain.usuario.Usuario;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +24,10 @@ public class Contato {
     @ManyToOne
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
 
     @Column(name = "nome", nullable = false)
     private String nome;
@@ -51,8 +56,9 @@ public class Contato {
     @Column(name = "autoriza_email", nullable = false)
     private Boolean autorizaEmail;
 
-    public Contato(Categoria categoria, String nome, Long cpf, Long cnpj, String email, Date dataNascimento, String endereco, Long telefoneFixo, Long celular, Boolean autorizaEmail) {
+    public Contato(Categoria categoria, Usuario usuario, String nome, Long cpf, Long cnpj, String email, Date dataNascimento, String endereco, Long telefoneFixo, Long celular, Boolean autorizaEmail) {
         this.categoria = categoria;
+        this.usuario = usuario;
         this.nome = nome;
         this.cpf = cpf;
         this.cnpj = cnpj;

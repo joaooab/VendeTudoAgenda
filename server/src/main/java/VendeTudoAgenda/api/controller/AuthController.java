@@ -45,7 +45,7 @@ public class AuthController {
         }
     }
 
-    public boolean checarSenha(String senhaBanco, String senhaRequest) {
+    private boolean checarSenha(String senhaBanco, String senhaRequest) {
         return senhaBanco.equals(senhaRequest);
     }
 

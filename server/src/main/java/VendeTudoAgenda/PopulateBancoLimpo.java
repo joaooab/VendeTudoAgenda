@@ -30,10 +30,12 @@ public class PopulateBancoLimpo implements ApplicationRunner {
         Usuario usuario = new Usuario("admin", 11111111111L, "admin@email", new Date(), "rua10", 38445654L, 985763251L, FuncaoUsuario.ADMINISTRADOR, "1234");
         incluirUsuario(usuario);
 
-        Categoria categoria = new Categoria("Favoritos");
+        Categoria categoria = new Categoria("PESSOA JURIDICA");
+        categoria = incluirCategoria(categoria);
+        categoria = new Categoria("PESSOA FISICA");
         categoria = incluirCategoria(categoria);
 
-        Contato contato = new Contato(categoria, "Joao", 11111111111L, null, "joao@email", new Date(), "rua12", 123132132L, 3522625L, true);
+        Contato contato = new Contato(categoria, usuario, "Joao", 11111111111L, null, "joao@email", new Date(), "rua12", 123132132L, 3522625L, true);
         contato = incluirContato(contato);
 
         Chamada chamada = new Chamada(contato, "Chamada - 1", new Date(), new Time(System.currentTimeMillis()), "Descricao da Chamada");

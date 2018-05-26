@@ -27,40 +27,6 @@ public class JwtService {
         this.sessionTime = sessionTime;
     }
 
-    /*public static void addAuthentication(HttpServletResponse response, String email) {
-        String JWT = Jwts.builder()
-                .setSubject(email)
-                .setExpiration(new Date(System.currentTimeMillis() + getSessionTime() * 1000))
-                .signWith(SignatureAlgorithm.HS512, getSecret())
-                .compact();
-
-        response.addHeader("Authorization", JWT);
-    }
-
-    public static Authentication getAuthentication(HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
-
-        if (token != null) {
-            String user = Jwts.parser()
-                    .setSigningKey(getSecret())
-                    .parseClaimsJws(token)
-                    .getBody()
-                    .getSubject();
-
-            if (user != null) {
-                return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
-            }
-        }
-        return null;
-    }
-
-    private static int getSessionTime() {
-        return sessionTime;
-    }
-
-    private static String getSecret() {
-        return secret;
-    }*/
     public String toToken(Usuario usuario) {
         return Jwts.builder()
                 .setSubject(usuario.getId().toString())

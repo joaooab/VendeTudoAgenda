@@ -1,13 +1,29 @@
 package VendeTudoAgenda.core.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
+
+@Service
 public class EmailService {
 
+    private JavaMailSender javaMailSender;
 
-    public void montarCorpo() {
-
+    @Autowired
+    public EmailService(JavaMailSender javaMailSender){
+        this.javaMailSender = javaMailSender;
     }
 
-    public void enviarEmail() {
+    public void enviarEmail(String to, String text) throws MailException{
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setTo(to);
+        simpleMailMessage.setFrom("vendetudoagenda@gmail.com");
+        simpleMailMessage.setSubject("Feliz Aniversário!");
+        simpleMailMessage.setText(text);
 
+        javaMailSender.send(simpleMailMessage);
     }
+
 }

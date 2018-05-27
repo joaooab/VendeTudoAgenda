@@ -27,7 +27,7 @@ public class PopulateBancoLimpo implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Usuario usuario = new Usuario("admin", 11111111111L, "admin@email", new Date(), "rua10", 38445654L, 985763251L, FuncaoUsuario.ADMINISTRADOR, "1234");
+        Usuario usuario = new Usuario("admin", 11111111111L, "vendetudoagenda@gmail.com", new Date(), "rua10", 38445654L, 985763251L, FuncaoUsuario.ADMINISTRADOR, "1234");
         incluirUsuario(usuario);
 
         Categoria categoria = new Categoria("PESSOA JURIDICA");

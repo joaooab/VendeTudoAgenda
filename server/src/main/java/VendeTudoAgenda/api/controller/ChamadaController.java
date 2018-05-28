@@ -3,6 +3,7 @@ package VendeTudoAgenda.api.controller;
 import VendeTudoAgenda.core.repository.ChamadaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+@RestController
 public class ChamadaController {
 
     private ChamadaRepository chamadaRepository;

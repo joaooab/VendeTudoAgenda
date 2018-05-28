@@ -33,6 +33,6 @@ public class CategoriaController {
     @GetMapping("/categorias")
     public ResponseEntity listarCategorias() {
         return ResponseEntity.ok(categoriaRepository.findAll());
-    }*/
+    }
 
 }

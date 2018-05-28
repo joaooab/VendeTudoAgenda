@@ -1,10 +1,7 @@
 package VendeTudoAgenda.api.controller;
 
 import VendeTudoAgenda.core.repository.ChamadaRepository;
-import VendeTudoAgenda.domain.Chamada;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 public class ChamadaController {
 
@@ -15,7 +12,7 @@ public class ChamadaController {
         this.chamadaRepository = chamadaRepository;
     }
 
-    @PostMapping("/chamadas")
+    /*@PostMapping("/chamadas")
     public void criarChamada(@RequestBody Chamada chamada) {
         chamadaRepository.save(chamada);
     }
@@ -34,5 +31,5 @@ public class ChamadaController {
     @GetMapping("/chamadas")
     public void listarChamadas() {
         ResponseEntity.ok(chamadaRepository.findAll());
-    }
+    }*/
 }

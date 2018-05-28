@@ -1,10 +1,7 @@
 package VendeTudoAgenda.api.controller;
 
 import VendeTudoAgenda.core.repository.ContatoRepository;
-import VendeTudoAgenda.domain.Contato;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 public class ContatoController {
     
@@ -15,7 +12,7 @@ public class ContatoController {
         this.contatoRepository = contatoRepository;
     }
 
-    @PostMapping("/contatos")
+    /*@PostMapping("/contatos")
     public void criarContato(@RequestBody Contato contato) {
         contatoRepository.save(contato);
     }
@@ -34,6 +31,6 @@ public class ContatoController {
     @GetMapping("/contatos")
     public ResponseEntity listarContatos() {
         return ResponseEntity.ok(contatoRepository.findAll());
-    }
+    }*/
 
 }

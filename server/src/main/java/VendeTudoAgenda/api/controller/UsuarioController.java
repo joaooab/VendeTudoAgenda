@@ -1,10 +1,8 @@
 package VendeTudoAgenda.api.controller;
 
 import VendeTudoAgenda.core.repository.UsuarioRepository;
-import VendeTudoAgenda.domain.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UsuarioController {
@@ -16,7 +14,7 @@ public class UsuarioController {
         this.usuarioRepository = usuarioRepository;
     }
 
-    @PostMapping("/usuarios")
+    /*@PostMapping("/usuarios")
     public void criarUsuario(@RequestBody Usuario usuario) {
         usuarioRepository.save(usuario);
     }
@@ -36,6 +34,6 @@ public class UsuarioController {
     public ResponseEntity listarUsuario() {
         return ResponseEntity.ok(usuarioRepository.findAll());
     }
-
+*/
 }
 

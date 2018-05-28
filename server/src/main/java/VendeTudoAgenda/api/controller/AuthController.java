@@ -32,6 +32,7 @@ public class AuthController {
 
         if (usuarioBanco != null && checarSenha(usuarioBanco.getSenha(), usuarioBody.getSenha())) {
             JSONObject object = new JSONObject(usuarioBanco);
+            object.put("token", jwtService.toToken(usuarioBanco));
 
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.AUTHORIZATION, jwtService.toToken(usuarioBanco));

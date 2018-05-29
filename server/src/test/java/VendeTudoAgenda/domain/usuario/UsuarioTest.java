@@ -25,7 +25,7 @@ public class UsuarioTest {
     @Test
     public void deve_salvar_e_buscar_usuario_pelo_nome() {
         // given
-        Usuario usuario = new Usuario("admin", 11111111111L, "vendetudoagenda@gmail.com", new Date(), "rua10", 38445654L, 985763251L, FuncaoUsuario.ADMINISTRADOR, "1234");
+        Usuario usuario = new Usuario("admin", 11111111111L, "vendetudoagenda@gmail.com", new Date(), "rua10", "38445654", "985763251", FuncaoUsuario.ADMINISTRADOR, "1234");
         entityManager.persist(usuario);
         entityManager.flush();
 
@@ -39,7 +39,7 @@ public class UsuarioTest {
     @Test
     public void deve_salvar_e_buscar_usuario_pelo_id() {
         // given
-        Usuario usuario = new Usuario("admin", 11111111111L, "vendetudoagenda@gmail.com", new Date(), "rua10", 38445654L, 985763251L, FuncaoUsuario.ADMINISTRADOR, "1234");
+        Usuario usuario = new Usuario("admin", 11111111111L, "vendetudoagenda@gmail.com", new Date(), "rua10", "38445654", "985763251", FuncaoUsuario.ADMINISTRADOR, "1234");
         entityManager.persist(usuario);
         entityManager.flush();
 
@@ -53,7 +53,7 @@ public class UsuarioTest {
     @Test
     public void deve_salvar_e_buscar_usuario_pelo_email() {
         // given
-        Usuario usuario = new Usuario("admin", 11111111111L, "vendetudoagenda@gmail.com", new Date(), "rua10", 38445654L, 985763251L, FuncaoUsuario.ADMINISTRADOR, "1234");
+        Usuario usuario = new Usuario("admin", 11111111111L, "vendetudoagenda@gmail.com", new Date(), "rua10", "38445654", "985763251", FuncaoUsuario.ADMINISTRADOR, "1234");
         entityManager.persist(usuario);
         entityManager.flush();
 
@@ -67,7 +67,7 @@ public class UsuarioTest {
     @Test
     public void deve_salvar_e_editar_usuario() {
         // given
-        Usuario usuario = new Usuario("admin", 11111111111L, "vendetudoagenda@gmail.com", new Date(), "rua10", 38445654L, 985763251L, FuncaoUsuario.ADMINISTRADOR, "1234");
+        Usuario usuario = new Usuario("admin", 11111111111L, "vendetudoagenda@gmail.com", new Date(), "rua10", "38445654", "985763251", FuncaoUsuario.ADMINISTRADOR, "1234");
         entityManager.persist(usuario);
         entityManager.flush();
 
@@ -84,7 +84,7 @@ public class UsuarioTest {
     @Test
     public void deve_salvar_e_deletar_usuario() {
         // given
-        Usuario usuario = new Usuario("admin", 11111111111L, "vendetudoagenda@gmail.com", new Date(), "rua10", 38445654L, 985763251L, FuncaoUsuario.ADMINISTRADOR, "1234");
+        Usuario usuario = new Usuario("admin", 11111111111L, "vendetudoagenda@gmail.com", new Date(), "rua10", "38445654", "985763251", FuncaoUsuario.ADMINISTRADOR, "1234");
         entityManager.persist(usuario);
         entityManager.flush();
 

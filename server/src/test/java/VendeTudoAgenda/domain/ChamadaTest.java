@@ -33,10 +33,10 @@ public class ChamadaTest {
         Categoria categoria = new Categoria("PESSOA JURIDICA");
         entityManager.persist(categoria);
 
-        Usuario usuario = new Usuario("admin", 11111111111L, "vendetudoagenda@gmail.com", new Date(), "rua10", 38445654L, 985763251L, FuncaoUsuario.ADMINISTRADOR, "1234");
+        Usuario usuario = new Usuario("admin", 11111111111L, "vendetudoagenda@gmail.com", new Date(), "rua10", "38445654", "985763251", FuncaoUsuario.ADMINISTRADOR, "1234");
         entityManager.persist(usuario);
 
-        contato = new Contato(categoria, usuario, "Joao", 11111111111L, null, "joao@email", new Date(), "rua12", 123132132L, 3522625L, true);
+        contato = new Contato(categoria, usuario, "Joao", 11111111111L, null, "joao@email", new Date(), "rua12", "123132132", "3522625", true);
         entityManager.persist(contato);
         entityManager.flush();
     }

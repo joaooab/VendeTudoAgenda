@@ -1,0 +1,32 @@
+<div class="p-3 mb-2 bg-secondary text-white">LISTA DE CONTATOS</div>
+<div class="form-group row">
+    <p-growl [(value)]="msgs"></p-growl>
+    <div class="col-1"></div>
+    <div class="col-10 text-center">
+
+        <p-dataTable [rows]="10"  selectionMode="single" [(selection)]="selectedContato" [value]="contato" [resizableColumns]="true" [paginator]="true" emptyMessage="Nenhum registro encontrado." tableStyleClass="table user-list table-hover">
+                            
+                <p-column  header="Nome" field="nome" [sortable]="true"  [style]="{'width':'150px','text-align': 'center'}"></p-column>
+                
+                <p-column header="CPF/CNPJ" field="cpf" [sortable]="true"  [style]="{'width':'150px','text-align': 'center'}"></p-column>
+
+                <p-column header="Categoria" field="categoria" [sortable]="true"  [style]="{'width':'150px','text-align': 'center'}"></p-column>
+
+                <p-column header="Ligacões" field="ligacoes" [sortable]="true"  [style]="{'width':'150px','text-align': 'center'}"></p-column>
+
+
+        </p-dataTable>
+
+    </div>
+</div>
+<div class="form-group row">
+    
+    <div class="col-7"></div>
+    <div class="col-4">
+        <button pButton (click)="voltarTelaPrincipal()" type="button" label="VOLTAR" class="ui-button-secondary" style="width:120px;"></button>
+        <button pButton (click)="excluir()" type="button" label="EXCLUIR" class="ui-button-danger" style="width:120px;"></button>
+        <button pButton (click)="editar()" type="button" label="EDITAR" style="width:120px;"></button>
+    </div>
+
+    
+</div>

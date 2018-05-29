@@ -1,0 +1,41 @@
+<div class="p-3 mb-2 bg-secondary text-white">CHAMADA</div>
+<div class="p-4 ml-5">
+    <section>
+        <form role="form">
+
+            <div class="form-group row">
+                <label for="nome" class="col-sm-1 col-form-label">Nome</label>
+                <div class="col-sm-4">
+                    <input type="text" [(ngModel)]="chamada.nome" name="nome" id="nome" maxlength="256" pInputText />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="data" class="col-sm-1 col-form-label">Data</label>
+                <div class="col-sm-4">
+                    <p-calendar [locale]="configCalendario" [style]="{'margin-right':'50px'}"
+                                [(ngModel)]="chamada.data" name="data" id="data" [showIcon]="true" dateFormat="dd-mm-yy"></p-calendar>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="duracao" class="col-sm-1 col-form-label">Duração</label>
+                <div class="col-sm-4">
+                    <p-inputMask [(ngModel)]="chamada.duracao" mask="99:99:99" name="duracao" id="duracao"></p-inputMask>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="descricao" style="font-size: 15px">Descrição</label>
+                <div class="col-sm-4">
+                <textarea [rows]="5" name="descricao" [(ngModel)]="chamada.descricao" maxlength="2048" [cols]="40" pInputTextarea autoResize="autoResize"
+                          id="descricao"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-4 offset-7 text-right">
+                    <button pButton  type="button" label="Voltar" class="ui-button-secondary" style="width:150px;"></button>
+                    <button pButton (click)="salvar()" type="button" label="Salvar" style="width:150px;"></button>
+                </div>
+            </div>
+
+        </form>
+    </section>
+</div>

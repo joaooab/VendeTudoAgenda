@@ -1,0 +1,101 @@
+<div class="p-3 mb-2 bg-secondary text-white">CONTATO</div>
+<div>
+    <section>
+        <form role="form" style="padding-left: 5%; padding-top: 2%;">
+            <p-growl [(value)]="msgs"></p-growl>
+            <div class="form-group row">
+                <label for="nome" class="col-sm-2 col-form-label"><p style="color: red;display: inline;">*</p> Nome</label>
+                <div class="col-sm-4">
+                  <input type="text" class="form-control" [(ngModel)]="contato.nome" name="nome" maxlength="255" minlength="8">
+                </div>
+            </div>
+            
+            <div class="row">
+                <label for="nome" class="col-sm-2 col-form-label"><p style="color: red;display: inline;">*</p> Pessoa</label>
+                
+                <p-dropdown [options]="pessoa" [(ngModel)]="option" name="option" [style]="{'margin-left':'15px','margin-bottom':'10px', 'width':'430px'}"></p-dropdown>
+
+            </div>
+            
+            
+            <div class="form-group row" *ngIf="option == 'Física'">
+                <label for="nome" class="col-sm-2 col-form-label"><p style="color: red;display: inline;">*</p> CPF</label>
+                <div class="col-sm-4">
+                        <p-inputMask  placeholder="___.___.___-__" type="text" [(ngModel)]="contato.cpf" name="cpf"  mask="999.999.999-99" ></p-inputMask>
+                </div>
+            </div>
+
+            <div class="form-group row" *ngIf="option == 'Juridica'" >
+                <label for="nome" class="col-sm-2 col-form-label"><p style="color: red;display: inline;">*</p> CNPJ</label>
+                <div class="col-sm-4">
+                        <p-inputMask  placeholder="__.___.___/____.__" type="text" [(ngModel)]="contato.cnpj" name="cnpj"  mask="99.999.999/9999-99"  ></p-inputMask>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="nome" class="col-sm-2 col-form-label">E-mail</label>
+                <div class="col-sm-4">
+                  <input type="text" class="form-control" [(ngModel)]="contato.email" name="email" maxlength="64" minlength="8">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="nome" class="col-sm-2 col-form-label"><p style="color: red;display: inline;">*</p> Nascimento</label>
+                <div class="col-sm-2">
+                    <p-inputMask  placeholder="__/__/____" type="text" [(ngModel)]="contato.nascimento" name="nascimento"  mask="99/99/9999"  ></p-inputMask>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="nome" class="col-sm-2 col-form-label"><p style="color: red;display: inline;">*</p> Endereço</label>
+                <div class="col-sm-4">
+                  <input type="text" class="form-control" [(ngModel)]="contato.endereco" name="endereco" maxlength="64" minlength="8">
+                </div>
+            
+            </div>
+
+            <div class="form-group row">
+                <label for="telefoneFixo" class="col-sm-2 col-form-label">  Telefone Fixo</label>
+                <div class="col-sm-2">
+                    <p-inputMask  type="text" placeholder="(  )" mask="(99) 99999-9999" [(ngModel)]="contato.telefoneFixo" name="telefoneFixo"></p-inputMask>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="celular" class="col-sm-2 col-form-label"><p style="color: red;display: inline;">*</p> Celular</label>
+                <div class="col-sm-2">
+                    <p-inputMask  type="text" placeholder="(  )" mask="(99) 99999-9999" [(ngModel)]="contato.celular"  name="celular"></p-inputMask>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="funcao" class="col-sm-2 col-form-label"><p style="color: red;display: inline;">*</p> Categoria</label>
+                <div class="col-sm-2">
+                    <select id="inputState" class="form-control">
+                    <option selected>Administrador</option>
+                    <option>Vendedor</option>
+                    </select>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <div class="form-group row">
+                <div class="col-sm-1"></div><label style="color: red;">Campos com asteriscos devem ser preenchidos</label>
+            </div>
+            <br/>
+            <div class="form-group row">
+                <div class="col-sm-1"></div>
+                <label><p-checkbox name="autorizaEmail" [(ngModel)]="checked" binary="true"></p-checkbox>Aceito o envio de emails promocionais</label>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-8"></div>
+                <div>
+                    <button style="background-color:gray; border: none;" (click) = "voltar()"  pButton type="button" label="Voltar" ></button>
+                    <button (click) = "salvar()"  pButton type="button" label="Salvar" ></button>
+                </div>
+            </div>
+
+        </form>
+    </section>
+</div>

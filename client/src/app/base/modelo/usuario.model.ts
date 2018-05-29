@@ -2,7 +2,8 @@ import { Entidade } from "../../arquitetura/modelo/entidade.model";
 
 export class Usuario extends Entidade {
     nome:string;
-    cpfOuCnpj: string;
+    cpf: string;
+    cnpj:string;
     email: string;
     dataDeNascimento: string;
     endereco: string;

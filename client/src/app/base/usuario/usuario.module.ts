@@ -9,6 +9,7 @@ import {InputMaskModule} from 'primeng/inputmask';
 import {DropdownModule} from 'primeng/dropdown';
 import {TableModule} from 'primeng/table';
 import {GrowlModule} from 'primeng/growl';
+
 //end prime ng
 
 import { CadastroUsuarioComponent } from './cadastro/cadastro-usuario.component';

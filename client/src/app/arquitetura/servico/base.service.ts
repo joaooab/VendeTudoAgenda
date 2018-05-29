@@ -3,8 +3,7 @@ import {Http, RequestOptionsArgs , Headers} from "@angular/http";
 
 export function getUsuarioLogado() {
 
-    return true;
-    //ngreturn localStorage.getItem('user')
+    return localStorage.getItem('user')
 }
 
 export function setUsuarioLogado(usuario: any) {
@@ -22,10 +21,18 @@ export class BaseService {
     }
 
     protected buildHeaders() : Headers{
+     
+        var token = localStorage.getItem('user');
+        token = token.replace(/['"]+/g,'');
+        
         return new Headers({
+
+
             'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            'Authorization': token
         })
+
+        
     }
 
     protected mapper(resp) {

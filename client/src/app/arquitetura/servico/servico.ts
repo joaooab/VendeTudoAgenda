@@ -17,13 +17,13 @@ export abstract class Servico<E extends Entidade> extends BaseService {
     protected url(path: string){
         //return `${environment.api}/${this.path}/${path}` usando o token 
        
-        return `${environment.baseUrl}/${this.path}/${path}`
+        return `${environment.baseUrl}/${this.path}`
 
     }
 
-    listar() : Observable< E[] > {
-        
-        return this.http.get(this.path, this.config())
+    listar() : Observable<any> {
+       
+        return this.http.get(this.url(''), this.config())
         .map(this.mapper)
     }
 
@@ -33,6 +33,7 @@ export abstract class Servico<E extends Entidade> extends BaseService {
     }
 
     salvar(entidade: E): Observable<string>{
+
         return this.http.post(`${environment.baseUrl}/${this.path}`, entidade, this.config())
         .map(this.mapper)
     }

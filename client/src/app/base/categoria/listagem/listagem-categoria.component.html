@@ -1,11 +1,11 @@
-<div class="p-3 mb-2 bg-secondary text-white">LISTA DE USUÁRIOS</div>
+<div class="p-3 mb-2 bg-secondary text-white">LISTA DE CATEGORIAS</div>
 
 
 <div class="row justify-content-center align-items-center mt-4">
   <p-growl [(value)]="msgs"></p-growl>
   <div class="col-10 text-center">
-    <p-table [columns]="cols" [value]="usuarios" [resizableColumns]="true" [paginator]="true" [rows]="10" selectionMode="single"
-      [(selection)]="selectedUsuario" dataKey="cpfOuCnpj">
+    <p-table [columns]="cols" [value]="categorias" [resizableColumns]="true" [paginator]="true" [rows]="10" selectionMode="single"
+      [(selection)]="selectedCategoria" dataKey="descricao">
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
@@ -25,10 +25,7 @@
   </div>
 </div>
 <div class="row justify-content-center  mt-3">
-  <div class="col-1">
-    <button pButton (click)="novo()" type="button" label="NOVO" style="width:120px;"></button>
-  </div>
-  <div class="col-9">
+  <div class="col-9 offset-1">
     <div class="float-right">
       <button pButton (click)="voltarTelaPrincipal()" type="button" label="VOLTAR" class="ui-button-secondary" style="width:120px;"></button>
       <button pButton (click)="excluir()" type="button" label="EXCLUIR" class="ui-button-danger" style="width:120px;"></button>

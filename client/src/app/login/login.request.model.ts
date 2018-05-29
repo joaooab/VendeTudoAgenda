@@ -2,7 +2,7 @@
 
 export class LoginRequest{
     
-    usuario: string;
+    email: string;
     senha: string;
     tipoUsuario: any;
 

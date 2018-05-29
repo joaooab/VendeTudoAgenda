@@ -22,8 +22,8 @@ export class ListagemUsuarioComponent implements OnInit {
 
   ngOnInit() {
     this.usuarios = [
-      {nome:'Teste',cpfOuCnpj:'992939293929',email:'a@gmail.com',funcao:'Administrador'},
-      {nome:'Teste1',cpfOuCnpj:'992939293921',email:'teste@gmail.com',funcao:'Administrador'}
+      {id:'1',nome:'Teste',cpfOuCnpj:'992939293929',email:'a@gmail.com',funcao:'Administrador'},
+      {id:'2',nome:'Teste1',cpfOuCnpj:'992939293921',email:'teste@gmail.com',funcao:'Administrador'}
     ]
     //this.usuarioService.listar().subscribe(res => this.usuarios = res);
 
@@ -40,7 +40,11 @@ export class ListagemUsuarioComponent implements OnInit {
   }
 
   editar():void{
-
+    if(!this.selectedUsuario){
+      this.msgs.push({severity:'error', summary:'Error Message', detail:'Selecione um usuário dá lista'});
+    }else{
+      this.router.navigate(['/cadastros/usuario/edicao/',this.selectedUsuario.id]);
+    }
   }
 
   excluir():void{

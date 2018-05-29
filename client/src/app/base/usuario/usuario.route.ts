@@ -5,7 +5,7 @@ import { ListagemUsuarioComponent } from './listagem/listagem-usuario.component'
 
 export const UsuarioRoute: Route[] = [
     
-    {path: 'cadastros/usuario' , component: ListagemUsuarioComponent, data:{title:'Usuário'}},
+    {path: 'cadastros/usuario' , component: ListagemUsuarioComponent},
     {path: 'cadastros/usuario/novo', component: CadastroUsuarioComponent},
     {path: 'cadastros/usuario/edicao/:id', component: CadastroUsuarioComponent}
 

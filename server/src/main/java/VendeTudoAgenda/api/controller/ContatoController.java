@@ -11,11 +11,42 @@ import org.springframework.web.bind.annotation.*;
 public class ContatoController {
     
     private ContatoRepository contatoRepository;
+
+    /*
+    @Query("SELECT c FROM Contato c WHERE LOWER(c.email)=LOWER(:email) ")
+    Contato findByEmail(@Param("email") String email);*/
+
+
     
     @Autowired
     public ContatoController(ContatoRepository contatoRepository) {
         this.contatoRepository = contatoRepository;
     }
+
+    @GetMapping("/contatoes/nome/{nome}")
+    public ResponseEntity buscarContatosNome(@PathVariable String nome){
+        Contato contato = contatoRepository.findByName(nome);
+        return ResponseEntity.ok(contato);
+    }
+
+    @GetMapping("/contatoes/cpf/{cpf}")
+    public ResponseEntity buscarContatosCpf(@PathVariable Long cpf){
+        Contato contato = contatoRepository.findByCpf(cpf);
+        return ResponseEntity.ok(contato);
+    }
+
+    @GetMapping("/contatoes/cnpj/{cnpj}")
+    public ResponseEntity buscarContatosCnpj(@PathVariable Long cnpj){
+        Contato contato = contatoRepository.findByCnpj(cnpj);
+        return ResponseEntity.ok(contato);
+    }
+
+    @GetMapping("/contatoes/email/{email}")
+    public ResponseEntity buscarContatosEmail(@PathVariable String email){
+        Contato contato = contatoRepository.findByEmail(email);
+        return ResponseEntity.ok(contato);
+    }
+
 
     @PostMapping("/contatoes")
     public void criarContato(@RequestBody Contato contato) {

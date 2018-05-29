@@ -8,6 +8,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
+import static junit.framework.Assert.assertNull;
 import static junit.framework.TestCase.assertTrue;
 
 @RunWith(SpringRunner.class)
@@ -20,25 +23,50 @@ public class CategoriaTest {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
-//    @Autowired
-//    private MockMvc mvc;
-//
-//    @MockBean
-//    private JwtService jwtService;
-//
-//    private Map<String, Object> param;
-
     @Test
-    public void whenFindByName_thenReturnEmployee() {
+    public void deve_salvar_e_buscar_categoria_pelo_nome() {
         // given
         Categoria categoria = new Categoria("TESTE");
         entityManager.persist(categoria);
         entityManager.flush();
 
         // when
-        Categoria categoriaEncontrada = categoriaRepository.findByName(categoria.getNome());
+        Categoria categoriaBanco = categoriaRepository.findByName(categoria.getNome());
 
         // then
-        assertTrue(categoriaEncontrada.getNome().equals("TESTE"));
+        assertTrue(categoriaBanco.getNome().equals("TESTE"));
     }
+
+    @Test
+    public void deve_salvar_e_deletar_categoria_pelo_nome() {
+        // given
+        Categoria categoria = new Categoria("TESTE");
+        entityManager.persist(categoria);
+        entityManager.flush();
+
+        // when
+        categoriaRepository.delete(categoria);
+
+        // then
+        Categoria categoriaBanco = categoriaRepository.findByName("TESTE");
+        assertNull(categoriaBanco);
+    }
+
+    @Test
+    public void deve_salvar_e_editar_categoria() {
+        // given
+        Categoria categoria = new Categoria("TESTE");
+        entityManager.persist(categoria);
+        entityManager.flush();
+
+        // when
+        categoria.setNome("NOVOTESTE");
+        entityManager.persist(categoria);
+        entityManager.flush();
+
+        // then
+        List<Categoria> categoriaList = categoriaRepository.findAll();
+        assertTrue(categoriaList.size() == 1);
+    }
+
 }

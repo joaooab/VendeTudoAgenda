@@ -1,7 +1,9 @@
 package VendeTudoAgenda.domain.usuario;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -35,10 +37,10 @@ public class Usuario implements Serializable {
     private String endereco;
 
     @Column(name = "telefone_fixo")
-    private Long telefoneFixo;
+    private String telefoneFixo;
 
     @Column(name = "celular", nullable = false)
-    private Long celular;
+    private String celular;
 
     @Column(name = "funcao", nullable = false)
     private FuncaoUsuario funcao;
@@ -46,7 +48,7 @@ public class Usuario implements Serializable {
     @Column(name = "senha", nullable = false)
     private String senha;
 
-    public Usuario(String nome, Long cpf, String email, Date dataNascimento, String endereco, Long telefoneFixo, Long celular, FuncaoUsuario funcao, String senha) {
+    public Usuario(String nome, Long cpf, String email, Date dataNascimento, String endereco, String telefoneFixo, String celular, FuncaoUsuario funcao, String senha) {
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;

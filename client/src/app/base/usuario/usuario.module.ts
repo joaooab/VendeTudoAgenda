@@ -12,28 +12,31 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
 import {CadastroUsuarioComponent} from './cadastro/cadastro-usuario.component';
 import {ListagemUsuarioComponent} from './listagem/listagem-usuario.component';
 import {UsuarioService} from './usuario.service';
+import {DataTableModule} from 'primeng/datatable';
 
 //end prime ng
 
 
 @NgModule({
-  imports: [
-    FormsModule,
-    CommonModule,
-    ButtonModule,
-    InputTextModule,
-    InputMaskModule,
-    DropdownModule,
-    TableModule,
-    AutoCompleteModule,
-    GrowlModule
-  ],
-  declarations: [
-    CadastroUsuarioComponent,
-    ListagemUsuarioComponent
-  ],
-  providers:[
-    UsuarioService
-  ]
+    imports: [
+        FormsModule,
+        CommonModule,
+        ButtonModule,
+        InputTextModule,
+        InputMaskModule,
+        DropdownModule,
+        TableModule,
+        AutoCompleteModule,
+        GrowlModule,
+        DataTableModule
+    ],
+    declarations: [
+        CadastroUsuarioComponent,
+        ListagemUsuarioComponent
+    ],
+    providers: [
+        UsuarioService
+    ]
 })
-export class UsuarioModule { }
+export class UsuarioModule {
+}

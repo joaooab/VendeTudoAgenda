@@ -4,24 +4,13 @@
 <div class="row justify-content-center align-items-center mt-4">
   <p-growl [(value)]="msgs"></p-growl>
   <div class="col-10 text-center">
-    <p-table [columns]="cols" [value]="usuarios" [resizableColumns]="true" [paginator]="true" [rows]="10" selectionMode="single"
-      [(selection)]="selectedUsuario" dataKey="cpfOuCnpj">
-      <ng-template pTemplate="header" let-columns>
-        <tr>
-          <th *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
-            {{col.header}}
-            <p-sortIcon [field]="col.field"></p-sortIcon>
-          </th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-rowData let-columns="columns">
-        <tr  [pSelectableRow]="rowData">
-          <td *ngFor="let col of columns" class="ui-resizable-column">
-            {{rowData[col.field]}}
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
+	  <p-dataTable [rows]="10"  selectionMode="single" [(selection)]="selectedUsuario" [value]="usuarios" [resizableColumns]="true" [paginator]="true" emptyMessage="Nenhum registro encontrado." tableStyleClass="table user-list table-hover">
+		  <p-column  header="Nome" field="nome" [sortable]="true"  [style]="{'width':'150px','text-align': 'center'}"></p-column>
+		  <p-column header="CPF/CNPJ" field="cpf" [sortable]="true"  [style]="{'width':'150px','text-align': 'center'}"></p-column>
+		  <p-column header="E-mail" field="email" [sortable]="true"  [style]="{'width':'150px','text-align': 'center'}"></p-column>
+		  <p-column header="Função" field="funcao" [sortable]="true"  [style]="{'width':'150px','text-align': 'center'}"></p-column>
+	  </p-dataTable>
+
   </div>
 </div>
 <div class="row justify-content-center  mt-3">

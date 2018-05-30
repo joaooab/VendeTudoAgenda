@@ -6,9 +6,15 @@ export function getUsuarioLogado() {
     return localStorage.getItem('user')
 }
 
-export function setUsuarioLogado(usuario: any) {
+export function getIdUsuarioLogadoNoSistema(){
+    return localStorage.getItem('usuario');
+}
 
-    localStorage.setItem('user', JSON.stringify(usuario))
+export function setUsuarioLogado(token:any, usuario:any) {
+
+    localStorage.setItem('user', JSON.stringify(token));
+
+    localStorage.setItem('usuario', JSON.stringify(usuario));
 }
 
 
@@ -20,6 +26,12 @@ export class BaseService {
         }
     }
 
+    protected configLogin(): RequestOptionsArgs {
+        return {
+            headers : this.buildHeadersLogin()
+        }
+    } 
+
     protected buildHeaders() : Headers{
      
         var token = localStorage.getItem('user');
@@ -30,6 +42,19 @@ export class BaseService {
 
             'Content-Type': 'application/json',
             'Authorization': token
+        })
+
+        
+    }
+
+    protected buildHeadersLogin() : Headers{
+     
+        
+        return new Headers({
+
+
+            'Content-Type': 'application/json',
+            
         })
 
         

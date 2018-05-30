@@ -45,4 +45,8 @@ export class CadastroUsuarioComponent implements OnInit {
     //this.usuarioService.salvar(this.usuario);
   }
 
+  voltar(){
+    this.router.navigate(['/principal']);
+  }
+
 }

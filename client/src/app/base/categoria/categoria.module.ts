@@ -7,6 +7,9 @@ import {ButtonModule} from 'primeng/button';
 import {TableModule} from 'primeng/table';
 import {GrowlModule} from 'primeng/growl';
 import {InputTextModule} from 'primeng/inputtext';
+import {DataTableModule} from 'primeng/datatable';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
 //fim prime ng
 
 import {CategoriaService} from './categoria.service';
@@ -20,14 +23,17 @@ import { CadastroCategoriaComponent } from './cadastro/cadastro-categoria.compon
     TableModule,
     GrowlModule,
     ButtonModule,
-    InputTextModule
+    InputTextModule,
+    DataTableModule,
+    ConfirmDialogModule
   ],
   declarations: [
     CadastroCategoriaComponent,
     ListagemCategoriaComponent
   ],
   providers:[
-    CategoriaService
+    CategoriaService,
+    ConfirmationService
   ]
 })
 export class CategoriaModule { }

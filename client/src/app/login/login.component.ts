@@ -31,21 +31,24 @@ export class LoginComponent implements OnInit{
             this.msgs.push({severity:'warn', summary:'Warn Message', detail:'Campos obrigatórios'});
 
         }
+        else{
+            this.loginService.logar(this.loginRequest).subscribe((usuario)=>{
+            
+                setUsuarioLogado(usuario.token, usuario);
+    
+                this.document.body.classList.remove('back-login');
+    
+                this.router.navigate(['/principal']);
+                
+    
+            },(usuarioError)=>{
+    
+                this.msgs = [];
+                this.msgs.push({severity:'error', summary:'Error Message', detail: 'Usuário e/ou senha inválido'});
+            });
+        }
         
-        this.loginService.logar(this.loginRequest).subscribe((usuario)=>{
-            
-            console.log(usuario.token)
-            setUsuarioLogado(usuario.token);
-
-            this.document.body.classList.remove('back-login');
-
-            this.router.navigate(['/principal']);
-            
-
-        },(usuarioError)=>{
-            this.msgs = [];
-            this.msgs.push({severity:'error', summary:'Error Message', detail: 'Usuário e/ou senha inválido'});
-        });
+        
     }
 
     esqueciSenha(){

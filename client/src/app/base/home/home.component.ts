@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { DOCUMENT } from "@angular/platform-browser";
 import { LogoutService } from "../../login/logout.service";
 import { SelectItem } from "primeng/api";
+import { ContatoService } from "../contato/contato.service";
 
 
 
@@ -19,7 +20,8 @@ export class HomeComponent implements OnInit{
 
     constructor(private router: Router,
                 @Inject(DOCUMENT) private document: Document,
-                private logoutService: LogoutService){
+                private logoutService: LogoutService,
+                private contatoService:ContatoService){
 
 
         this.document.body.classList.add('back-login');
@@ -28,7 +30,7 @@ export class HomeComponent implements OnInit{
             {label: 'CPF', value:'CPF'},
             {label: 'CNPJ', value:'CNPJ'},
             {label: 'NOME', value:'NOME'},
-            {label: 'RAZAO-SOCIAL', value:'RAZÃO SOCIAL'}
+            {label: 'RAZÃO SOCIAL', value:'RAZAO-SOCIAL'}
 
         ]
     }
@@ -47,5 +49,20 @@ export class HomeComponent implements OnInit{
 
     alterarBack(){
         this.document.body.classList.remove('back-login');
+    }
+
+    buscar(){
+        if(this.option == 'CPF'){
+            console.log('cpf')
+        }
+        if(this.option == 'CNPJ'){
+            console.log('cnpj')
+        }
+        if(this.option == 'NOME'){
+            console.log('nome')
+        }
+        if(this.option == 'RAZAO-SOCIAL'){
+            console.log('razao')
+        }
     }
 }

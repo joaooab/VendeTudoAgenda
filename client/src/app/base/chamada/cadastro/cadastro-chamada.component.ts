@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {ChamadaService} from '../chamda.service';
+import {ChamadaService} from '../chamada.service';
 import {Chamada} from '../../modelo/Chamada.model';
 import {Message} from 'primeng/api';
 import {MessageService} from 'primeng/components/common/messageservice';

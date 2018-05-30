@@ -11,9 +11,10 @@ import {GrowlModule} from 'primeng/growl';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {CadastroChamadaComponent} from './cadastro/cadastro-chamada.component';
 import {ListagemChamadaoComponent} from './listagem/listagem-chamada.component';
-import {ChamadaService} from './chamda.service';
+import {ChamadaService} from './chamada.service';
 import {CalendarModule} from 'primeng/calendar';
 import {DataTableModule} from 'primeng/datatable';
+import { DetalhamentoChamadaComponent } from './detalhamento/detalhamento-chamada.component';
 
 //end prime ng
 
@@ -34,7 +35,8 @@ import {DataTableModule} from 'primeng/datatable';
     ],
     declarations: [
         CadastroChamadaComponent,
-        ListagemChamadaoComponent
+        ListagemChamadaoComponent,
+        DetalhamentoChamadaComponent
     ],
     providers:[
         ChamadaService

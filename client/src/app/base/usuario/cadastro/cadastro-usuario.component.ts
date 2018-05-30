@@ -18,7 +18,7 @@ export class CadastroUsuarioComponent implements OnInit {
   usuario: Usuario = new Usuario();
 
   constructor(private usuarioService: UsuarioService,
-    private activeRoute: ActivatedRoute,
+    private activateRoute: ActivatedRoute,
     private router: Router) {
     this.pessoa = [
       { label: 'Selecione', value: '' },
@@ -33,7 +33,7 @@ export class CadastroUsuarioComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.activeRoute.params.subscribe(parametro => {
+    this.activateRoute.params.subscribe(parametro => {
       if (parametro["id"] !== undefined)
         console.log(parametro["id"]);
       //this.usuarioService.

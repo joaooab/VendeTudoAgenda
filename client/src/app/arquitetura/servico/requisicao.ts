@@ -1,4 +1,4 @@
-import { Entidade } from "../../../arquitetura/modelo/entidade.model";
+import { Entidade } from "../../arquitetura/modelo/entidade.model";
 
 // export class Embedded<T extends Entidade>{
 //     t:T[];

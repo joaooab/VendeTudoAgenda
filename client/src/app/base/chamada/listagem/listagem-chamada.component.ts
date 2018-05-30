@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {Message} from 'primeng/api';
-import {ChamadaService} from '../chamda.service';
+import {ChamadaService} from '../chamada.service';
 
 @Component({
     selector: 'app-listagem-chamada',

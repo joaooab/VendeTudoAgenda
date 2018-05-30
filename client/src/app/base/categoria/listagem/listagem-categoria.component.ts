@@ -5,6 +5,7 @@ import {Message, ConfirmationService} from 'primeng/api';
 import { Router } from '@angular/router';
 import { CategoriaService } from '../categoria.service';
 import { RespostaRequisicao } from '../../../arquitetura/servico/requisicao';
+import { getFuncaoUsuarioLogado } from '../../../arquitetura/servico/base.service';
 
 @Component({
   selector: 'app-listagem-categoria',
@@ -18,11 +19,24 @@ export class ListagemCategoriaComponent implements OnInit {
   
   selectedCategoria: Categoria;
 
+  usuarioFuncao : string;
+
+  usuarioAutorizado: string;
+
   msgs: Message[] = [];
 
   constructor(private router:Router,
               private categoriaService: CategoriaService,
-              private confirmationService:ConfirmationService) { }
+              private confirmationService:ConfirmationService) { 
+
+      this.usuarioFuncao = getFuncaoUsuarioLogado().replace(/['"]+/g,'');
+
+      if(this.usuarioFuncao == 'ADMINISTRADOR'){
+          this.usuarioAutorizado = 'sim';
+      }
+
+      
+  }
 
   ngOnInit() {
 

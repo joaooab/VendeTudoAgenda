@@ -3,14 +3,35 @@ import { Http, RequestOptionsArgs, Headers } from "@angular/http";
 
 export function getUsuarioLogado() {
 
-    return localStorage.getItem('user')
+    return localStorage.getItem('token')
 }
 
-export function setUsuarioLogado(usuario: any) {
+export function getIdUsuarioLogado(){
 
-    localStorage.setItem('user', JSON.stringify(usuario))
+    return localStorage.getItem('usuarioId');
 }
 
+export function getFuncaoUsuarioLogado(){
+
+    return localStorage.getItem('usuarioFuncao');
+}
+
+export function setUsuarioLogado(token:any) {
+
+    localStorage.setItem('token', JSON.stringify(token));
+
+}
+
+export function setIdUsuarioLogado(id:number){
+    
+    localStorage.setItem('usuarioId', JSON.stringify(id));
+}
+
+export function setFuncaoUsuarioLogado(funcao : any){
+
+    localStorage.setItem('usuarioFuncao', JSON.stringify(funcao));
+    
+}
 
 export class BaseService {
 
@@ -22,9 +43,10 @@ export class BaseService {
 
     protected buildHeaders(): Headers {
 
-        if (localStorage.getItem('user')) {
-            var token = localStorage.getItem('user');
-            token = token.replace(/['"]+/g, '');
+    protected buildHeaders() : Headers{
+     
+        var token = localStorage.getItem('token');
+        token = token.replace(/['"]+/g,'');
 
             return new Headers({
 

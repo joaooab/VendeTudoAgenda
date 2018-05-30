@@ -6,7 +6,7 @@ import { ContatoService } from "../contato.service";
 import {Message, ConfirmationService} from 'primeng/api';
 import { MessageService } from "primeng/components/common/messageservice";
 import { Usuario } from "../../modelo/usuario.model";
-import { getUsuarioLogado } from "../../../arquitetura/servico/base.service";
+import { getUsuarioLogado, getFuncaoUsuarioLogado } from "../../../arquitetura/servico/base.service";
 import { RespostaRequisicao } from "../../../arquitetura/servico/requisicao";
 import { CategoriaService } from "../../categoria/categoria.service";
 
@@ -22,6 +22,10 @@ export class ContatoListagemComponent implements OnInit{
     private contato: Contato[];
     selectedContato: Contato;
 
+    usuarioFuncao : string;
+
+    usuarioAutorizado: string;
+
     msgs: Message[] = [];
 
     constructor(
@@ -29,7 +33,12 @@ export class ContatoListagemComponent implements OnInit{
                 private categoriaService:CategoriaService,
                 private router:Router,
                 private confirmationService:ConfirmationService){
-        
+                    
+        this.usuarioFuncao = getFuncaoUsuarioLogado().replace(/['"]+/g,'');
+
+        if(this.usuarioFuncao == 'ADMINISTRADOR'){
+            this.usuarioAutorizado = 'sim';
+        }
         
        
     }

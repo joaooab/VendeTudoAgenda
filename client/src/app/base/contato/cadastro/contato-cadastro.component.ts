@@ -10,6 +10,7 @@ import { RespostaRequisicao } from "../../../arquitetura/servico/requisicao";
 import { ContatoService } from "../contato.service";
 import { Usuario } from "../../modelo/usuario.model";
 import { UsuarioService } from "../../usuario/usuario.service";
+import { getIdUsuarioLogado } from "../../../arquitetura/servico/base.service";
 
 @Component({
     templateUrl: './contato-cadastro.component.html'
@@ -72,6 +73,8 @@ export class ContatoCadastroComponent implements OnInit{
 
                     this.contato.dataNascimento = new Date(this.contato.dataNascimento);
 
+                    this.idCategoria = this.contato.categoria.id;
+
                     if(this.contato.cpf){
                         this.option = "CPF";
                     }
@@ -100,6 +103,8 @@ export class ContatoCadastroComponent implements OnInit{
 
     salvar(){
         
+        
+
         if(!this.contato.nome || !this.contato.dataNascimento || !this.contato.endereco || !this.contato.celular || !this.optAutorizaEmail ||!this.idCategoria){
             this.msgs = [];
             this.msgs.push({severity:'error', summary:'Warn Message', detail:'Campos obrigatórios não preenchidos'});
@@ -112,8 +117,6 @@ export class ContatoCadastroComponent implements OnInit{
         }
         else{
             
-            this.getCategoria();
-
             if(this.contato.id == undefined){
                
                 if(this.optAutorizaEmail == 'autorizo'){
@@ -217,6 +220,8 @@ export class ContatoCadastroComponent implements OnInit{
 
     montarBody(){
         
+        
+
         let body = {"contato":
             {
                 "nome":this.contato.nome,
@@ -229,7 +234,7 @@ export class ContatoCadastroComponent implements OnInit{
                 "endereco":this.contato.endereco,
                 "telefoneFixo":this.contato.telefoneFixo,
                 "categoria":{"id":this.idCategoria},
-                "usuario":{"id":1}        
+                "usuario":{"id":getIdUsuarioLogado()}        
             }
         };
         console.log(body);
@@ -248,13 +253,6 @@ export class ContatoCadastroComponent implements OnInit{
 
     adicionarMascaraCnpj(cnpj){
         return cnpj.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g,"\$1.\$2.\$3\-\$4");
-    }
-
-    getCategoria(){
-        
-        this.categoriaService.get(this.idCategoria).subscribe(res =>{
-            this.categoria = res;
-        });
     }
 
     private configCalander() {

@@ -5,7 +5,7 @@ import { MessageService } from "primeng/components/common/messageservice";
 import { Router } from "@angular/router";
 import { DOCUMENT } from '@angular/platform-browser'
 import { LoginService } from "./login.service";
-import { setUsuarioLogado } from "../arquitetura/servico/base.service";
+import { setUsuarioLogado, setIdUsuarioLogado, setFuncaoUsuarioLogado } from "../arquitetura/servico/base.service";
 @Component({
     templateUrl: './login.component.html'
 })
@@ -34,7 +34,11 @@ export class LoginComponent implements OnInit{
         else{
             this.loginService.logar(this.loginRequest).subscribe((usuario)=>{
             
-                setUsuarioLogado(usuario.token, usuario);
+                setUsuarioLogado(usuario.token);
+
+                setIdUsuarioLogado(usuario.id);
+
+                setFuncaoUsuarioLogado(usuario.funcao);
     
                 this.document.body.classList.remove('back-login');
     

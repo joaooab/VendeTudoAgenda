@@ -8,12 +8,14 @@ import { Injectable } from "@angular/core";
 import 'rxjs/add/operator/catch';
 
 
-export const LOCAL_STORAGE_ITEM_USER : string = 'user';
 
 export function clearToken(){
     
-    localStorage.removeItem(LOCAL_STORAGE_ITEM_USER);
-    localStorage.removeItem('usuario');
+    localStorage.removeItem('token');
+    
+    localStorage.removeItem('usuarioId');
+
+    localStorage.removeItem('usuarioFuncao');
 
 }
 

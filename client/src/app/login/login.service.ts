@@ -13,6 +13,7 @@ export const LOCAL_STORAGE_ITEM_USER : string = 'user';
 export function clearToken(){
     
     localStorage.removeItem(LOCAL_STORAGE_ITEM_USER);
+    localStorage.removeItem('usuario');
 
 }
 
@@ -28,7 +29,7 @@ export class LoginService extends BaseService{
 
         let body = {"usuario":{"email":loginRequest.email,"senha":loginRequest.senha}};
 
-        return this.http.post(`${environment.baseUrl}/login`, body, this.config())
+        return this.http.post(`${environment.baseUrl}/login`, body, this.configLogin() ) 
         
         .map(this.mapper)
         

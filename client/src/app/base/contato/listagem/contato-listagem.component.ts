@@ -3,11 +3,12 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { Contato } from "../../modelo/contato.model";
 import { Servico } from "../../../arquitetura/servico/servico";
 import { ContatoService } from "../contato.service";
-import {Message} from 'primeng/api';
+import {Message, ConfirmationService} from 'primeng/api';
 import { MessageService } from "primeng/components/common/messageservice";
 import { Usuario } from "../../modelo/usuario.model";
 import { getUsuarioLogado } from "../../../arquitetura/servico/base.service";
 import { RespostaRequisicao } from "../../../arquitetura/servico/requisicao";
+import { CategoriaService } from "../../categoria/categoria.service";
 
 
 
@@ -24,8 +25,10 @@ export class ContatoListagemComponent implements OnInit{
     msgs: Message[] = [];
 
     constructor(
-                protected service: ContatoService,
-                private router:Router){
+                protected contatoService: ContatoService,
+                private categoriaService:CategoriaService,
+                private router:Router,
+                private confirmationService:ConfirmationService){
         
         
        
@@ -33,10 +36,10 @@ export class ContatoListagemComponent implements OnInit{
 
     ngOnInit(): void {
         
-        this.service.listar().subscribe((res:RespostaRequisicao<Contato>)=>
+        this.contatoService.listar().subscribe((res)=>
         {
-           console.log(res);
-            this.contato = res._embedded['contatoes'];
+
+            this.contato = res;
 
         })
 
@@ -52,6 +55,36 @@ export class ContatoListagemComponent implements OnInit{
         this.msgs = [];
         if(!this.selectedContato){
             this.msgs.push({severity:'error', summary:'Error Message', detail:'Selecione um contato da lista'});
+        }
+        
+        this.router.navigate(['cadastros/contato/edicao/' + this.selectedContato.id]);
+    }
+
+    excluir(){
+        this.msgs = [];
+        if(!this.selectedContato){
+            this.msgs.push({severity:'error', summary:'Error Message', detail:'Selecione um contato da lista'});
+        }else{
+            this.confirmationService.confirm({
+                message: 'Deseja realmente excluir este contato ?',
+                header: 'Delete Confirmation',
+                icon: 'fa fa-trash',
+                accept: () => {
+                    this.contatoService.excluir(this.selectedContato.id).subscribe(res =>{
+                        this.msgs = [];
+                        this.msgs.push({severity:'success', summary:'Service Message', detail:'Dado excluido com sucesso!'});
+                        
+                        this.contatoService.listar().subscribe((res)=>{
+                          this.contato = res;
+                          
+                        })
+                  
+                      })
+                },
+                reject: () => {
+                    this.msgs = [{severity:'info', summary:'Rejected', detail:'You have rejected'}];
+                }
+            });
         }
         
     }

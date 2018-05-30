@@ -32,7 +32,7 @@ public class ContatoTest {
     public void setUp() {
         categoria = new Categoria("PESSOA JURIDICA");
         entityManager.persist(categoria);
-        usuario = new Usuario("admin", 11111111111L, "vendetudoagenda@gmail.com", new Date(), "rua10", "38445654", "985763251", FuncaoUsuario.ADMINISTRADOR, "1234");
+        usuario = new Usuario("admin", 11111111111L, "vendetudoagenda@gmail.com", new Date(), "rua10", "38445654L", "985763251L", FuncaoUsuario.ADMINISTRADOR, "1234");
         entityManager.persist(usuario);
         entityManager.flush();
     }
@@ -40,7 +40,7 @@ public class ContatoTest {
     @Test
     public void deve_salvar_e_buscar_usuario_pelo_nome() {
         // given
-        Contato contato = new Contato(categoria, usuario, "TESTE", 11111111111L, null, "joao@email", new Date(), "rua12", "38445654", "985763251", true);
+        Contato contato = new Contato(categoria, usuario, "TESTE", 11111111111L, null, "joao@email", new Date(), "rua12", "123132132L", "3522625L", true);
         entityManager.persist(contato);
         entityManager.flush();
 
@@ -54,7 +54,7 @@ public class ContatoTest {
     @Test
     public void deve_salvar_e_buscar_usuario_pelo_id() {
         // given
-        Contato contato = new Contato(categoria, usuario, "TESTE", 11111111111L, null, "joao@email", new Date(), "rua12", "38445654", "985763251", true);
+        Contato contato = new Contato(categoria, usuario, "TESTE", 11111111111L, null, "joao@email", new Date(), "rua12", "123132132L", "3522625L", true);
         entityManager.persist(contato);
         entityManager.flush();
 
@@ -67,7 +67,7 @@ public class ContatoTest {
 
     @Test
     public void deve_salver_e_deletar_contato() {
-        Contato contato = new Contato(categoria, usuario, "TESTE", 11111111111L, null, "joao@email", new Date(), "rua12", "38445654", "985763251", true);
+        Contato contato = new Contato(categoria, usuario, "TESTE", 11111111111L, null, "joao@email", new Date(), "rua12", "123132132L", "3522625L", true);
         entityManager.persist(contato);
         entityManager.flush();
 

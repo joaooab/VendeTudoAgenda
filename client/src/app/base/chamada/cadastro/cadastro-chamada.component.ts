@@ -44,6 +44,10 @@ export class CadastroChamadaComponent implements OnInit {
         this.router.navigate(['/principal']);
     }
 
+    voltar(){
+        this.router.navigate(['/principal'])
+    }
+
     private configCalander() {
         return {
             closeText: 'Fechar',
@@ -72,5 +76,7 @@ export class CadastroChamadaComponent implements OnInit {
             allDayText: 'Todo o Dia'
         };
     }
+
+
 
 }

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Categoria } from '../../modelo/categoria.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { CategoriaService } from '../categoria.service';
+import {Message, ConfirmationService} from 'primeng/api';
+import { RespostaRequisicao } from '../../../arquitetura/servico/requisicao';
+
 
 @Component({
   selector: 'app-cadastro-categoria',
@@ -10,13 +14,83 @@ import { Router } from '@angular/router';
 export class CadastroCategoriaComponent implements OnInit {
 
   categoria:Categoria = new Categoria();
-  constructor(private router:Router) { }
+  
+  msgs: Message[] = [];
+
+  titulo:string;
+
+  constructor(private router:Router,
+              private categoriaService:CategoriaService,
+              private activatedRoute: ActivatedRoute,
+              private confirmationService:ConfirmationService) { }
 
   ngOnInit() {
+    
+    this.activatedRoute.params.subscribe(parametro =>{
+      if(parametro["id"]==undefined){
+        this.titulo = "CADASTRO DE CATEGORIA";
+    }
+    else{
+      this.titulo = "EDITAR CADASTRO DE CATEGORIA";
+      
+      this.categoriaService.get(Number(parametro["id"])).subscribe(res=>{
+        
+          this.categoria = res;
+
+      });
+    }
+  });
+}
+
+  salvar(){
+    
+    if(this.categoria.id == undefined){
+      
+      this.categoriaService.salvar(this.montarBody()).subscribe(res=>{
+          
+        this.msgs = [];
+        this.msgs.push({severity:'success', summary:'Service Message', detail:'Dados salvos com sucesso!'});
+  
+        this.categoria = new Categoria();
+      
+      })
+
+    }else{
+
+      this.confirmationService.confirm({
+        message: 'Deseja realmente salvar alterações ?',
+        header: 'Confirmation',
+        icon: 'fa fa-trash',
+        accept: () => {
+          
+          this.categoriaService.alterar(this.montarBody(), this.categoria.id).subscribe(res => {
+        
+            this.msgs = [];
+            this.msgs.push({severity:'success', summary:'Service Message', detail:'Dados alterados com sucesso!'});
+
+            
+          })
+
+        },
+        reject: () => {
+            this.msgs = [{severity:'info', summary:'Rejected', detail:'Alteração cancelada'}];
+        }
+      });
+      
+      
+    }
   }
+  
 
   voltarTelaPrincipal(){
     this.router.navigate(['/principal'])
+  }
+
+  montarBody(){
+    var body = {"categoria":{"nome":this.categoria.nome}}
+
+    return body;
+
   }
 
 }

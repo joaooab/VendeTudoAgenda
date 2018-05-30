@@ -27,7 +27,7 @@ public class PopulateBancoLimpo implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Usuario usuario = new Usuario("admin", 11111111111L, "vendetudoagenda@gmail.com", new Date(), "rua10", "38445654", "985763251", FuncaoUsuario.ADMINISTRADOR, "1234");
+        Usuario usuario = new Usuario("admin", 11111111111L, "vendetudoagenda@gmail.com", new Date(), "rua10", "38445654L", "985763251L", FuncaoUsuario.ADMINISTRADOR, "1234");
         incluirUsuario(usuario);
 
         incluirUsuario(new Usuario("admin1", 22222222222L, "vendetudoagend@gmail.com", new Date(), "rua10", "38445654", "985763251", FuncaoUsuario.ADMINISTRADOR, "12345"));
@@ -42,7 +42,7 @@ public class PopulateBancoLimpo implements ApplicationRunner {
         categoria = new Categoria("PESSOA FISICA");
         categoria = incluirCategoria(categoria);
 
-        Contato contato = new Contato(categoria, usuario, "Joao", 11111111111L, null, "joao@email", new Date(), "rua12", "123132132", "3522625", true);
+        Contato contato = new Contato(categoria, usuario, "Joao", 11111111111L, null, "joao@email", new Date(), "rua12", "123132132L", "3522625L", true);
         contato = incluirContato(contato);
 
         Chamada chamada = new Chamada(contato, "Chamada - 1", new Date(), new Time(System.currentTimeMillis()), "Descricao da Chamada");

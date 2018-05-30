@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Categoria } from '../../modelo/categoria.model';
-import {Message} from 'primeng/api';
+import {Message, ConfirmationService} from 'primeng/api';
 import { Router } from '@angular/router';
+import { CategoriaService } from '../categoria.service';
+import { RespostaRequisicao } from '../../../arquitetura/servico/requisicao';
 
 @Component({
   selector: 'app-listagem-categoria',
@@ -11,20 +13,67 @@ import { Router } from '@angular/router';
 })
 export class ListagemCategoriaComponent implements OnInit {
   cols: Array<any>;
-  categorias: Array<any>;
+
+  categorias: Categoria[];
+  
   selectedCategoria: Categoria;
+
   msgs: Message[] = [];
 
-  constructor(private router:Router) { }
+  constructor(private router:Router,
+              private categoriaService: CategoriaService,
+              private confirmationService:ConfirmationService) { }
 
   ngOnInit() {
-    this.cols = [
-      {field: 'descricao',header:'Categoria'}
-    ]
+
+    this.categoriaService.listar().subscribe((res)=>{
+        this.categorias = res;
+        
+    })
+
   }
 
   voltarTelaPrincipal(){
     this.router.navigate(['/principal'])
+  }
+
+  editar(){
+    
+    this.router.navigate(['cadastros/categoria/edicao/'+this.selectedCategoria.id]);
+  }
+
+  excluir(){
+
+
+    this.msgs = [];
+        if(!this.selectedCategoria){
+            this.msgs.push({severity:'error', summary:'Error Message', detail:'Selecione uma categoria da lista'});
+        }else{
+            this.confirmationService.confirm({
+                message: 'Deseja realmente excluir este contato ?',
+                header: 'Delete Confirmation',
+                icon: 'fa fa-trash',
+                accept: () => {
+                  
+                  this.categoriaService.excluir(this.selectedCategoria.id).subscribe(res =>{
+                    this.msgs = [];
+                    this.msgs.push({severity:'success', summary:'Service Message', detail:'Dado excluido com sucesso!'});
+                    
+                    this.categoriaService.listar().subscribe((res)=>{
+                      this.categorias = res;
+                      
+                    })
+              
+                  })
+                    
+                },
+                reject: () => {
+                    this.msgs = [{severity:'info', summary:'Rejected', detail:'You have rejected'}];
+                }
+            });
+        }
+
+    
   }
 
 }

@@ -17,36 +17,37 @@ export abstract class Servico<E extends Entidade> extends BaseService {
     protected url(path: string){
         //return `${environment.api}/${this.path}/${path}` usando o token 
        
-        return `${environment.baseUrl}/${this.path}`
+        return `${environment.baseUrl}/${this.path}/${path}`
 
     }
 
     listar() : Observable<any> {
-       
-        return this.http.get(this.url(''), this.config())
+
+        return this.http.get(`${environment.baseUrl}/${this.path}`, this.config())
         .map(this.mapper)
     }
 
     get(id: number): Observable<E> {
-        return this.http.get(this.url(`${id}`), this.config() )
+ 
+        return this.http.get(`${environment.baseUrl}/${this.path}/${id}`, this.config() )
         .map(this.mapper)
     }
 
-    salvar(entidade: E): Observable<string>{
+    salvar(entidade:any): Observable<string>{
 
         return this.http.post(`${environment.baseUrl}/${this.path}`, entidade, this.config())
         .map(this.mapper)
     }
 
-    alterar(entidade: E): Observable<string>{
+    alterar(entidade: any, id: number): Observable<string>{
 
-        return this.http.put(`${environment.baseUrl}/${this.path}`, entidade, this.config())
+        return this.http.patch(`${environment.baseUrl}/${this.path}/${id}`, entidade, this.config())
         .map(this.mapper)
     }
 
-    excluir(entidade: E): Observable<string>{
+    excluir(id: number): Observable<string>{
 
-        return this.http.put(`${environment.baseUrl}/${this.path}/excluir`, entidade, this.config())
+        return this.http.delete(this.url(`${id}`), this.config())
         .map(this.mapper)
     }
 

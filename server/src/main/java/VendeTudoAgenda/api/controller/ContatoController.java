@@ -53,7 +53,7 @@ public class ContatoController {
         return contatoRepository.findOne(id);
     }
 
-    @PutMapping("/contatoes/{id}")
+    @DeleteMapping("/contatoes/{id}")
     public void deletarContato(@PathVariable Long id) {
         Contato contato = contatoRepository.findById(id);
         contatoRepository.delete(contato);

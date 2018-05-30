@@ -6,9 +6,9 @@ export class Contato extends Entidade {
     
     nome:string;
 
-    cpf: string;
+    cpf: number;
 
-    cnpj: string;
+    cnpj: number;
 
     email: string;
 
@@ -16,14 +16,21 @@ export class Contato extends Entidade {
 
     endereco: string;
 
-    telefoneFixo: number;
+    telefoneFixo: string;
 
-    celular: number;
+    celular: string;
 
     autorizaEmail: boolean;
 
     categoria:Categoria;
 
     ligacoes:Chamada;
+
+    constructor(){
+        
+        super();
+        this.categoria = new Categoria();
+        this.ligacoes = new Chamada();
+    }
 
 }

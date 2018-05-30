@@ -1,7 +1,9 @@
 package VendeTudoAgenda.api.controller;
 
 import VendeTudoAgenda.core.repository.ChamadaRepository;
+import VendeTudoAgenda.core.repository.ContatoRepository;
 import VendeTudoAgenda.domain.Chamada;
+import VendeTudoAgenda.domain.Contato;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,31 +13,40 @@ import org.springframework.web.bind.annotation.*;
 public class ChamadaController {
 
     private ChamadaRepository chamadaRepository;
+    private ContatoRepository contatoRepository;
 
     @Autowired
-    public ChamadaController(ChamadaRepository chamadaRepository) {
+    public ChamadaController(ChamadaRepository chamadaRepository, ContatoRepository contatoRepository) {
         this.chamadaRepository = chamadaRepository;
+        this.contatoRepository = contatoRepository;
     }
 
     @PostMapping("/chamadas")
-    public void criarChamada(@RequestBody Chamada chamada) {
+    public ResponseEntity criarChamada(@RequestBody Chamada chamada) {
+        Contato contato = contatoRepository.findByName(chamada.getNome());
+
+        if(contato == null){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        chamada.setContato(contato);
         chamadaRepository.save(chamada);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/chamadas/{id}")
     public Chamada obterChamada(@PathVariable Long id) {
-        return chamadaRepository.findOne(id);
+        return chamadaRepository.findById(id);
     }
 
     @PutMapping("/chamadas/{id}")
     public void deletarChamada(@PathVariable Long id) {
-        Chamada chamada = chamadaRepository.findOne(id);
+        Chamada chamada = chamadaRepository.findById(id);
         chamadaRepository.delete(chamada);
     }
 
     @GetMapping("/chamadas")
-    public void listarChamadas() {
-        ResponseEntity.ok(chamadaRepository.findAll());
+    public ResponseEntity listarChamadas() {
+        return ResponseEntity.ok(chamadaRepository.findAll());
     }
 
     @PatchMapping("/chamadas/{id}")
@@ -53,9 +64,6 @@ public class ChamadaController {
         }
         if(chamada.getDescricao() == null){
             chamada.setDescricao(chamadaDB.getDescricao());
-        }
-        if(chamada.getContato() == null){
-            chamada.setContato(chamadaDB.getContato());
         }
 
         chamadaRepository.save(chamada);

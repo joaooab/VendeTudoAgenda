@@ -12,12 +12,7 @@ public class ContatoController {
     
     private ContatoRepository contatoRepository;
 
-    /*
-    @Query("SELECT c FROM Contato c WHERE LOWER(c.email)=LOWER(:email) ")
-    Contato findByEmail(@Param("email") String email);*/
 
-
-    
     @Autowired
     public ContatoController(ContatoRepository contatoRepository) {
         this.contatoRepository = contatoRepository;
@@ -60,7 +55,7 @@ public class ContatoController {
 
     @PutMapping("/contatoes/{id}")
     public void deletarContato(@PathVariable Long id) {
-        Contato contato = contatoRepository.findOne(id);
+        Contato contato = contatoRepository.findById(id);
         contatoRepository.delete(contato);
     }
 

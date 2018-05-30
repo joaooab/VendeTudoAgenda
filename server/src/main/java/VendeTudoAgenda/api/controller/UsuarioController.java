@@ -24,12 +24,12 @@ public class UsuarioController {
 
     @GetMapping("/usuarios/{id}")
     public Usuario obterUsuario(@PathVariable Long id) {
-        return usuarioRepository.findOne(id);
+        return usuarioRepository.findById(id);
     }
 
     @PutMapping("/usuarios/{id}")
     public void deletarUsuario(@PathVariable Long id) {
-        Usuario usuario = usuarioRepository.findOne(id);
+        Usuario usuario = usuarioRepository.findById(id);
         usuarioRepository.delete(usuario);
     }
 

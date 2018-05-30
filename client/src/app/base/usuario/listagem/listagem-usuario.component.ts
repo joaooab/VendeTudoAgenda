@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {Message} from 'primeng/api';
 
-import { Usuario } from '../../modelo/usuario.model';
-import { UsuarioService } from '../usuario.service';
+import {Usuario} from '../../modelo/usuario.model';
+import {UsuarioService} from '../usuario.service';
 
 @Component({
   selector: 'app-listagem-usuario',
@@ -21,11 +21,10 @@ export class ListagemUsuarioComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    this.usuarios = [
-      {id:'1',nome:'Teste',cpfOuCnpj:'992939293929',email:'a@gmail.com',funcao:'Administrador'},
-      {id:'2',nome:'Teste1',cpfOuCnpj:'992939293921',email:'teste@gmail.com',funcao:'Administrador'}
-    ]
-    //this.usuarioService.listar().subscribe(res => this.usuarios = res);
+      this.usuarioService.listar().subscribe(result => {
+          let usuarios = JSON.parse(result._body);
+          this.usuarios = usuarios;
+      });
 
     this.cols = [
       {field: 'nome',header:'Nome'},

@@ -2,7 +2,7 @@
 <div class="p-4 ml-5">
     <section>
         <form role="form">
-
+			<p-growl [(value)]="msgs"></p-growl>
             <div class="form-group row">
                 <label for="nome" class="col-sm-1 col-form-label">Nome</label>
                 <div class="col-sm-4">
@@ -31,8 +31,8 @@
             </div>
             <div class="form-group row">
                 <div class="col-sm-4 offset-7 text-right">
-                    <button pButton  type="button" label="Voltar" class="ui-button-secondary" style="width:150px;"></button>
-                    <button pButton (click)="salvar()" type="button" label="Salvar" style="width:150px;"></button>
+                    <button pButton (click)="voltarTelaPrincipal()"  type="button" label="Voltar" class="ui-button-secondary" style="width:150px;"></button>
+                    <button pButton [disabled]="!chamada.nome || !chamada.data || !chamada.duracao || !chamada.descricao" (click)="salvar()" type="button" label="Salvar" style="width:150px;"></button>
                 </div>
             </div>
 

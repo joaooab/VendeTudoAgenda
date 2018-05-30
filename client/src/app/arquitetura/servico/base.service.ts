@@ -41,26 +41,39 @@ export class BaseService {
         }
     }
 
-    protected buildHeaders(): Headers {
+    protected configLogin(): RequestOptionsArgs {
+        return {
+            headers : this.buildHeadersLogin()
+        }
+    } 
+
 
     protected buildHeaders() : Headers{
      
-        var token = localStorage.getItem('token');
+        var token = localStorage.getItem('user');
         token = token.replace(/['"]+/g,'');
-
-            return new Headers({
-
-
-                'Content-Type': 'application/json',
-                'Authorization': token
-            });
-        } else {
-            return new Headers({
-                'Content-Type': 'application/json'
-            });
-        }
+        
+        return new Headers({
 
 
+            'Content-Type': 'application/json',
+            'Authorization': token
+        })
+
+        
+    }
+
+    protected buildHeadersLogin() : Headers{
+     
+        
+        return new Headers({
+
+
+            'Content-Type': 'application/json',
+            
+        })
+
+        
     }
 
     protected mapper(resp) {

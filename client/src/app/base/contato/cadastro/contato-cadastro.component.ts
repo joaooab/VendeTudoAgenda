@@ -157,14 +157,19 @@ export class ContatoCadastroComponent implements OnInit{
                     icon: 'fa fa-trash',
                     accept: () => {
                         
-                        console.log(this.contato.cpf.length);
-                        //  if(this.contato.cpf.length ){
-                        //     this.contato.cpf = this.removerMascara(this.contato.cpf);
-                        //  }
+                         if(this.contato.cpf ){
+                            if(this.contato.cpf.toString().length > 11){
+                                this.contato.cpf = this.removerMascara(this.contato.cpf);
+                            }
+                            
+                         }
         
-                        //  if(this.contato.cnpj.length){
-                        //       this.contato.cnpj = this.removerMascara(this.contato.cnpj);
-                        //  }
+                         if(this.contato.cnpj){
+                             if(this.contato.cnpj.toString().length>14){
+                                this.contato.cnpj = this.removerMascara(this.contato.cnpj);
+                             }
+                              
+                         }
 
                         
 
@@ -223,10 +228,13 @@ export class ContatoCadastroComponent implements OnInit{
                 "email":this.contato.email,
                 "endereco":this.contato.endereco,
                 "telefoneFixo":this.contato.telefoneFixo,
-                "categoria":this.categoria         
+                "categoria":{"id":this.idCategoria},
+                "usuario":{"id":1}        
             }
         };
-
+        console.log(body);
+        return body;
+        
     }
 
     removerMascara(valor){

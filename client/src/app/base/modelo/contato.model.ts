@@ -6,9 +6,9 @@ export class Contato extends Entidade {
     
     nome:string;
 
-    cpf: string;
+    cpf: number;
 
-    cnpj: string;
+    cnpj: number;
 
     email: string;
 

@@ -27,11 +27,6 @@ public class CategoriaController {
         return categoriaRepository.findOne(id);
     }
 
-    @PutMapping("/categorias/{id}")
-    public void deletarUsuario(@PathVariable Long id) {
-        Categoria categoria = categoriaRepository.findOne(id);
-        categoriaRepository.delete(categoria);
-    }
 
     @GetMapping("/categorias")
     public ResponseEntity listarCategorias() {

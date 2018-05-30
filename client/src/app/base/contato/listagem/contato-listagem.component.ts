@@ -25,7 +25,7 @@ export class ContatoListagemComponent implements OnInit{
     msgs: Message[] = [];
 
     constructor(
-                protected service: ContatoService,
+                protected contatoService: ContatoService,
                 private categoriaService:CategoriaService,
                 private router:Router,
                 private confirmationService:ConfirmationService){
@@ -36,7 +36,7 @@ export class ContatoListagemComponent implements OnInit{
 
     ngOnInit(): void {
         
-        this.service.listar().subscribe((res)=>
+        this.contatoService.listar().subscribe((res)=>
         {
 
             this.contato = res;
@@ -70,7 +70,16 @@ export class ContatoListagemComponent implements OnInit{
                 header: 'Delete Confirmation',
                 icon: 'fa fa-trash',
                 accept: () => {
-                    this.msgs = [{severity:'info', summary:'Confirmed', detail:'Record deleted'}];
+                    this.contatoService.excluir(this.selectedContato.id).subscribe(res =>{
+                        this.msgs = [];
+                        this.msgs.push({severity:'success', summary:'Service Message', detail:'Dado excluido com sucesso!'});
+                        
+                        this.contatoService.listar().subscribe((res)=>{
+                          this.contato = res;
+                          
+                        })
+                  
+                      })
                 },
                 reject: () => {
                     this.msgs = [{severity:'info', summary:'Rejected', detail:'You have rejected'}];

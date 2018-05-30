@@ -59,8 +59,8 @@ export class ListagemCategoriaComponent implements OnInit {
                     this.msgs = [];
                     this.msgs.push({severity:'success', summary:'Service Message', detail:'Dado excluido com sucesso!'});
                     
-                    this.categoriaService.listar().subscribe((res:RespostaRequisicao<Categoria>)=>{
-                      this.categorias = res._embedded['categorias'];
+                    this.categoriaService.listar().subscribe((res)=>{
+                      this.categorias = res;
                       
                     })
               

@@ -50,7 +50,7 @@ export class BaseService {
 
     protected buildHeaders() : Headers{
      
-        var token = localStorage.getItem('user');
+        var token = localStorage.getItem('token');
         token = token.replace(/['"]+/g,'');
         
         return new Headers({

@@ -1,97 +1,84 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { Categoria } from '../../modelo/categoria.model';
-import {Message, ConfirmationService} from 'primeng/api';
-import { Router } from '@angular/router';
-import { CategoriaService } from '../categoria.service';
-import { RespostaRequisicao } from '../../../arquitetura/servico/requisicao';
-import { getFuncaoUsuarioLogado } from '../../../arquitetura/servico/base.service';
+import {Categoria} from '../../modelo/categoria.model';
+import {ConfirmationService, Message} from 'primeng/api';
+import {Router} from '@angular/router';
+import {CategoriaService} from '../categoria.service';
+import {getFuncaoUsuarioLogado} from '../../../arquitetura/servico/base.service';
 
 @Component({
-  selector: 'app-listagem-categoria',
-  templateUrl: './listagem-categoria.component.html',
-  styles: []
+    selector: 'app-listagem-categoria',
+    templateUrl: './listagem-categoria.component.html',
+    styles: []
 })
 export class ListagemCategoriaComponent implements OnInit {
-  cols: Array<any>;
 
-  categorias: Categoria[];
-  
-  selectedCategoria: Categoria;
+    cols: Array<any>;
+    categorias: Categoria[];
+    selectedCategoria: Categoria;
+    usuarioFuncao: string;
+    usuarioAutorizado: string;
+    msgs: Message[] = [];
 
-  usuarioFuncao : string;
+    constructor(private router: Router,
+                private categoriaService: CategoriaService,
+                private confirmationService: ConfirmationService) {
 
-  usuarioAutorizado: string;
+        this.usuarioFuncao = getFuncaoUsuarioLogado().replace(/['"]+/g, '');
 
-  msgs: Message[] = [];
+        if (this.usuarioFuncao == 'ADMINISTRADOR') {
+            this.usuarioAutorizado = 'sim';
+        }
+    }
 
-  constructor(private router:Router,
-              private categoriaService: CategoriaService,
-              private confirmationService:ConfirmationService) { 
+    ngOnInit() {
+        this.categoriaService.listar().subscribe((res) => {
+            this.categorias = res;
+        });
+    }
 
-      this.usuarioFuncao = getFuncaoUsuarioLogado().replace(/['"]+/g,'');
+    voltarTelaPrincipal() {
+        this.router.navigate(['/principal']);
+    }
 
-      if(this.usuarioFuncao == 'ADMINISTRADOR'){
-          this.usuarioAutorizado = 'sim';
-      }
+    editar() {
+        this.router.navigate(['cadastros/categoria/edicao/' + this.selectedCategoria.id]);
+    }
 
-      
-  }
-
-  ngOnInit() {
-
-    this.categoriaService.listar().subscribe((res)=>{
-        this.categorias = res;
-        
-    })
-
-  }
-
-  voltarTelaPrincipal(){
-    this.router.navigate(['/principal'])
-  }
-
-  editar(){
-    
-    this.router.navigate(['cadastros/categoria/edicao/'+this.selectedCategoria.id]);
-  }
-
-  excluir(){
-
-
-    this.msgs = [];
-        if(!this.selectedCategoria){
-            this.msgs.push({severity:'error', summary:'Error Message', detail:'Selecione uma categoria da lista'});
-        }else{
+    excluir() {
+        this.msgs = [];
+        if (!this.selectedCategoria) {
+            this.msgs.push({severity: 'error', summary: 'Error Message', detail: 'Selecione uma categoria da lista'});
+        } else {
             this.confirmationService.confirm({
                 message: 'Deseja realmente excluir este contato ?',
                 header: 'Delete Confirmation',
                 icon: 'fa fa-trash',
                 accept: () => {
-                  
-                  this.categoriaService.excluir(this.selectedCategoria.id).subscribe(res =>{
-                    this.msgs = [];
-                    this.msgs.push({severity:'success', summary:'Service Message', detail:'Dado excluido com sucesso!'});
-                    
-                    this.categoriaService.listar().subscribe((res)=>{
-                      this.categorias = res;
-                      
-                    })
-              
-                  },(erro)=>{
-                    
-                    this.msgs.push({severity:'error', summary:'Error Message', detail:'Não é possível excluir esta categoria pois está sendo usada'});
 
-                  })
-                    
+                    this.categoriaService.excluir(this.selectedCategoria.id).subscribe(res => {
+                        this.msgs = [];
+                        this.msgs.push({severity: 'success', summary: 'Service Message', detail: 'Dados excluídos com sucesso!'});
+
+                        this.categoriaService.listar().subscribe((res) => {
+                            this.categorias = res;
+                        });
+
+                    }, (erro) => {
+                        this.msgs.push({
+                            severity: 'error',
+                            summary: 'Error Message',
+                            detail: 'Não é possível excluir esta categoria pois está sendo usada'
+                        });
+
+                    });
+
                 },
                 reject: () => {
-                    this.msgs = [{severity:'info', summary:'Rejected', detail:'You have rejected'}];
+                    this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'You have rejected'}];
                 }
             });
         }
-
-    
-  }
+    }
 
 }

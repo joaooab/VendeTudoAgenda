@@ -1,50 +1,56 @@
-<div class="p-3 mb-2 bg-secondary text-white">USUÁRIO</div>
-<div class="p-4 ml-5">
-  <section>
-    <form role="form">
+<form role="form">
+  <div class="p-3 mb-2 bg-secondary text-white">USUÁRIO</div>
+  <div class="p-4 ml-5  hidden-xs-down">
+    <section>
 
       <div class="form-group row">
-        <label for="nome" class="col-sm-1 col-form-label"><p style="color: red;display: inline;">*</p>Nome</label>
+        <label for="nome" class="col-sm-1 col-form-label">
+          <p style="color: red;display: inline;">*</p>Nome</label>
         <div class="col-sm-4">
           <input type="text" [(ngModel)]="usuario.nome" name="nome" pInputText />
         </div>
       </div>
       <div class="form-group row">
-          <label for="nome" class="col-sm-1 col-form-label">
+        <label for="nome" class="col-sm-1 col-form-label">
           <p style="color: red;display: inline;">*</p> Pessoa</label>
         <div class="col-sm-4">
-          <p-dropdown [options]="pessoa" [(ngModel)]="option" name="option" ></p-dropdown>
+          <p-dropdown [options]="pessoa" [(ngModel)]="option" name="option"></p-dropdown>
         </div>
       </div>
 
       <div class="form-group row" *ngIf="option == 'Física'">
-          <label for="nome" class="col-sm-1 col-form-label"><p style="color: red;display: inline;">*</p> CPF</label>
-          <div class="col-sm-4">
-                  <p-inputMask  placeholder="___.___.___-__" type="text" [(ngModel)]="usuario.cpf" name="cpf"  mask="999.999.999-99" ></p-inputMask>
-          </div>
+        <label for="nome" class="col-sm-1 col-form-label">
+          <p style="color: red;display: inline;">*</p> CPF</label>
+        <div class="col-sm-4">
+          <p-inputMask placeholder="___.___.___-__" type="text" [(ngModel)]="usuario.cpf" name="cpf" mask="999.999.999-99"></p-inputMask>
+        </div>
       </div>
 
-      <div class="form-group row" *ngIf="option == 'Juridica'" >
-          <label for="nome" class="col-sm-1 col-form-label"><p style="color: red;display: inline;">*</p> CNPJ</label>
-          <div class="col-sm-4">
-                  <p-inputMask  placeholder="__.___.___/____.__" type="text" [(ngModel)]="usuario.cnpj" name="cnpj"  mask="99.999.999/9999-99"  ></p-inputMask>
-          </div>
+      <div class="form-group row" *ngIf="option == 'Juridica'">
+        <label for="nome" class="col-sm-1 col-form-label">
+          <p style="color: red;display: inline;">*</p> CNPJ</label>
+        <div class="col-sm-4">
+          <p-inputMask placeholder="__.___.___/____.__" type="text" [(ngModel)]="usuario.cnpj" name="cnpj" mask="99.999.999/9999-99"></p-inputMask>
+        </div>
       </div>
 
       <div class="form-group row">
-        <label for="email" class="col-sm-1 col-form-label"><p style="color: red;display: inline;">*</p>E-mail</label>
+        <label for="email" class="col-sm-1 col-form-label">
+          <p style="color: red;display: inline;">*</p>E-mail</label>
         <div class="col-sm-4">
           <input type="text" [(ngModel)]="usuario.email" name="email" pInputText />
         </div>
       </div>
       <div class="form-group row">
-        <label for="dataDeNascimento" class="col-sm-1 col-form-label"><p style="color: red;display: inline;">*</p>Nascimento</label>
+        <label for="dataDeNascimento" class="col-sm-1 col-form-label">
+          <p style="color: red;display: inline;">*</p>Nascimento</label>
         <div class="col-sm-4">
           <p-inputMask [(ngModel)]="usuario.dataDeNascimento" name="dataDeNascimento" mask="99/99/9999"></p-inputMask>
         </div>
       </div>
       <div class="form-group row">
-        <label for="endereco" class="col-sm-1 col-form-label"><p style="color: red;display: inline;">*</p>Endereço</label>
+        <label for="endereco" class="col-sm-1 col-form-label">
+          <p style="color: red;display: inline;">*</p>Endereço</label>
         <div class="col-sm-4">
           <input type="text" [(ngModel)]="usuario.endereco" name="endereco" pInputText />
         </div>
@@ -57,35 +63,168 @@
         </div>
       </div>
       <div class="form-group row">
-        <label for="celular" class="col-sm-1 col-form-label"><p style="color: red;display: inline;">*</p>Celular</label>
+        <label for="celular" class="col-sm-1 col-form-label">
+          <p style="color: red;display: inline;">*</p>Celular</label>
         <div class="col-sm-2">
           <p-inputMask [(ngModel)]="usuario.celular" name="celular" mask="(99) 99999-9999"></p-inputMask>
         </div>
       </div>
       <div class="form-group row">
-        <label for="funcao" class="col-sm-1 col-form-label"><p style="color: red;display: inline;">*</p>Função</label>
+        <label for="funcao" class="col-sm-1 col-form-label">
+          <p style="color: red;display: inline;">*</p>Função</label>
         <div class="col-sm-2">
-          <p-dropdown [options]="funcao" [(ngModel)]="usuario.funcao" name="option" ></p-dropdown>
+          <p-dropdown [options]="funcao" [(ngModel)]="usuario.funcao" name="option"></p-dropdown>
         </div>
       </div>
       <div class="form-group row">
-        <label for="senha" class="col-sm-1 col-form-label"><p style="color: red;display: inline;">*</p>Senha</label>
+        <label for="senha" class="col-sm-1 col-form-label">
+          <p style="color: red;display: inline;">*</p>Senha</label>
         <div class="col-sm-4">
           <input type="password" [(ngModel)]="usuario.senha" name="senha" pInputText />
         </div>
       </div>
       <div class="form-group row">
-        <label for="confirmacaoSenha" class="col-sm-1 col-form-label"><p style="color: red;display: inline;">*</p>Confirmação</label>
+        <label for="confirmacaoSenha" class="col-sm-1 col-form-label">
+          <p style="color: red;display: inline;">*</p>Confirmação</label>
         <div class="col-sm-4">
           <input type="password" [(ngModel)]="usuario.confirmacaoSenha" name="confirmacaoSenha" pInputText />
         </div>
       </div>
       <div class="form-group row">
         <div class="col-sm-4 offset-7 text-right">
-          <button pButton  (click)="voltar()" type="button" label="Voltar" class="ui-button-secondary" style="width:150px;"></button>
+          <button pButton (click)="voltar()" type="button" label="Voltar" class="ui-button-secondary" style="width:150px;"></button>
           <button pButton (click)="salvar()" type="button" label="Salvar" style="width:150px;"></button>
         </div>
       </div>
-    </form>
-  </section>
-</div>
+    </section>
+  </div>
+
+  <div class="hidden-sm-up" style="padding-left: 30px; padding-right: 30px;">
+    <div class="form-group">
+      <div class="row col-xs-12">
+        <label for="nome" class="col-form-label">
+          <p style="color: red;display: inline;">*</p>Nome</label>
+        <input type="text" [(ngModel)]="usuario.nome" name="nome" id="nome" pInputText />
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-xs-12">
+          <label for="pessoa" class="col-form-label">
+            <p style="color: red;display: inline;">*</p> Pessoa</label>
+          <br>
+          <p-dropdown [options]="pessoa" [(ngModel)]="option" id="pessoa" name="option"></p-dropdown>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="row" *ngIf="option == 'Física'">
+        <div class="col-xs-12">
+          <label for="nome" class="col-form-label">
+            <p style="color: red;display: inline;">*</p> CPF</label>
+          <br>
+          <p-inputMask placeholder="___.___.___-__" type="text" [(ngModel)]="usuario.cpf" name="cpf" mask="999.999.999-99"></p-inputMask>
+        </div>
+      </div>
+      <div class="row" *ngIf="option == 'Juridica'">
+        <div class="col-xs-12">
+          <label for="nome" class="col-form-label">
+            <p style="color: red;display: inline;">*</p> CNPJ</label>
+          <br>
+          <p-inputMask placeholder="__.___.___/____.__" type="text" [(ngModel)]="usuario.cnpj" name="cnpj" mask="99.999.999/9999-99"></p-inputMask>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col-xs-12">
+          <label for="email" class="col-form-label">
+            <p style="color: red;display: inline;">*</p>E-mail</label>
+          <br>
+          <input type="text" [(ngModel)]="usuario.email" name="email" pInputText />
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-xs-12">
+          <label for="dataDeNascimento" class="col-form-label">
+            <p style="color: red;display: inline;">*</p>Nascimento</label>
+          <br>
+          <p-inputMask [(ngModel)]="usuario.dataDeNascimento" name="dataDeNascimento" mask="99/99/9999"></p-inputMask>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-xs-12">
+          <label for="endereco" class="col-form-label">
+            <p style="color: red;display: inline;">*</p>Endereço</label>
+          <br>
+          <input type="text" [(ngModel)]="usuario.endereco" name="endereco" pInputText />
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-xs-12">
+          <label for="telefoneFixo" class="col-form-label">Telefone Fixo</label>
+          <br>
+          <p-inputMask [(ngModel)]="usuario.telefoneFixo" name="fixo" mask="(99) 9999 -9999"></p-inputMask>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-xs-12">
+          <label for="celular" class="col-form-label">
+            <p style="color: red;display: inline;">*</p>Celular</label>
+          <br>
+          <p-inputMask [(ngModel)]="usuario.celular" name="celular" mask="(99) 99999-9999"></p-inputMask>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-xs-12">
+          <label for="funcao" class="col-form-label">
+            <p style="color: red;display: inline;">*</p>Função</label>
+          <br>
+          <p-dropdown [options]="funcao" [(ngModel)]="usuario.funcao" name="option"></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-xs-12">
+          <label for="senha" class="col-form-label">
+            <p style="color: red;display: inline;">*</p>Senha</label>
+          <br>
+          <input type="password" [(ngModel)]="usuario.senha" name="senha" pInputText />
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-xs-12">
+          <label for="confirmacaoSenha" class="col-form-label">
+            <p style="color: red;display: inline;">*</p>Confirmação</label>
+          <br>
+          <input type="password" [(ngModel)]="usuario.confirmacaoSenha" name="confirmacaoSenha" pInputText />
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-xs-6 responsive-btn-center-vs">
+          <button pButton (click)="voltar()" type="button" label="Voltar" class="ui-button-secondary" style="width:150px;"></button>
+        </div>
+        <div class="col-xs-6">
+          <button pButton (click)="salvar()" type="button" label="Salvar" style="width:150px;"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

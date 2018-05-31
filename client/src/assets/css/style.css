@@ -81,3 +81,12 @@
       
     background: gray !important;
 }
+
+.responsive-btn-center {
+    padding-left: 50px;
+    padding-right: 40px;
+}
+.responsive-btn-center-vs {
+    padding-left: 12px;
+    padding-right: 15px;
+}

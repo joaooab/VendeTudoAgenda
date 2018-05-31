@@ -1,10 +1,12 @@
 package VendeTudoAgenda.api.controller;
 
+import VendeTudoAgenda.api.exception.InvalidRequestException;
 import VendeTudoAgenda.core.repository.ContatoRepository;
 import VendeTudoAgenda.domain.Contato;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,25 +23,60 @@ public class ContatoController {
     @GetMapping("/contatoes/nome/{nome}")
     public ResponseEntity buscarContatosNome(@PathVariable String nome){
         Contato contato = contatoRepository.findByName(nome);
-        return ResponseEntity.ok(contato);
+
+        if(contato != null){
+            return ResponseEntity.ok(contato);
+        }
+        else {
+
+            return ResponseEntity.notFound().build();
+
+        }
+
     }
 
+
     @GetMapping("/contatoes/cpf/{cpf}")
-    public ResponseEntity buscarContatosCpf(@PathVariable Long cpf){
+    public ResponseEntity buscarContatosCpf(@PathVariable Long cpf ){
         Contato contato = contatoRepository.findByCpf(cpf);
-        return ResponseEntity.ok(contato);
+
+        if(contato != null){
+            return ResponseEntity.ok(contato);
+        }
+        else {
+
+            return ResponseEntity.notFound().build();
+
+        }
+
     }
 
     @GetMapping("/contatoes/cnpj/{cnpj}")
     public ResponseEntity buscarContatosCnpj(@PathVariable Long cnpj){
         Contato contato = contatoRepository.findByCnpj(cnpj);
-        return ResponseEntity.ok(contato);
+
+        if(contato != null){
+            return ResponseEntity.ok(contato);
+        }
+        else {
+
+            return ResponseEntity.notFound().build();
+
+        }
     }
 
     @GetMapping("/contatoes/email/{email}")
     public ResponseEntity buscarContatosEmail(@PathVariable String email){
         Contato contato = contatoRepository.findByEmail(email);
-        return ResponseEntity.ok(contato);
+
+        if(contato != null){
+            return ResponseEntity.ok(contato);
+        }
+        else {
+
+            return ResponseEntity.notFound().build();
+
+        }
     }
 
 

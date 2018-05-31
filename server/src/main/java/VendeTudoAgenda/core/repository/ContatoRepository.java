@@ -13,10 +13,10 @@ public interface ContatoRepository extends JpaRepository<Contato, Long> {
     @Query("SELECT c FROM Contato c WHERE LOWER(c.nome)=LOWER(:nome) ")
     Contato findByName(@Param("nome") String nome);
 
-    @Query("SELECT c FROM Contato c WHERE LOWER(c.cpf)=LOWER(:cpf) ")
+    @Query("SELECT c FROM Contato c WHERE c.cpf=:cpf")
     Contato findByCpf(@Param("cpf") Long cpf);
 
-    @Query("SELECT c FROM Contato c WHERE LOWER(c.cnpj)=LOWER(:cnpj) ")
+    @Query("SELECT c FROM Contato c WHERE c.cnpj=:cnpj")
     Contato findByCnpj(@Param("cnpj") Long cnpj);
 
     @Query("SELECT c FROM Contato c WHERE LOWER(c.email)=LOWER(:email) ")

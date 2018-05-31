@@ -6,6 +6,7 @@ import {DialogModule} from 'primeng/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import {DropdownModule} from 'primeng/dropdown';
+import {GrowlModule} from 'primeng/growl';
 
 @NgModule({
     imports:[
@@ -14,7 +15,8 @@ import {DropdownModule} from 'primeng/dropdown';
         ButtonModule,
         RouterModule,
         DialogModule,
-        DropdownModule
+        DropdownModule,
+        GrowlModule
         
     ],
     declarations:[

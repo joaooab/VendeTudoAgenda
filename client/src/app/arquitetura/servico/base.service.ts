@@ -1,5 +1,4 @@
-import { Http, RequestOptionsArgs, Headers } from "@angular/http";
-
+import {Headers, RequestOptionsArgs} from '@angular/http';
 
 export function getUsuarioLogado() {
 
@@ -47,39 +46,28 @@ export class BaseService {
         }
     } 
 
-
     protected buildHeaders() : Headers{
      
         var token = localStorage.getItem('token');
         token = token.replace(/['"]+/g,'');
         
         return new Headers({
-
-
             'Content-Type': 'application/json',
             'Authorization': token
-        })
+        });
 
-        
     }
 
     protected buildHeadersLogin() : Headers{
-     
-        
         return new Headers({
-
-
             'Content-Type': 'application/json',
-            
-        })
-
-        
+        });
     }
 
     protected mapper(resp) {
-
         try {
-            return (resp.json() || resp.text())
+            return (resp.json() || resp.text());
+
         } catch (error) {
             return resp;
         }

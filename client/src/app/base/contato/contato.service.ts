@@ -1,7 +1,8 @@
-import { Injectable } from "@angular/core";
-import { Servico } from "../../arquitetura/servico/servico";
-import { Contato } from "../modelo/contato.model";
-import { Http } from "@angular/http";
+import {Injectable} from '@angular/core';
+import {Servico} from '../../arquitetura/servico/servico';
+import {Contato} from '../modelo/contato.model';
+import {Http} from '@angular/http';
+import {environment} from '../../../environments/environment';
 
 @Injectable()
 export class ContatoService extends Servico<Contato>{
@@ -10,5 +11,9 @@ export class ContatoService extends Servico<Contato>{
         
         super('contatoes',http)
         
+    }
+
+    gerarRelatorio(){
+        return this.http.get(`${environment.baseUrl}/gerarRelatorio`, this.config());
     }
 }

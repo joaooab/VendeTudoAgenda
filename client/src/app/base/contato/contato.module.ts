@@ -1,15 +1,13 @@
-import { NgModule } from "@angular/core";
-import {InputMaskModule,CalendarModule} from 'primeng/primeng';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CalendarModule, InputMaskModule} from 'primeng/primeng';
+import {FormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
 import {TableModule} from 'primeng/table';
 import {DataTableModule} from 'primeng/datatable';
-
 import {DropdownModule} from 'primeng/dropdown';
-
 import {CheckboxModule} from 'primeng/checkbox';
 import {ButtonModule} from 'primeng/button';
-import {BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {GrowlModule} from 'primeng/growl';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
@@ -17,10 +15,10 @@ import {RadioButtonModule} from 'primeng/radiobutton';
 
 import {ContatoCadastroComponent} from './cadastro/contato-cadastro.component';
 import {ContatoListagemComponent} from './listagem/contato-listagem.component';
-import { ContatoService } from "./contato.service";
+import {ContatoService} from './contato.service';
 
 @NgModule({
-    imports:[
+    imports: [
         CheckboxModule,
         CalendarModule,
         ButtonModule,
@@ -34,16 +32,16 @@ import { ContatoService } from "./contato.service";
         DataTableModule,
         ConfirmDialogModule,
         RadioButtonModule
-        
-        
+
     ],
-    declarations:[
+    declarations: [
         ContatoCadastroComponent,
-        ContatoListagemComponent       
+        ContatoListagemComponent
     ],
-    providers:[
+    providers: [
         ContatoService,
         ConfirmationService
     ]
 })
-export class ContatoModule{}
+export class ContatoModule {
+}

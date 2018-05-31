@@ -1,82 +1,58 @@
 package VendeTudoAgenda.api.controller;
 
-import VendeTudoAgenda.api.exception.InvalidRequestException;
+import VendeTudoAgenda.core.repository.ChamadaRepository;
 import VendeTudoAgenda.core.repository.ContatoRepository;
 import VendeTudoAgenda.domain.Contato;
+import VendeTudoAgenda.domain.ContatoExcel;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class ContatoController {
     
     private ContatoRepository contatoRepository;
-
+    private ChamadaRepository chamadaRepository;
 
     @Autowired
-    public ContatoController(ContatoRepository contatoRepository) {
+    public ContatoController(ContatoRepository contatoRepository, ChamadaRepository chamadaRepository) {
         this.contatoRepository = contatoRepository;
+        this.chamadaRepository = chamadaRepository;
     }
 
     @GetMapping("/contatoes/nome/{nome}")
     public ResponseEntity buscarContatosNome(@PathVariable String nome){
         Contato contato = contatoRepository.findByName(nome);
-
-        if(contato != null){
-            return ResponseEntity.ok(contato);
-        }
-        else {
-
-            return ResponseEntity.notFound().build();
-
-        }
-
+        return contato != null ? ResponseEntity.ok(contato):ResponseEntity.notFound().build();
     }
 
-
     @GetMapping("/contatoes/cpf/{cpf}")
-    public ResponseEntity buscarContatosCpf(@PathVariable Long cpf ){
+    public ResponseEntity buscarContatosCpf(@PathVariable Long cpf ) {
         Contato contato = contatoRepository.findByCpf(cpf);
-
-        if(contato != null){
-            return ResponseEntity.ok(contato);
-        }
-        else {
-
-            return ResponseEntity.notFound().build();
-
-        }
-
+        return contato != null ? ResponseEntity.ok(contato):ResponseEntity.notFound().build();
     }
 
     @GetMapping("/contatoes/cnpj/{cnpj}")
-    public ResponseEntity buscarContatosCnpj(@PathVariable Long cnpj){
+    public ResponseEntity buscarContatosCnpj(@PathVariable Long cnpj) {
         Contato contato = contatoRepository.findByCnpj(cnpj);
-
-        if(contato != null){
-            return ResponseEntity.ok(contato);
-        }
-        else {
-
-            return ResponseEntity.notFound().build();
-
-        }
+        return contato != null ? ResponseEntity.ok(contato):ResponseEntity.notFound().build();
     }
 
     @GetMapping("/contatoes/email/{email}")
-    public ResponseEntity buscarContatosEmail(@PathVariable String email){
+    public ResponseEntity buscarContatosEmail(@PathVariable String email) {
         Contato contato = contatoRepository.findByEmail(email);
-
-        if(contato != null){
-            return ResponseEntity.ok(contato);
-        }
-        else {
-
-            return ResponseEntity.notFound().build();
-
-        }
+        return contato != null ? ResponseEntity.ok(contato):ResponseEntity.notFound().build();
     }
 
 
@@ -102,46 +78,93 @@ public class ContatoController {
     }
 
     @PatchMapping("/contatoes/{id}")
-    public ResponseEntity alterarContato(@PathVariable Long id, @RequestBody Contato contato){
+    public ResponseEntity alterarContato(@PathVariable Long id, @RequestBody Contato contato) {
         Contato contatoDB = contatoRepository.findById(id);
         contato.setId(id);
 
-        if(contato.getNome() == null){
+        if (contato.getNome() == null) {
             contato.setNome(contatoDB.getNome());
         }
-        if(contato.getCpf() == null){
+        if (contato.getCpf() == null) {
             contato.setCpf(contatoDB.getCpf());
         }
-        if(contato.getCnpj() == null){
+        if (contato.getCnpj() == null) {
             contato.setCnpj(contatoDB.getCnpj());
         }
-        if(contato.getEmail() == null){
+        if (contato.getEmail() == null) {
             contato.setEmail(contatoDB.getEmail());
         }
-        if(contato.getDataNascimento() == null){
+        if (contato.getDataNascimento() == null) {
             contato.setDataNascimento(contatoDB.getDataNascimento());
         }
-        if(contato.getEndereco() == null){
+        if (contato.getEndereco() == null) {
             contato.setEndereco(contatoDB.getEndereco());
         }
-        if(contato.getTelefoneFixo() == null){
+        if (contato.getTelefoneFixo() == null) {
             contato.setTelefoneFixo(contatoDB.getTelefoneFixo());
         }
-        if(contato.getCelular() == null){
+        if (contato.getCelular() == null) {
             contato.setCelular(contatoDB.getCelular());
         }
-        if(contato.getAutorizaEmail() == null){
+        if (contato.getAutorizaEmail() == null) {
             contato.setAutorizaEmail(contatoDB.getAutorizaEmail());
         }
-        if(contato.getCategoria() == null){
+        if (contato.getCategoria() == null) {
             contato.setCategoria(contatoDB.getCategoria());
         }
-        if(contato.getUsuario() == null){
+        if (contato.getUsuario() == null) {
             contato.setUsuario(contatoDB.getUsuario());
         }
 
         contatoRepository.save(contato);
         return (new ResponseEntity(HttpStatus.OK));
+    }
+
+    @GetMapping(value = "/gerarRelatorio", produces = "application/xls")
+    public ResponseEntity getExcel() {
+        List<Contato> contatos = contatoRepository.findAll();
+        List<ContatoExcel> contatosExcel = new ArrayList<ContatoExcel>();
+        for (Contato contato : contatos) {
+            contatosExcel.add(new ContatoExcel(contato.getNome(), contato.getCategoria().getNome(), chamadaRepository.quantidadeLigacoes(contato.getId())));
+        }
+
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet("Relatório de Contatos");
+
+        Row header = sheet.createRow(0);
+        header.createCell(0).setCellValue("Nome");
+        header.createCell(1).setCellValue("Categoria");
+        header.createCell(2).setCellValue("Quantidade de Ligações");
+
+        int rowCount = 1;
+
+        for (ContatoExcel contato : contatosExcel) {
+            Row userRow = sheet.createRow(rowCount++);
+            userRow.createCell(0).setCellValue(contato.getNome());
+            userRow.createCell(1).setCellValue(contato.getCategoria());
+            userRow.createCell(2).setCellValue(contato.getQuantidadeLigacoes());
+
+        }
+
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            workbook.write(bos);
+            byte[] bytes = bos.toByteArray();
+
+            byte[] bytes64 = Base64.encodeBase64(bytes);
+            String base64 = new String(bytes64);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"contatos.xls\"");
+
+            return (new ResponseEntity(base64, headers, HttpStatus.OK));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.ok("erro");
+
     }
 
 }

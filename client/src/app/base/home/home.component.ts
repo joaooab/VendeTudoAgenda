@@ -5,6 +5,7 @@ import { DOCUMENT } from "@angular/platform-browser";
 import { LogoutService } from "../../login/logout.service";
 import { SelectItem } from "primeng/api";
 import { ContatoService } from "../contato/contato.service";
+import {Message} from 'primeng/api';
 
 
 
@@ -16,7 +17,10 @@ export class HomeComponent implements OnInit{
  
     display: boolean = false;
     tipo: SelectItem[];
+    valorPesquisa:any;
+    contatoId:any;
     option: string = 'Selecione';
+    msgs: Message[] = [];
 
     constructor(private router: Router,
                 @Inject(DOCUMENT) private document: Document,
@@ -26,11 +30,10 @@ export class HomeComponent implements OnInit{
 
         this.document.body.classList.add('back-login');
         this.tipo = [
-            {label: 'Selecione', value:''},
+            {label: 'Selecione', value:'Selecione'},
             {label: 'CPF', value:'CPF'},
             {label: 'CNPJ', value:'CNPJ'},
-            {label: 'NOME', value:'NOME'},
-            {label: 'RAZÃO SOCIAL', value:'RAZAO-SOCIAL'}
+            {label: 'NOME', value:'NOME'}
 
         ]
     }
@@ -52,17 +55,70 @@ export class HomeComponent implements OnInit{
     }
 
     buscar(){
+        
+        if(!this.valorPesquisa){
+            this.msgs = [];
+            this.msgs.push({severity:'error', summary:'Warn Message', detail:'Preencha o campo para pesquisa'});
+
+            this.document.getElementById('valor').focus();
+        
+        }else if(this.option == 'Selecione' ){
+            this.msgs = [];
+            this.msgs.push({severity:'error', summary:'Warn Message', detail:'Selecione uma opção'});
+
+        }
+
+        
         if(this.option == 'CPF'){
-            console.log('cpf')
+            
+            this.contatoService.listarCpf(this.valorPesquisa).subscribe(res =>{
+                this.contatoId = res.id;
+
+                this.router.navigate(['cadastros/contato/edicao/'+ this.contatoId])
+
+                this.document.body.classList.remove('back-login');
+
+            },(erro) =>{
+
+                this.msgs = [];
+                this.msgs.push({severity:'error', summary:'Warn Message', detail:'Nenhum contato com a caracteristica descrita foi encontrado em nossa base de dados!'});
+
+        
+            })
         }
         if(this.option == 'CNPJ'){
-            console.log('cnpj')
+            
+            this.contatoService.listarCnpj(this.valorPesquisa).subscribe((res) =>{
+                this.contatoId = res.id;
+
+                this.router.navigate(['cadastros/contato/edicao/'+ this.contatoId])
+
+                this.document.body.classList.remove('back-login');
+            },(erro) =>{
+
+                this.msgs = [];
+                this.msgs.push({severity:'error', summary:'Warn Message', detail:'Nenhum contato com a caracteristica descrita foi encontrado em nossa base de dados!'});
+
+        
+            })
         }
+        
         if(this.option == 'NOME'){
-            console.log('nome')
+            
+            this.contatoService.listarNome(this.valorPesquisa).subscribe((res) =>{
+                this.contatoId = res.id;
+
+                this.router.navigate(['cadastros/contato/edicao/'+ this.contatoId])
+
+                this.document.body.classList.remove('back-login');
+            },(erro) =>{
+
+                this.msgs = [];
+                this.msgs.push({severity:'error', summary:'Warn Message', detail:'Nenhum contato com a caracteristica descrita foi encontrado em nossa base de dados!'});
+
+        
+            })
         }
-        if(this.option == 'RAZAO-SOCIAL'){
-            console.log('razao')
-        }
+        
     }
 }

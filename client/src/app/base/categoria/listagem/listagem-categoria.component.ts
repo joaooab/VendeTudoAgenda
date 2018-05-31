@@ -78,6 +78,10 @@ export class ListagemCategoriaComponent implements OnInit {
                       
                     })
               
+                  },(erro)=>{
+                    
+                    this.msgs.push({severity:'error', summary:'Error Message', detail:'Não é possível excluir esta categoria pois está sendo usada'});
+
                   })
                     
                 },

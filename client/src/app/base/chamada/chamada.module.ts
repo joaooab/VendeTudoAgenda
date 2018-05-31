@@ -14,7 +14,7 @@ import {ListagemChamadaoComponent} from './listagem/listagem-chamada.component';
 import {ChamadaService} from './chamada.service';
 import {CalendarModule} from 'primeng/calendar';
 import {DataTableModule} from 'primeng/datatable';
-import { DetalhamentoChamadaComponent } from './detalhamento/detalhamento-chamada.component';
+import { ConsultaChamadaComponent } from './consulta/consulta-chamada.component';
 
 //end prime ng
 
@@ -36,7 +36,7 @@ import { DetalhamentoChamadaComponent } from './detalhamento/detalhamento-chamad
     declarations: [
         CadastroChamadaComponent,
         ListagemChamadaoComponent,
-        DetalhamentoChamadaComponent
+        ConsultaChamadaComponent
     ],
     providers:[
         ChamadaService

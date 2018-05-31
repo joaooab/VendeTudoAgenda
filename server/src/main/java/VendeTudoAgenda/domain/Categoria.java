@@ -12,14 +12,14 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonRootName("categoria")
-@Table(name="categoria")
+@Table(name="categoria", uniqueConstraints = {@UniqueConstraint(columnNames = "nome")})
 public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "nome", nullable = false)
+    @Column(name = "nome", nullable = false, unique = true)
     private String nome;
 
     @Override

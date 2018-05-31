@@ -3,8 +3,7 @@ import {Router} from '@angular/router';
 import {Contato} from '../../modelo/contato.model';
 import {saveAs} from 'file-saver/FileSaver';
 import {ContatoService} from '../contato.service';
-import {ConfirmationService, Message} from 'primeng/api';
-import {getFuncaoUsuarioLogado} from '../../../arquitetura/servico/base.service';
+import {Message} from 'primeng/api';
 import {CategoriaService} from '../../categoria/categoria.service';
 
 @Component({
@@ -13,21 +12,13 @@ import {CategoriaService} from '../../categoria/categoria.service';
 export class ContatoListagemComponent implements OnInit {
     private contato: Contato[];
     selectedContato: Contato;
-    usuarioFuncao: string;
     usuarioAutorizado: string;
     msgs: Message[] = [];
 
     constructor(
         protected contatoService: ContatoService,
         private categoriaService: CategoriaService,
-        private router: Router,
-        private confirmationService: ConfirmationService) {
-
-        this.usuarioFuncao = getFuncaoUsuarioLogado().replace(/['"]+/g, '');
-
-        if (this.usuarioFuncao == 'ADMINISTRADOR') {
-            this.usuarioAutorizado = 'sim';
-        }
+        private router: Router) {
     }
 
     ngOnInit(): void {
@@ -40,7 +31,7 @@ export class ContatoListagemComponent implements OnInit {
         this.router.navigate(['/principal']);
     }
 
-    editar() {
+    detalhes() {
         this.msgs = [];
         if (!this.selectedContato) {
             this.msgs.push({severity: 'error', summary: 'Error Message', detail: 'Selecione um contato da lista'});
@@ -49,39 +40,10 @@ export class ContatoListagemComponent implements OnInit {
         this.router.navigate(['cadastros/contato/edicao/' + this.selectedContato.id]);
     }
 
-    excluir() {
-        this.msgs = [];
-        if (!this.selectedContato) {
-            this.msgs.push({severity: 'error', summary: 'Error Message', detail: 'Selecione um contato da lista'});
-        } else {
-            this.confirmationService.confirm({
-                message: 'Deseja realmente excluir este contato ?',
-                header: 'Delete Confirmation',
-                icon: 'fa fa-trash',
-                accept: () => {
-                    this.contatoService.excluir(this.selectedContato.id).subscribe(res => {
-                        this.msgs = [];
-                        this.msgs.push({severity: 'success', summary: 'Service Message', detail: 'Dado excluido com sucesso!'});
-
-                        this.contatoService.listar().subscribe((res) => {
-                            this.contato = res;
-
-                        });
-
-                    });
-                },
-                reject: () => {
-                    this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'You have rejected'}];
-                }
-            });
-        }
-
-    }
-
     gerarRelatorio() {
         this.contatoService.gerarRelatorio().subscribe(result => {
             let blob = this.b64toBlob(result['_body']);
-            saveAs(blob, "contatos.xls");
+            saveAs(blob, 'contatos.xls');
         });
     }
 
@@ -104,7 +66,7 @@ export class ContatoListagemComponent implements OnInit {
             byteArrays.push(byteArray);
         }
 
-        return new Blob(byteArrays, {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"});
+        return new Blob(byteArrays, {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'});
     }
 
 }

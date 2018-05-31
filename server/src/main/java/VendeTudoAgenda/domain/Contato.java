@@ -38,7 +38,7 @@ public class Contato {
     @Column(name = "cnpj")
     private Long cnpj;
 
-    @Column(unique = true, name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "data_nascimento", nullable = false)

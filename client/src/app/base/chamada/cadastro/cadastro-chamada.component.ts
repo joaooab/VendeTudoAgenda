@@ -29,7 +29,6 @@ export class CadastroChamadaComponent implements OnInit {
     ngOnInit() {
     }
 
-
     salvar() {
         this.chamadaService.salvar(this.chamada).subscribe(result => {
             this.msgs = [];

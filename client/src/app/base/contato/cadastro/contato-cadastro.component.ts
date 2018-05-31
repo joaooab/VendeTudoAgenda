@@ -1,272 +1,269 @@
-import { Component, OnInit } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
-import { Contato } from "../../modelo/contato.model";
-import { SelectItem, ConfirmationService } from "primeng/api";
-import {Message} from 'primeng/api';
-import { MessageService } from "primeng/components/common/messageservice";
-import { Categoria } from "../../modelo/categoria.model";
-import { CategoriaService } from "../../categoria/categoria.service";
-import { RespostaRequisicao } from "../../../arquitetura/servico/requisicao";
-import { ContatoService } from "../contato.service";
-import { Usuario } from "../../modelo/usuario.model";
-import { UsuarioService } from "../../usuario/usuario.service";
-import { getIdUsuarioLogado } from "../../../arquitetura/servico/base.service";
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Contato} from '../../modelo/contato.model';
+import {ConfirmationService, Message, SelectItem} from 'primeng/api';
+import {Categoria} from '../../modelo/categoria.model';
+import {CategoriaService} from '../../categoria/categoria.service';
+import {ContatoService} from '../contato.service';
+import {getFuncaoUsuarioLogado, getIdUsuarioLogado} from '../../../arquitetura/servico/base.service';
 
 @Component({
     templateUrl: './contato-cadastro.component.html'
 })
-export class ContatoCadastroComponent implements OnInit{
-    
-    private pessoa : SelectItem[];
-    option : string = 'Selecione';
-    titulo:string;
-    nascimento:string;
-    data:string;
-
+export class ContatoCadastroComponent implements OnInit {
+    private pessoa: SelectItem[];
+    option: string = 'Selecione';
+    titulo: string;
+    data: string;
     configCalendario: any;
-
-    optAutorizaEmail : string;
-
-    private categorias:Categoria[];
-    private categoria:Categoria = new Categoria();
-
-    private usuario : Usuario = new Usuario();
-    
+    optAutorizaEmail: string;
+    private categorias: Categoria[];
     private idCategoria;
-
     msgs: Message[] = [];
-
-    private valorCpfOuCnpj : number[];
-    
+    usuarioFuncao: string;
+    usuarioAutorizado: string;
     private contato: Contato = new Contato();
+    public desbloquearCampos: boolean = false;
+    public telaEdicao: boolean = false;
 
-    constructor(private router:Router,
-                private categoriaService:CategoriaService,
+    constructor(private router: Router,
+                private categoriaService: CategoriaService,
                 private activatedRoute: ActivatedRoute,
-                private contatoService:ContatoService,
-                private confirmationService: ConfirmationService,
-                private usuarioService: UsuarioService){
-        
-        this.configCalendario = this.configCalander()
-        // this.maxDate = new Date();
-        // this.maxDate.setFullYear(2000);
+                private contatoService: ContatoService,
+                private confirmationService: ConfirmationService) {
+
+        this.configCalendario = this.configCalander();
         this.pessoa = [
-            {label:'Selecione', value:''},
+            {label: 'Selecione', value: ''},
             {label: 'CPF', value: 'CPF'},
             {label: 'CNPJ', value: 'CNPJ'}
         ];
+
+        this.usuarioFuncao = getFuncaoUsuarioLogado().replace(/['"]+/g, '');
+
+        if (this.usuarioFuncao == 'ADMINISTRADOR') {
+            this.usuarioAutorizado = 'sim';
+        }
     }
 
-    ngOnInit(){
-        
-
-        this.activatedRoute.params.subscribe(parametro =>{
-            if(parametro["id"]==undefined){
-                this.titulo = "CADASTRO DE CONTATO";
+    ngOnInit() {
+        this.activatedRoute.params.subscribe(parametro => {
+            if (parametro['id'] == undefined) {
+                this.titulo = 'CADASTRO DE CONTATO';
+                this.desbloquearCampos = true;
+                this.telaEdicao = false;
             }
-            else{
-                
-                this.titulo = "EDITAR CADASTRO DE CONTATO";
-                this.contatoService.get(Number(parametro["id"])).subscribe((res)=>{
-                    
+            else {
+
+                this.titulo = 'EDITAR CADASTRO DE CONTATO';
+                this.contatoService.get(Number(parametro['id'])).subscribe((res) => {
+
                     this.contato = res;
-
                     this.contato.dataNascimento = new Date(this.contato.dataNascimento);
-
                     this.idCategoria = this.contato.categoria.id;
+                    this.telaEdicao = true;
 
-                    if(this.contato.cpf){
-                        this.option = "CPF";
+                    if (this.contato.cpf) {
+                        this.option = 'CPF';
                     }
-                    if(this.contato.cnpj){
-                        this.option = "CNPJ";
+                    if (this.contato.cnpj) {
+                        this.option = 'CNPJ';
                     }
 
-                    if(this.contato.autorizaEmail){
+                    if (this.contato.autorizaEmail) {
                         this.optAutorizaEmail = 'autorizo';
-                    }
-                    else if(!this.contato.autorizaEmail){
+
+                    } else if (!this.contato.autorizaEmail) {
                         this.optAutorizaEmail = 'naoAutorizo';
                     }
-                })
+                });
             }
-        })
+        });
 
-
-        this.categoriaService.listar().subscribe((res)=>{
-            
+        this.categoriaService.listar().subscribe((res) => {
             this.categorias = res;
-
-        })
+        });
     }
-    
 
-    salvar(){
-        
-        
+    registro() {
+        this.router.navigate(['cadastros/chamada']);
+    }
 
-        if(!this.contato.nome || !this.contato.dataNascimento || !this.contato.endereco || !this.contato.celular || !this.optAutorizaEmail ||!this.idCategoria){
+    editar() {
+        this.desbloquearCampos = true;
+    }
+
+    salvar() {
+        if (!this.contato.nome || !this.contato.dataNascimento || !this.contato.endereco || !this.contato.celular || !this.optAutorizaEmail || !this.idCategoria) {
             this.msgs = [];
-            this.msgs.push({severity:'error', summary:'Warn Message', detail:'Campos obrigatórios não preenchidos'});
+            this.msgs.push({severity: 'error', summary: 'Warn Message', detail: 'Campos obrigatórios não preenchidos'});
 
-        }else if(!this.verificaDataNascimento()){
-            
+        } else if (!this.verificaDataNascimento()) {
+
             this.msgs = [];
-            this.msgs.push({severity:'error', summary:'Warn Message', detail:'O contato deve ter idade igual ou superior a 18 anos'});
+            this.msgs.push({severity: 'error', summary: 'Warn Message', detail: 'O contato deve ter idade igual ou superior a 18 anos'});
 
         }
-        else{
-            
-            if(this.contato.id == undefined){
-               
-                if(this.optAutorizaEmail == 'autorizo'){
+        else {
+
+            if (this.contato.id == undefined) {
+
+                if (this.optAutorizaEmail == 'autorizo') {
                     this.contato.autorizaEmail = true;
                 }
-                if(this.optAutorizaEmail =='naoAutorizo' ){
+                if (this.optAutorizaEmail == 'naoAutorizo') {
                     this.contato.autorizaEmail = false;
                 }
-                
-                if(this.contato.cpf){
+
+                if (this.contato.cpf) {
                     this.contato.cpf = this.removerMascara(this.contato.cpf);
                 }
 
-                if(this.contato.cnpj){
+                if (this.contato.cnpj) {
                     this.contato.cnpj = this.removerMascara(this.contato.cnpj);
                 }
 
-            this.contatoService.salvar(this.montarBody()).subscribe(res=>{
-          
-                this.msgs = [];
-                this.msgs.push({severity:'success', summary:'Service Message', detail:'Dados salvos com sucesso!'});
-          
-                this.contato = new Contato();
-              
-              })
+                this.contatoService.salvar(this.montarBody()).subscribe(res => {
 
-            }else{
+                    this.msgs = [];
+                    this.msgs.push({severity: 'success', summary: 'Service Message', detail: 'Dados salvos com sucesso!'});
 
-                if(this.optAutorizaEmail == 'autorizo'){
+                    this.contato = new Contato();
+
+                });
+
+            } else {
+
+                if (this.optAutorizaEmail == 'autorizo') {
                     this.contato.autorizaEmail = true;
                 }
-                if(this.optAutorizaEmail =='naoAutorizo' ){
+                if (this.optAutorizaEmail == 'naoAutorizo') {
                     this.contato.autorizaEmail = false;
                 }
 
-                
 
                 this.confirmationService.confirm({
                     message: 'Deseja realmente salvar alterações ?',
                     header: 'Confirmation',
                     icon: 'fa fa-trash',
                     accept: () => {
-                        
-                         if(this.contato.cpf ){
-                            if(this.contato.cpf.toString().length > 11){
+
+                        if (this.contato.cpf) {
+                            if (this.contato.cpf.toString().length > 11) {
                                 this.contato.cpf = this.removerMascara(this.contato.cpf);
                             }
-                            
-                         }
-        
-                         if(this.contato.cnpj){
-                             if(this.contato.cnpj.toString().length>14){
+
+                        }
+
+                        if (this.contato.cnpj) {
+                            if (this.contato.cnpj.toString().length > 14) {
                                 this.contato.cnpj = this.removerMascara(this.contato.cnpj);
-                             }
-                              
-                         }
+                            }
 
-                        
+                        }
 
-                        this.contatoService.alterar(this.montarBody(), this.contato.id).subscribe(res =>{
+
+                        this.contatoService.alterar(this.montarBody(), this.contato.id).subscribe(res => {
                             this.msgs = [];
-                             this.msgs.push({severity:'success', summary:'Service Message', detail:'Dados alterados com sucesso!'});
-                        })
+                            this.msgs.push({severity: 'success', summary: 'Service Message', detail: 'Dados alterados com sucesso!'});
+                        });
 
-                        
+
                     },
                     reject: () => {
-                        this.msgs = [{severity:'info', summary:'Rejected', detail:'You have rejected'}];
+                        this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'You have rejected'}];
                     }
                 });
             }
 
         }
 
-        
-    }
-    voltar(){
-        this.router.navigate(['/principal'])
+
     }
 
-    verificaDataNascimento():boolean{
-        
-        var dataAtual = new Date();
+    excluir() {
+        this.msgs = [];
+        this.confirmationService.confirm({
+            message: 'Deseja realmente excluir este contato ?',
+            header: 'Delete Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+                this.contatoService.excluir(this.contato.id).subscribe(res => {
+                    this.msgs = [];
+                    this.msgs.push({severity: 'success', summary: 'Service Message', detail: 'Dados excluidos com sucesso!'});
 
-        var diferenca = dataAtual.getFullYear() - this.contato.dataNascimento.getFullYear();
+                    this.contatoService.listar().subscribe((res) => {
+                        this.contato = res;
 
+                    });
 
-        if(diferenca > 18 ){
-            
-            return true;
-            
-            
-        }else if(diferenca == 18){
-            if(dataAtual.getMonth()>this.contato.dataNascimento.getMonth()){
-                return true;
-            }else {
-                return false;
+                });
+            },
+            reject: () => {
+                this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'You have rejected'}];
             }
+        });
+    }
+
+    voltar() {
+        this.router.navigate(['/principal']);
+    }
+
+    verificaDataNascimento(): boolean {
+        let dataAtual = new Date();
+        let diferenca = dataAtual.getFullYear() - this.contato.dataNascimento.getFullYear();
+
+        if (diferenca > 18) {
+            return true;
+        } else if (diferenca == 18) {
+            return (dataAtual.getMonth() > this.contato.dataNascimento.getMonth());
         }
     }
 
-    montarBody(){
-        
-        
-
-        let body = {"contato":
-            {
-                "nome":this.contato.nome,
-                "autorizaEmail":this.contato.autorizaEmail,
-                "celular":this.contato.celular,
-                "cnpj":this.contato.cnpj,
-                "cpf":this.contato.cpf,
-                "dataNascimento": this.contato.dataNascimento,
-                "email":this.contato.email,
-                "endereco":this.contato.endereco,
-                "telefoneFixo":this.contato.telefoneFixo,
-                "categoria":{"id":this.idCategoria},
-                "usuario":{"id":getIdUsuarioLogado()}        
-            }
+    montarBody() {
+        let body = {
+            'contato':
+                {
+                    'nome': this.contato.nome,
+                    'autorizaEmail': this.contato.autorizaEmail,
+                    'celular': this.contato.celular,
+                    'cnpj': this.contato.cnpj,
+                    'cpf': this.contato.cpf,
+                    'dataNascimento': this.contato.dataNascimento,
+                    'email': this.contato.email,
+                    'endereco': this.contato.endereco,
+                    'telefoneFixo': this.contato.telefoneFixo,
+                    'categoria': {'id': this.idCategoria},
+                    'usuario': {'id': getIdUsuarioLogado()}
+                }
         };
-        console.log(body);
         return body;
-        
+
     }
 
-    removerMascara(valor){
-        
-        return valor = valor.replace(/(\.|\/|\-)/g,"");
+    removerMascara(valor) {
+        return valor.replace(/(\.|\/|\-)/g, '');
     }
 
-    adicionarMascaraCpf(cpf){
-        return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g,"\$1.\$2.\$3\-\$4");
+    adicionarMascaraCpf(cpf) {
+        return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '\$1.\$2.\$3\-\$4');
     }
 
-    adicionarMascaraCnpj(cnpj){
-        return cnpj.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g,"\$1.\$2.\$3\-\$4");
+    adicionarMascaraCnpj(cnpj) {
+        return cnpj.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '\$1.\$2.\$3\-\$4');
     }
 
     private configCalander() {
         return {
-            
             closeText: 'Fechar',
             prevText: 'Anterior',
             nextText: 'Próximo',
             currentText: 'Começo',
-            monthNames: ['Janeiro','Fevereiro','Mar�o','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-            monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Dez'],
-            dayNames: ['Domingo','Segunda','Ter�a','Quarta','Quinta','Sexta','S�bado'],
-            dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','S�b'],
-            dayNamesMin: ['D','S','T','Q','Q','S','S'],
+            monthNames: ['Janeiro', 'Fevereiro', 'Mar�o', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            dayNames: ['Domingo', 'Segunda', 'Ter�a', 'Quarta', 'Quinta', 'Sexta', 'S�bado'],
+            dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'S�b'],
+            dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
             weekHeader: 'Semana',
             firstDay: 0,
             isRTL: false,
@@ -281,8 +278,8 @@ export class ContatoCadastroComponent implements OnInit{
             month: 'Mês',
             week: 'Semana',
             day: 'Dia',
-            allDayText : 'Todo o Dia'
-        }
+            allDayText: 'Todo o Dia'
+        };
     }
 
 

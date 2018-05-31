@@ -6,11 +6,12 @@ import { ChamadaService } from '../chamada.service';
 
 @Component({
   selector: 'app-detalhamento-chamada',
-  templateUrl: './detalhamento-chamada.component.html',
+  templateUrl: './consulta-chamada.component.html',
   styles: []
 })
-export class DetalhamentoChamadaComponent implements OnInit {
+export class ConsultaChamadaComponent implements OnInit {
   chamada:Chamada = new Chamada();
+  public duracao: String;
   constructor(private chamadaService: ChamadaService,
               private activatedRoute:ActivatedRoute,
               private router: Router) { }
@@ -19,11 +20,14 @@ export class DetalhamentoChamadaComponent implements OnInit {
     this.activatedRoute.params.subscribe(parametro => {
       if (parametro["id"] !== undefined)
         console.log(parametro["id"]);
-        this.chamada.nome = 'Joaquim';
-        this.chamada.data = new Date('05/10/2016');
-        this.chamada.duracao =  '0 hrs 15 min 46 s';
-        this.chamada.descricao = 'Teste';
-        //this.chamadaService.
+        this.chamadaService.get(parametro["id"]).subscribe(result=>{
+            this.chamada = result;
+
+            let duracaoSplit = String(this.chamada.duracao).split(":");
+
+            this.duracao = duracaoSplit[0] + " hrs " + duracaoSplit[1] + " min " + duracaoSplit[2] + " seg";
+
+        });
     });
   }
 

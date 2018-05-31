@@ -8,7 +8,6 @@ export class Chamada extends Entidade {
 
     constructor() {
         super();
-        this.data = new Date();
         this.nome =  '';
         this.duracao = '';
         this.descricao = '';

@@ -25,20 +25,12 @@ export class ListagemChamadaoComponent implements OnInit {
         });
     }
 
-    novo():void{
-        this.router.navigate(['/cadastros/chamada/novo']);
-    }
-
-    editar():void{
-
-    }
-
-    excluir():void{
+    abrir():void{
         this.msgs = [];
         if(!this.chamadaSelecionada){
             this.msgs.push({severity:'error', summary:'Error Message', detail:'Selecione uma chamada da lista'});
         }else{
-
+            this.router.navigate(['/cadastros/chamada/consulta', this.chamadaSelecionada.id]);
         }
     }
 

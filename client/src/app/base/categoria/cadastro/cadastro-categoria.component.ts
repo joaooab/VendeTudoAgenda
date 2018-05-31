@@ -1,96 +1,84 @@
-import { Component, OnInit } from '@angular/core';
-import { Categoria } from '../../modelo/categoria.model';
-import { Router, ActivatedRoute } from '@angular/router';
-import { CategoriaService } from '../categoria.service';
+import {Component, OnInit} from '@angular/core';
+import {Categoria} from '../../modelo/categoria.model';
+import {Router, ActivatedRoute} from '@angular/router';
+import {CategoriaService} from '../categoria.service';
 import {Message, ConfirmationService} from 'primeng/api';
-import { RespostaRequisicao } from '../../../arquitetura/servico/requisicao';
+import {RespostaRequisicao} from '../../../arquitetura/servico/requisicao';
 
 
 @Component({
-  selector: 'app-cadastro-categoria',
-  templateUrl: './cadastro-categoria.component.html',
-  styleUrls: ['./cadastro-categoria.component.css']
+    selector: 'app-cadastro-categoria',
+    templateUrl: './cadastro-categoria.component.html',
+    styleUrls: ['./cadastro-categoria.component.css']
 })
 export class CadastroCategoriaComponent implements OnInit {
 
-  categoria:Categoria = new Categoria();
-  
-  msgs: Message[] = [];
+    categoria: Categoria = new Categoria();
+    msgs: Message[] = [];
+    titulo: string;
 
-  titulo:string;
-
-  constructor(private router:Router,
-              private categoriaService:CategoriaService,
-              private activatedRoute: ActivatedRoute,
-              private confirmationService:ConfirmationService) { }
-
-  ngOnInit() {
-    
-    this.activatedRoute.params.subscribe(parametro =>{
-      if(parametro["id"]==undefined){
-        this.titulo = "CADASTRO DE CATEGORIA";
+    constructor(private router: Router,
+                private categoriaService: CategoriaService,
+                private activatedRoute: ActivatedRoute,
+                private confirmationService: ConfirmationService) {
     }
-    else{
-      this.titulo = "EDITAR CADASTRO DE CATEGORIA";
-      
-      this.categoriaService.get(Number(parametro["id"])).subscribe(res=>{
-        
-          this.categoria = res;
 
-      });
+    ngOnInit() {
+        this.activatedRoute.params.subscribe(parametro => {
+            if (parametro['id'] == undefined) {
+                this.titulo = 'CADASTRO DE CATEGORIA';
+            }
+            else {
+                this.titulo = 'EDITAR CADASTRO DE CATEGORIA';
+
+                this.categoriaService.get(Number(parametro['id'])).subscribe(res => {
+                    this.categoria = res;
+                });
+            }
+        });
     }
-  });
-}
 
-  salvar(){
-    
-    if(this.categoria.id == undefined){
-      
-      this.categoriaService.salvar(this.montarBody()).subscribe(res=>{
-          
-        this.msgs = [];
-        this.msgs.push({severity:'success', summary:'Service Message', detail:'Dados salvos com sucesso!'});
-  
-        this.categoria = new Categoria();
-      
-      })
+    salvar() {
+        if (this.categoria.id == undefined) {
+            this.categoriaService.salvar(this.montarBody()).subscribe(
+                res => {
+                    this.msgs = [];
+                    this.msgs.push({severity: 'success', summary: 'Service Message', detail: 'Dados salvos com sucesso!'});
+                    this.categoria = new Categoria();
+                },
+                erro => {
+                    this.msgs = [];
+                    this.msgs.push({severity: 'info', summary: 'Rejected', detail: 'A categoria informada já existe!'});
+                });
 
-    }else{
+        } else {
+            this.confirmationService.confirm({
+                message: 'Deseja realmente salvar alterações ?',
+                header: 'Confirmation',
+                icon: 'fa fa-trash',
+                accept: () => {
 
-      this.confirmationService.confirm({
-        message: 'Deseja realmente salvar alterações ?',
-        header: 'Confirmation',
-        icon: 'fa fa-trash',
-        accept: () => {
-          
-          this.categoriaService.alterar(this.montarBody(), this.categoria.id).subscribe(res => {
-        
-            this.msgs = [];
-            this.msgs.push({severity:'success', summary:'Service Message', detail:'Dados alterados com sucesso!'});
+                    this.categoriaService.alterar(this.montarBody(), this.categoria.id).subscribe(res => {
 
-            
-          })
+                        this.msgs = [];
+                        this.msgs.push({severity: 'success', summary: 'Service Message', detail: 'Dados alterados com sucesso!'});
+                    });
 
-        },
-        reject: () => {
-            this.msgs = [{severity:'info', summary:'Rejected', detail:'Alteração cancelada'}];
+                },
+                reject: () => {
+                    this.msgs = [{severity: 'info', detail: 'Alteração cancelada'}];
+                }
+            });
         }
-      });
-      
-      
     }
-  }
-  
 
-  voltarTelaPrincipal(){
-    this.router.navigate(['/principal'])
-  }
 
-  montarBody(){
-    var body = {"categoria":{"nome":this.categoria.nome}}
+    voltarTelaPrincipal() {
+        this.router.navigate(['/principal']);
+    }
 
-    return body;
-
-  }
+    montarBody() {
+        return {'categoria': {'nome': this.categoria.nome}};
+    }
 
 }

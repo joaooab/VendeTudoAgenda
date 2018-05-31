@@ -1,124 +1,164 @@
-import { Component, OnInit, Inject, ViewChild } from "@angular/core";
-import { Usuario } from "../modelo/usuario.model";
-import { Router } from "@angular/router";
-import { DOCUMENT } from "@angular/platform-browser";
-import { LogoutService } from "../../login/logout.service";
-import { SelectItem } from "primeng/api";
-import { ContatoService } from "../contato/contato.service";
-import {Message} from 'primeng/api';
-
-
+import {Component, Inject, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {DOCUMENT} from '@angular/platform-browser';
+import {LogoutService} from '../../login/logout.service';
+import {Message, SelectItem} from 'primeng/api';
+import {ContatoService} from '../contato/contato.service';
+import {saveAs} from 'file-saver/FileSaver';
 
 
 @Component({
-    templateUrl:'./home.component.html'
+    templateUrl: './home.component.html'
 })
-export class HomeComponent implements OnInit{
- 
+export class HomeComponent implements OnInit {
+
     display: boolean = false;
     tipo: SelectItem[];
-    valorPesquisa:any;
-    contatoId:any;
+    valorPesquisa: any;
+    contatoId: any;
     option: string = 'Selecione';
     msgs: Message[] = [];
 
     constructor(private router: Router,
                 @Inject(DOCUMENT) private document: Document,
                 private logoutService: LogoutService,
-                private contatoService:ContatoService){
-
+                private contatoService: ContatoService) {
 
         this.document.body.classList.add('back-login');
         this.tipo = [
-            {label: 'Selecione', value:'Selecione'},
-            {label: 'CPF', value:'CPF'},
-            {label: 'CNPJ', value:'CNPJ'},
-            {label: 'NOME', value:'NOME'}
+            {label: 'Selecione', value: 'Selecione'},
+            {label: 'CPF', value: 'CPF'},
+            {label: 'CNPJ', value: 'CNPJ'},
+            {label: 'NOME', value: 'NOME'}
+        ];
+    }
 
-        ]
+    ngOnInit() {
+
+
     }
-    ngOnInit(){
-        
-        
-    }
-    
+
     showDialog() {
         this.display = true;
     }
 
-    sair(){
+    sair() {
         this.logoutService.logout();
     }
 
-    alterarBack(){
+    alterarBack() {
         this.document.body.classList.remove('back-login');
     }
 
-    buscar(){
-        
-        if(!this.valorPesquisa){
+    buscar() {
+
+        if (!this.valorPesquisa) {
             this.msgs = [];
-            this.msgs.push({severity:'error', summary:'Warn Message', detail:'Preencha o campo para pesquisa'});
+            this.msgs.push({severity: 'error', summary: 'Warn Message', detail: 'Preencha o campo para pesquisa'});
 
             this.document.getElementById('valor').focus();
-        
-        }else if(this.option == 'Selecione' ){
+
+        } else if (this.option == 'Selecione') {
             this.msgs = [];
-            this.msgs.push({severity:'error', summary:'Warn Message', detail:'Selecione uma opção'});
+            this.msgs.push({severity: 'error', summary: 'Warn Message', detail: 'Selecione uma opção'});
 
         }
 
-        
-        if(this.option == 'CPF'){
-            
-            this.contatoService.listarCpf(this.valorPesquisa).subscribe(res =>{
+
+        if (this.option == 'CPF') {
+
+            this.contatoService.listarCpf(this.valorPesquisa).subscribe(res => {
                 this.contatoId = res.id;
 
-                this.router.navigate(['cadastros/contato/edicao/'+ this.contatoId])
+                this.router.navigate(['cadastros/contato/edicao/' + this.contatoId]);
 
                 this.document.body.classList.remove('back-login');
 
-            },(erro) =>{
+            }, (erro) => {
 
                 this.msgs = [];
-                this.msgs.push({severity:'error', summary:'Warn Message', detail:'Nenhum contato com a caracteristica descrita foi encontrado em nossa base de dados!'});
+                this.msgs.push({
+                    severity: 'error',
+                    summary: 'Warn Message',
+                    detail: 'Nenhum contato com a caracteristica descrita foi encontrado em nossa base de dados!'
+                });
 
-        
-            })
+
+            });
         }
-        if(this.option == 'CNPJ'){
-            
-            this.contatoService.listarCnpj(this.valorPesquisa).subscribe((res) =>{
+        if (this.option == 'CNPJ') {
+
+            this.contatoService.listarCnpj(this.valorPesquisa).subscribe((res) => {
                 this.contatoId = res.id;
 
-                this.router.navigate(['cadastros/contato/edicao/'+ this.contatoId])
+                this.router.navigate(['cadastros/contato/edicao/' + this.contatoId]);
 
                 this.document.body.classList.remove('back-login');
-            },(erro) =>{
+            }, (erro) => {
 
                 this.msgs = [];
-                this.msgs.push({severity:'error', summary:'Warn Message', detail:'Nenhum contato com a caracteristica descrita foi encontrado em nossa base de dados!'});
+                this.msgs.push({
+                    severity: 'error',
+                    summary: 'Warn Message',
+                    detail: 'Nenhum contato com a caracteristica descrita foi encontrado em nossa base de dados!'
+                });
 
-        
-            })
+
+            });
         }
-        
-        if(this.option == 'NOME'){
-            
-            this.contatoService.listarNome(this.valorPesquisa).subscribe((res) =>{
+
+        if (this.option == 'NOME') {
+
+            this.contatoService.listarNome(this.valorPesquisa).subscribe((res) => {
                 this.contatoId = res.id;
-
-                this.router.navigate(['cadastros/contato/edicao/'+ this.contatoId])
-
+                this.router.navigate(['cadastros/contato/edicao/' + this.contatoId]);
                 this.document.body.classList.remove('back-login');
-            },(erro) =>{
+
+            }, (erro) => {
 
                 this.msgs = [];
-                this.msgs.push({severity:'error', summary:'Warn Message', detail:'Nenhum contato com a caracteristica descrita foi encontrado em nossa base de dados!'});
-
-        
-            })
+                this.msgs.push({
+                    severity: 'error',
+                    summary: 'Warn Message',
+                    detail: 'Nenhum contato com a caracteristica descrita foi encontrado em nossa base de dados!'
+                });
+            });
         }
-        
+
+    }
+
+    gerarRelatorio() {
+        this.contatoService.gerarRelatorio().subscribe(result => {
+            this.msgs = [];
+            this.msgs.push({severity: 'success', summary: 'Service Message', detail: 'Dados exportados com sucesso!'});
+
+            if (result['_body']) {
+                let blob = this.b64toBlob(result['_body']);
+                saveAs(blob, 'contatos.xls');
+            }
+
+        });
+    }
+
+    b64toBlob(b64Data) {
+        var sliceSize = 512;
+
+        var byteCharacters = atob(b64Data);
+        var byteArrays = [];
+
+        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+            var byteNumbers = new Array(slice.length);
+            for (var i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+
+            var byteArray = new Uint8Array(byteNumbers);
+
+            byteArrays.push(byteArray);
+        }
+
+        return new Blob(byteArrays, {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'});
     }
 }

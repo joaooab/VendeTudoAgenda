@@ -12,7 +12,6 @@ import {CategoriaService} from '../../categoria/categoria.service';
 export class ContatoListagemComponent implements OnInit {
     private contato: Contato[];
     selectedContato: Contato;
-    usuarioAutorizado: string;
     msgs: Message[] = [];
 
     constructor(
@@ -42,8 +41,14 @@ export class ContatoListagemComponent implements OnInit {
 
     gerarRelatorio() {
         this.contatoService.gerarRelatorio().subscribe(result => {
-            let blob = this.b64toBlob(result['_body']);
-            saveAs(blob, 'contatos.xls');
+            if(result['_body']){
+                let blob = this.b64toBlob(result['_body']);
+                saveAs(blob, 'contatos.xls');
+            }
+
+            this.msgs = [];
+            this.msgs.push({severity: 'success', summary: 'Service Message', detail: 'Dados exportados com sucesso!'});
+
         });
     }
 

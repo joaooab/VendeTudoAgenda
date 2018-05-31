@@ -1,6 +1,6 @@
 <div class="dialogHome">
     <p-dialog header="CONSULTA" [(visible)]="display" [modal]="true" [responsive]="true" [width]="600" [minWidth]="200" [minY]="70">
-        <p-growl [(value)]="msgs"></p-growl>
+
         <div class="row">
             <div class="col-md-10">
                 <input type="text" id="valor" [(ngModel)]="valorPesquisa" class="form-control" name="nome" maxlength="255" minlength="8">
@@ -27,7 +27,7 @@
     </p-dialog>
 </div>
 <div class="col-md-12 hidden-xs-down">
-
+	<p-growl [(value)]="msgs"></p-growl>
     <div class="home">
 
         <div class="col-md-12">
@@ -71,7 +71,7 @@
 
                         </a>
 
-                        <a class="homeIcon" (click)="alterarBack()" href="#">
+                        <a class="homeIcon" (click)="gerarRelatorio()" href="#">
                             <i class="fa fa-phone-square"></i>
                             <span>Relatório de clientes</span>
                         </a>
@@ -142,7 +142,7 @@
         </div>
         <div class="row">
             <div class="col-xs-6 responsive-btn-pagi-init" style="padding-right: 35px;">
-                <a class="homeIcon" (click)="alterarBack()" href="#">
+                <a class="homeIcon" (click)="gerarRelatorio()" href="#">
                     <i class="fa fa-phone-square"></i>
                     <span>Relatório de clientes</span>
                 </a>

@@ -1,11 +1,12 @@
 <div class="p-3 mb-2 bg-secondary text-white">LISTA DE CONTATOS</div>
-<div class="form-group row">
+<div class="form-group row  hidden-xs-down">
 	<p-growl [(value)]="msgs"></p-growl>
 	<p-confirmDialog></p-confirmDialog>
 	<div class="col-1"></div>
 	<div class="col-10 text-center">
 
-		<p-dataTable [rows]="10" selectionMode="single" [(selection)]="selectedContato" [value]="contato" [resizableColumns]="true" [paginator]="true" emptyMessage="Nenhum registro encontrado." tableStyleClass="table user-list table-hover">
+		<p-dataTable [rows]="10" selectionMode="single" [(selection)]="selectedContato" [value]="contato" [resizableColumns]="true"
+		 [paginator]="true" emptyMessage="Nenhum registro encontrado." tableStyleClass="table user-list table-hover">
 			<p-column header="Nome" field="nome" [sortable]="true" [style]="{'width':'150px','text-align': 'center'}"></p-column>
 			<p-column header="CPF/CNPJ" field="cpf" [sortable]="true" [style]="{'width':'150px','text-align': 'center'}"></p-column>
 			<p-column header="Categoria" field="categoria.nome" [sortable]="true" [style]="{'width':'150px','text-align': 'center'}"></p-column>
@@ -14,14 +15,50 @@
 
 	</div>
 </div>
-<div class="form-group row">
-
-	<div class="col-7"></div>
-	<div class="col-5">
-		<button pButton (click)="gerarRelatorio()" type="button" label="EXPORTAR" class="ui-button-secondary" ></button>
-		<button pButton (click)="voltarTelaPrincipal()" type="button" label="VOLTAR" class="ui-button-secondary" ></button>
-		<button pButton [disabled]="!selectedContato" (click)="detalhes()" type="button" label="DETALHES" ></button>
+<div class="row justify-content-center  mt-3 hidden-xs-down">
+	<div class="col-9 offset-1">
+		<div class="float-right">
+			<button pButton (click)="voltarTelaPrincipal()" type="button" label="VOLTAR" class="ui-button-secondary"></button>
+			<button pButton (click)="gerarRelatorio()" type="button" label="EXPORTAR" class="ui-button-secondary"></button>
+			<button pButton [disabled]="!selectedContato" (click)="detalhes()" type="button" label="DETALHES"></button>
+		</div>
 	</div>
+</div>
 
-    
+<div class="hidden-sm-up">
+	<div class="form-group">
+		<div class="row">
+			<p-growl [(value)]="msgs"></p-growl>
+			<p-confirmDialog></p-confirmDialog>
+			<div class="col-xs-12 text-center">
+	
+				<p-dataTable [rows]="10" selectionMode="single" [(selection)]="selectedContato" [value]="contato" [resizableColumns]="true"
+				 [paginator]="true" emptyMessage="Nenhum registro encontrado." tableStyleClass="table user-list table-hover" res>
+					<p-column header="Nome" field="nome" [sortable]="true" [style]="{'width':'50px','text-align': 'center'}"></p-column>
+					<p-column header="CPF/CNPJ" field="cpf" [sortable]="true" [style]="{'width':'50px','text-align': 'center'}"></p-column>
+					<p-column header="Categoria" field="categoria.nome" [sortable]="true" [style]="{'width':'50px','text-align': 'center'}"></p-column>
+					<p-column header="Ligacões" field="" [sortable]="true" [style]="{'width':'50px','text-align': 'center'}"></p-column>
+				</p-dataTable>
+	
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>
+	<div class="row">
+		<div class="col-xs-6 responsive-btn-center" style="padding-left: 80px;">
+			<button pButton (click)="voltarTelaPrincipal()" type="button" label="VOLTAR" class="ui-button-secondary"></button>
+		</div>
+		<div class="col-xs-6">
+			<button pButton (click)="gerarRelatorio()" type="button" label="EXPORTAR" class="ui-button-secondary"></button>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-xs-6 responsive-btn-center" style="padding-left: 80px;">
+			<button pButton [disabled]="!selectedContato" (click)="detalhes()" type="button" label="DETALHES"></button>
+		</div>
+		<div class="col-xs-6">
+		</div>
+	</div>
 </div>

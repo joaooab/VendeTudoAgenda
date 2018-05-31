@@ -15,7 +15,7 @@
 
   </div>
 </div>
-<div class="row justify-content-center  mt-3">
+<div class="row justify-content-center  mt-3 hidden-xs-down">
   <div class="col-9 offset-1">
     <div class="float-right">
       <button pButton (click)="voltarTelaPrincipal()" type="button" label="VOLTAR" class="ui-button-secondary" ></button>
@@ -24,3 +24,24 @@
     </div>
   </div>
 </div>
+
+<div class="hidden-sm-up">
+    <br>
+    <br>
+    <div class="row">
+      <div class="col-xs-6 responsive-btn-center" style="padding-left: 80px;">
+          <button pButton (click)="voltarTelaPrincipal()" type="button" label="VOLTAR" class="ui-button-secondary" ></button>
+      </div>
+      <div class="col-xs-6">
+          <button pButton  [disabled]="!usuarioFuncao || !usuarioAutorizado " (click)="excluir()" type="button" label="EXCLUIR" class="ui-button-danger" ></button>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-xs-6 responsive-btn-center" style="padding-left: 80px;">
+          <button pButton (click)="editar()" type="button" label="EDITAR" ></button>
+      </div>
+      <div class="col-xs-6">
+      </div>
+    </div>
+  </div>

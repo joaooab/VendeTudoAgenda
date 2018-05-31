@@ -1,55 +1,66 @@
-<div class="p-3 mb-1 bg-secondary text-white">{{titulo}}</div>
-<div>
-	<section>
-		<form role="form" style="padding-left: 5%; padding-top: 2%;">
-			<p-growl [(value)]="msgs"></p-growl>
-			<p-confirmDialog></p-confirmDialog>
+<form role="form">
+	<div class="p-3 mb-1 bg-secondary text-white">{{titulo}}</div>
+	<p-growl [(value)]="msgs"></p-growl>
+	<p-confirmDialog></p-confirmDialog>
+	<div style="padding-left: 5%; padding-top: 2%;" class="hidden-xs-down">
+		<section>
 			<div class="form-group row">
-				<label for="nome" class="col-sm-2 col-form-label"><p style="color: red;display: inline;">*</p> Nome</label>
+				<label for="nome" class="col-sm-2 col-form-label">
+					<p style="color: red;display: inline;">*</p> Nome</label>
 				<div class="col-sm-4">
-					<input [disabled]="!desbloquearCampos" type="text" class="form-control" [(ngModel)]="contato.nome" name="nome" maxlength="255" minlength="8">
+					<input [disabled]="!desbloquearCampos" type="text" class="form-control" [(ngModel)]="contato.nome" name="nome" maxlength="255"
+					 minlength="8">
 				</div>
 			</div>
 
 			<div class="row">
-				<label for="nome" class="col-sm-2 col-form-label"><p style="color: red;display: inline;">*</p>CPF/CNPJ</label>
+				<label for="nome" class="col-sm-2 col-form-label">
+					<p style="color: red;display: inline;">*</p>CPF/CNPJ</label>
 				<p-dropdown [disabled]="!desbloquearCampos" [options]="pessoa" [(ngModel)]="option" name="option" [style]="{'margin-left':'15px','margin-bottom':'10px', 'width':'430px'}"></p-dropdown>
 			</div>
 
 
 			<div class="form-group row" *ngIf="option == 'CPF'">
-				<label for="nome" class="col-sm-2 col-form-label"><p style="color: red;display: inline;">*</p> CPF</label>
+				<label for="nome" class="col-sm-2 col-form-label">
+					<p style="color: red;display: inline;">*</p> CPF</label>
 				<div class="col-sm-4">
-					<p-inputMask [disabled]="!desbloquearCampos" placeholder="___.___.___-__" type="text" [(ngModel)]="contato.cpf" name="cpf" mask="999.999.999-99"></p-inputMask>
+					<p-inputMask [disabled]="!desbloquearCampos" placeholder="___.___.___-__" type="text" [(ngModel)]="contato.cpf" name="cpf"
+					 mask="999.999.999-99"></p-inputMask>
 				</div>
 			</div>
 
 			<div class="form-group row" *ngIf="option == 'CNPJ'">
-				<label for="nome" class="col-sm-2 col-form-label"><p style="color: red;display: inline;">*</p> CNPJ</label>
+				<label for="nome" class="col-sm-2 col-form-label">
+					<p style="color: red;display: inline;">*</p> CNPJ</label>
 				<div class="col-sm-4">
-					<p-inputMask [disabled]="!desbloquearCampos" placeholder="__.___.___/____.__" type="text" [(ngModel)]="contato.cnpj" name="cnpj" mask="99.999.999/9999-99"></p-inputMask>
+					<p-inputMask [disabled]="!desbloquearCampos" placeholder="__.___.___/____.__" type="text" [(ngModel)]="contato.cnpj" name="cnpj"
+					 mask="99.999.999/9999-99"></p-inputMask>
 				</div>
 			</div>
 
 			<div class="form-group row">
 				<label for="nome" class="col-sm-2 col-form-label">E-mail</label>
 				<div class="col-sm-4">
-					<input type="text" [disabled]="!desbloquearCampos" class="form-control" [(ngModel)]="contato.email" name="email" maxlength="64" minlength="8">
+					<input type="text" [disabled]="!desbloquearCampos" class="form-control" [(ngModel)]="contato.email" name="email" maxlength="64"
+					 minlength="8">
 				</div>
 			</div>
 
 			<div class="form-group row">
-				<label for="nome" class="col-sm-2 col-form-label"><p style="color: red;display: inline;">*</p> Nascimento</label>
+				<label for="nome" class="col-sm-2 col-form-label">
+					<p style="color: red;display: inline;">*</p> Nascimento</label>
 				<div class="col-sm-4">
-					<p-calendar [disabled]="!desbloquearCampos" [locale]="configCalendario" [style]="{'margin-right':'50px'}"
-								[(ngModel)]="contato.dataNascimento" name="dataNascimento" id="data" [showIcon]="true" dateFormat="dd-mm-yy"></p-calendar>
+					<p-calendar [disabled]="!desbloquearCampos" [locale]="configCalendario" [style]="{'margin-right':'50px'}" [(ngModel)]="contato.dataNascimento"
+					 name="dataNascimento" id="data" [showIcon]="true" dateFormat="dd-mm-yy"></p-calendar>
 				</div>
 			</div>
 
 			<div class="form-group row">
-				<label for="nome" class="col-sm-2 col-form-label"><p style="color: red;display: inline;">*</p> Endereço</label>
+				<label for="nome" class="col-sm-2 col-form-label">
+					<p style="color: red;display: inline;">*</p> Endereço</label>
 				<div class="col-sm-4">
-					<input [disabled]="!desbloquearCampos" type="text" class="form-control" [(ngModel)]="contato.endereco" name="endereco" maxlength="64" minlength="8">
+					<input [disabled]="!desbloquearCampos" type="text" class="form-control" [(ngModel)]="contato.endereco" name="endereco" maxlength="64"
+					 minlength="8">
 				</div>
 
 			</div>
@@ -57,19 +68,23 @@
 			<div class="form-group row">
 				<label for="telefoneFixo" class="col-sm-2 col-form-label"> Telefone Fixo</label>
 				<div class="col-sm-2">
-					<p-inputMask [disabled]="!desbloquearCampos" type="text" placeholder="(  )" mask="(99) 9999-9999" [(ngModel)]="contato.telefoneFixo" name="telefoneFixo"></p-inputMask>
+					<p-inputMask [disabled]="!desbloquearCampos" type="text" placeholder="(  )" mask="(99) 9999-9999" [(ngModel)]="contato.telefoneFixo"
+					 name="telefoneFixo"></p-inputMask>
 				</div>
 			</div>
 
 			<div class="form-group row">
-				<label for="celular" class="col-sm-2 col-form-label"><p style="color: red;display: inline;">*</p> Celular</label>
+				<label for="celular" class="col-sm-2 col-form-label">
+					<p style="color: red;display: inline;">*</p> Celular</label>
 				<div class="col-sm-2">
-					<p-inputMask [disabled]="!desbloquearCampos" type="text" placeholder="(  )" mask="(99) 99999-9999" [(ngModel)]="contato.celular" name="celular"></p-inputMask>
+					<p-inputMask [disabled]="!desbloquearCampos" type="text" placeholder="(  )" mask="(99) 99999-9999" [(ngModel)]="contato.celular"
+					 name="celular"></p-inputMask>
 				</div>
 			</div>
 
 			<div class="form-group row">
-				<label for="funcao" class="col-sm-2 col-form-label"><p style="color: red;display: inline;">*</p> Categoria</label>
+				<label for="funcao" class="col-sm-2 col-form-label">
+					<p style="color: red;display: inline;">*</p> Categoria</label>
 				<div class="col-sm-2">
 					<select [disabled]="!desbloquearCampos" id="inputState" class="form-control" [(ngModel)]="idCategoria" name="categoria">
 						<option [ngValue]="undefined">Selecione</option>
@@ -80,14 +95,17 @@
 			<br/>
 			<div class="form-group row">
 				<div class="col-sm-2">
-					<label for="funcao"><p style="color: red;display: inline;">*</p> Termo</label>
+					<label for="funcao">
+						<p style="color: red;display: inline;">*</p> Termo</label>
 				</div>
 				<div class="col-sm-10">
 					<div class="row">
-						<p-radioButton [disabled]="!desbloquearCampos" name="group1" value="autorizo" label="Aceito o envio de emails promocionais" [(ngModel)]="optAutorizaEmail" inputId="opt1"></p-radioButton>
+						<p-radioButton [disabled]="!desbloquearCampos" name="group1" value="autorizo" label="Aceito o envio de emails promocionais"
+						 [(ngModel)]="optAutorizaEmail" inputId="opt1"></p-radioButton>
 					</div>
 					<div class="row">
-						<p-radioButton [disabled]="!desbloquearCampos" name="group1" value="naoAutorizo" label="Não aceito o envio de emails promocionais" [(ngModel)]="optAutorizaEmail" inputId="opt2"></p-radioButton>
+						<p-radioButton [disabled]="!desbloquearCampos" name="group1" value="naoAutorizo" label="Não aceito o envio de emails promocionais"
+						 [(ngModel)]="optAutorizaEmail" inputId="opt2"></p-radioButton>
 					</div>
 				</div>
 			</div>
@@ -102,14 +120,179 @@
 			<div class="form-group row">
 				<div class="col-sm-8"></div>
 				<div>
-					<button pButton [disabled]="!usuarioFuncao || !usuarioAutorizado" *ngIf="telaEdicao" (click)="excluir()" type="button" label="EXCLUIR" class="ui-button-danger"></button>
+					<button class="ui-button-secondary" (click)="voltar()" pButton type="button" label="VOLTAR"></button>
+					<button pButton [disabled]="!usuarioFuncao || !usuarioAutorizado" *ngIf="telaEdicao" (click)="excluir()" type="button" label="EXCLUIR"
+					 class="ui-button-danger"></button>
 					<button *ngIf="telaEdicao" style="background-color:gray; border: none;" (click)="registro()" pButton type="button" label="REGISTRO"></button>
 					<button *ngIf="telaEdicao" style="background-color:yellow; border: none;" (click)="editar()" pButton type="button" label="EDITAR"></button>
-					<button style="background-color:gray; border: none;" (click)="voltar()" pButton type="button" label="VOLTAR"></button>
 					<button (click)="salvar()" pButton type="button" label="SALVAR"></button>
 				</div>
 			</div>
 
-		</form>
-	</section>
-</div>
+		</section>
+	</div>
+	<div class="hidden-sm-up" style="padding-left: 30px; padding-right: 30px;">
+		<div class="form-group">
+			<div class="row col-xs-12">
+				<label for="nome" class="col-form-label">
+					<p style="color: red;display: inline;">*</p> Nome</label>
+
+				<input [disabled]="!desbloquearCampos" type="text" class="form-control" [(ngModel)]="contato.nome" name="nome" maxlength="255"
+				 minlength="8">
+
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="row">
+				<div class="col-xs-12">
+					<label for="nome" class="col-form-label">
+						<p style="color: red;display: inline;">*</p>CPF/CNPJ</label>
+					<br>
+					<p-dropdown [disabled]="!desbloquearCampos" [options]="pessoa" [(ngModel)]="option" name="option">
+					</p-dropdown>
+				</div>
+			</div>
+		</div>
+		<div class="form-group" *ngIf="option == 'CPF'">
+			<div class="row">
+				<div class="col-xs-12">
+					<label for="nome" class="col-form-label">
+						<p style="color: red;display: inline;">*</p> CPF</label>
+					<br>
+					<p-inputMask [disabled]="!desbloquearCampos" placeholder="___.___.___-__" type="text" [(ngModel)]="contato.cpf" name="cpf"
+					 mask="999.999.999-99"></p-inputMask>
+				</div>
+			</div>
+		</div>
+		<div class="form-group" *ngIf="option == 'CNPJ'">
+			<div class="row">
+				<div class="col-xs-12">
+					<label for="nome" class="col-form-label">
+						<p style="color: red;display: inline;">*</p> CNPJ</label>
+					<br>
+					<p-inputMask [disabled]="!desbloquearCampos" placeholder="__.___.___/____.__" type="text" [(ngModel)]="contato.cnpj" name="cnpj"
+					 mask="99.999.999/9999-99"></p-inputMask>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="row">
+				<div class="col-xs-12">
+					<label for="nome" class="col-form-label">E-mail</label>
+					<br>
+					<input type="text" [disabled]="!desbloquearCampos" class="form-control" [(ngModel)]="contato.email" name="email" maxlength="64"
+					 minlength="8">
+
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="row">
+				<div class="col-xs-12">
+					<label for="nome" class="col-form-label">
+						<p style="color: red;display: inline;">*</p> Nascimento</label>
+					<br>
+					<p-calendar [disabled]="!desbloquearCampos" [locale]="configCalendario" [style]="{'margin-right':'50px'}" [(ngModel)]="contato.dataNascimento"
+					 name="dataNascimento" id="data" [showIcon]="true" dateFormat="dd-mm-yy"></p-calendar>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="row">
+				<div class="col-xs-12">
+					<label for="nome" class="col-form-label">
+						<p style="color: red;display: inline;">*</p> Endereço</label>
+					<br>
+					<input [disabled]="!desbloquearCampos" type="text" class="form-control" [(ngModel)]="contato.endereco" name="endereco" maxlength="64"
+					 minlength="8">
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="row">
+				<div class="col-xs-12">
+					<label for="telefoneFixo" class="col-form-label"> Telefone Fixo</label>
+					<br>
+					<p-inputMask [disabled]="!desbloquearCampos" type="text" placeholder="(  )" mask="(99) 9999-9999" [(ngModel)]="contato.telefoneFixo"
+					 name="telefoneFixo"></p-inputMask>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="row">
+				<div class="col-xs-12">
+					<label for="celular" class="col-form-label">
+						<p style="color: red;display: inline;">*</p> Celular</label>
+					<br>
+					<p-inputMask [disabled]="!desbloquearCampos" type="text" placeholder="(  )" mask="(99) 99999-9999" [(ngModel)]="contato.celular"
+					 name="celular"></p-inputMask>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="row">
+				<div class="col-xs-12">
+					<label for="funcao" class="col-form-label">
+						<p style="color: red;display: inline;">*</p> Categoria</label>
+					<select [disabled]="!desbloquearCampos" id="inputState" class="form-control" [(ngModel)]="idCategoria" name="categoria">
+						<option [ngValue]="undefined">Selecione</option>
+						<option *ngFor="let cat of categorias" value="{{cat.id}}">{{cat.nome}}</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="row">
+				<div class="col-xs-12">
+					<label for="funcao">
+						<p style="color: red;display: inline;">*</p> Termo</label>
+					<br>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<p-radioButton [disabled]="!desbloquearCampos" name="group1" value="autorizo" label="Aceito o envio de emails promocionais"
+					 [(ngModel)]="optAutorizaEmail" inputId="opt1"></p-radioButton>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<p-radioButton [disabled]="!desbloquearCampos" name="group1" value="naoAutorizo" label="Não aceito o envio de emails promocionais"
+					 [(ngModel)]="optAutorizaEmail" inputId="opt2"></p-radioButton>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="row">
+				<div class="col-xs-6 responsive-btn-center">
+					<button class="ui-button-secondary" (click)="voltar()" pButton type="button" label="VOLTAR"></button>
+				</div>
+				<div class="col-xs-6">
+					<button (click)="salvar()" pButton type="button" label="SALVAR"></button>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="row">
+				<div class="col-xs-6 responsive-btn-center">
+					<button pButton [disabled]="!usuarioFuncao || !usuarioAutorizado" *ngIf="telaEdicao" (click)="excluir()" type="button" label="EXCLUIR"
+					 class="ui-button-danger"></button>
+				</div>
+				<div class="col-xs-6">
+					<button *ngIf="telaEdicao" style="background-color:gray; border: none;" (click)="registro()" pButton type="button" label="REGISTRO"></button>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="row">
+				<div class="col-xs-6 responsive-btn-center">
+					<button *ngIf="telaEdicao" style="background-color:yellow; border: none;" (click)="editar()" pButton type="button" label="EDITAR"></button>
+				</div>
+				<div class="col-xs-6">
+				</div>
+			</div>
+		</div>
+	</div>
+</form>

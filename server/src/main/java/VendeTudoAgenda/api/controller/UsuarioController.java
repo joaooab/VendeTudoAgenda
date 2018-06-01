@@ -27,7 +27,7 @@ public class UsuarioController {
         return usuarioRepository.findById(id);
     }
 
-    @PutMapping("/usuarios/{id}")
+    @DeleteMapping("/usuarios/{id}")
     public void deletarUsuario(@PathVariable Long id) {
         Usuario usuario = usuarioRepository.findById(id);
         usuarioRepository.delete(usuario);

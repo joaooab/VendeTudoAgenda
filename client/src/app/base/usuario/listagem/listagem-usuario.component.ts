@@ -1,60 +1,68 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-
 import {Message} from 'primeng/api';
-
 import {Usuario} from '../../modelo/usuario.model';
 import {UsuarioService} from '../usuario.service';
+import {getFuncaoUsuarioLogado} from '../../../arquitetura/servico/base.service';
 
 @Component({
-  selector: 'app-listagem-usuario',
-  templateUrl: './listagem-usuario.component.html',
-  styles: []
+    selector: 'app-listagem-usuario',
+    templateUrl: './listagem-usuario.component.html',
+    styles: []
 })
 export class ListagemUsuarioComponent implements OnInit {
-  cols: Array<any>;
-  usuarios: Array<any>;
-  selectedUsuario: Usuario;
-  msgs: Message[] = [];
+    usuarios: Array<any>;
+    selectedUsuario: Usuario;
+    msgs: Message[] = [];
+    usuarioAutorizado: boolean = false;
 
-  constructor(private usuarioService: UsuarioService,
-              private router: Router) { }
+    constructor(private usuarioService: UsuarioService,
+                private router: Router) {
 
-  ngOnInit() {
-      this.usuarioService.listar().subscribe(result => {
-          let usuarios = JSON.parse(result._body);
-          this.usuarios = usuarios;
-      });
-
-    this.cols = [
-      {field: 'nome',header:'Nome'},
-      {field: 'cpfOuCnpj', header:'CPF / CNPJ'},
-      {field: 'email', header:'E-mail'},
-      {field:'funcao',header:'Função'}
-    ]
-  }
-
-  novo():void{
-    this.router.navigate(['/cadastros/usuario/novo']);
-  }
-
-  editar():void{
-    if(!this.selectedUsuario){
-      this.msgs.push({severity:'error', summary:'Error Message', detail:'Selecione um usuário dá lista'});
-    }else{
-      this.router.navigate(['/cadastros/usuario/edicao/',this.selectedUsuario.id]);
+        this.usuarioAutorizado = ((getFuncaoUsuarioLogado().replace(/['"]+/g, '')) === 'ADMINISTRADOR');
     }
-  }
 
-  excluir():void{
-    console.log(this.selectedUsuario);
-    this.msgs = [];
-    if(!this.selectedUsuario){
-      this.msgs.push({severity:'error', summary:'Error Message', detail:'Selecione um usuário dá lista'});
+    ngOnInit() {
+        this.listarUsuarios();
     }
-  }
 
-  voltarTelaPrincipal(): void{
-    this.router.navigate(['/principal']);
-  }
+    novo(): void {
+        this.router.navigate(['/cadastros/usuario/novo']);
+    }
+
+    editar(): void {
+        if (!this.selectedUsuario) {
+            this.msgs.push({severity: 'error', summary: 'Error Message', detail: 'Selecione um usuário dá lista'});
+
+        } else {
+            this.router.navigate(['/cadastros/usuario/edicao/', this.selectedUsuario.id]);
+
+        }
+    }
+
+    excluir(): void {
+        this.msgs = [];
+        if (!this.selectedUsuario) {
+            this.msgs.push({severity: 'error', summary: 'Error Message', detail: 'Selecione um usuário dá lista'});
+
+        } else {
+            this.usuarioService.excluir(this.selectedUsuario.id).subscribe(result => {
+                this.selectedUsuario = null;
+                this.msgs.push({severity: 'success', summary: 'Service Message', detail: 'Dados excluidos com sucesso!'});
+                this.listarUsuarios();
+
+            });
+        }
+    }
+
+    voltarTelaPrincipal(): void {
+        this.router.navigate(['/principal']);
+    }
+
+    listarUsuarios() {
+        this.usuarioService.listar().subscribe(result => {
+            let usuarios = JSON.parse(result._body);
+            this.usuarios = usuarios;
+        });
+    }
 }

@@ -21,8 +21,9 @@ export class ContatoListagemComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.contatoService.listar().subscribe((res) => {
-            this.contato = res;
+        this.contatoService.listarContatos().subscribe((res) => {
+            let contatos = JSON.parse(res._body);
+            this.contato = contatos;
         });
     }
 

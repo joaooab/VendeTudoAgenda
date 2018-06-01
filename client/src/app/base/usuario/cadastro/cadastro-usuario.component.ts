@@ -1,52 +1,90 @@
-import { Component, OnInit } from '@angular/core';
-import { Usuario } from '../../modelo/usuario.model';
-import { UsuarioService } from '../usuario.service';
-import { ActivatedRoute, Router } from "@angular/router";
-import { SelectItem } from 'primeng/components/common/selectitem';
-
+import {Component, OnInit} from '@angular/core';
+import {Usuario} from '../../modelo/usuario.model';
+import {UsuarioService} from '../usuario.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Message} from 'primeng/api';
 
 @Component({
-  selector: 'app-cadastro-usuario',
-  templateUrl: './cadastro-usuario.component.html',
-  styleUrls: ['./cadastro-usuario.component.css']
+    selector: 'app-cadastro-usuario',
+    templateUrl: './cadastro-usuario.component.html',
+    styleUrls: ['./cadastro-usuario.component.css']
 })
 export class CadastroUsuarioComponent implements OnInit {
+    public configCalendario: any;
+    public usuario: Usuario = new Usuario();
+    msgs: Message[] = [];
 
-  pessoa: SelectItem[];
-  funcao: SelectItem[];
-  option: string = 'Selecione';
-  usuario: Usuario = new Usuario();
+    constructor(private usuarioService: UsuarioService,
+                private activateRoute: ActivatedRoute,
+                private router: Router) {
 
-  constructor(private usuarioService: UsuarioService,
-    private activateRoute: ActivatedRoute,
-    private router: Router) {
-    this.pessoa = [
-      { label: 'Selecione', value: '' },
-      { label: 'Física', value: 'Física' },
-      { label: 'Juridica', value: 'Juridica' }
-    ];
-    this.funcao = [
-      { label: 'Selecione', value: '' },
-      { label: 'Administrador', value: 'Administrador' },
-      { label: 'Vendedor', value: 'Vendedor' }
-    ];
-  }
+        this.configCalendario = this.configCalander();
+    }
 
-  ngOnInit() {
-    this.activateRoute.params.subscribe(parametro => {
-      if (parametro["id"] !== undefined)
-        console.log(parametro["id"]);
-      //this.usuarioService.
-    });
-  }
+    ngOnInit() {
+        this.activateRoute.params.subscribe(parametro => {
+            if (parametro['id']) {
+                this.usuarioService.get(parametro['id']).subscribe(result => {
+                    this.usuario = result;
+                    this.usuario.confirmacaoSenha = this.usuario.senha;
+                    this.usuario.dataNascimento = new Date(this.usuario.dataNascimento);
+                });
+            }
+        });
+    }
 
-  salvar() {
-    console.log(this.usuario);
-    //this.usuarioService.salvar(this.usuario);
-  }
+    salvar() {
+        this.msgs = [];
+        if (this.usuario.senha !== this.usuario.confirmacaoSenha) {
+            this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'As senhas não são iguais'}];
+            this.usuario.senha = '';
+            this.usuario.confirmacaoSenha = '';
+        } else {
+            this.usuario.cpf = String(this.usuario.cpf).replace(/\D/g, '');
+            let usuario = JSON.stringify({
+                usuario: this.usuario
+            });
+            this.usuarioService.salvar(usuario).subscribe(
+                result => {
+                    this.msgs.push({severity: 'success', summary: 'Service Message', detail: 'Usuário salvo com sucesso!'});
 
-  voltar(){
-    this.router.navigate(['/principal']);
-  }
+                }, erro => {
+                    this.msgs.push({severity: 'info', summary: '', detail: 'Já existe um usuário cadastrado com esse CPF!'});
+                });
+        }
+    }
+
+    voltar() {
+        this.router.navigate(['/principal']);
+    }
+
+    private configCalander() {
+        return {
+            closeText: 'Fechar',
+            prevText: 'Anterior',
+            nextText: 'Próximo',
+            currentText: 'Começo',
+            monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+            dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+            dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+            weekHeader: 'Semana',
+            firstDay: 0,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: '',
+            timeOnlyTitle: 'Só Horas',
+            timeText: 'Tempo',
+            hourText: 'Hora',
+            minuteText: 'Minuto',
+            secondText: 'Segundo',
+            ampm: false,
+            month: 'Mês',
+            week: 'Semana',
+            day: 'Dia',
+            allDayText: 'Todo o Dia'
+        };
+    }
 
 }

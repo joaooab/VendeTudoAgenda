@@ -11,18 +11,18 @@ import {getFuncaoUsuarioLogado, getIdUsuarioLogado} from '../../../arquitetura/s
     templateUrl: './contato-cadastro.component.html'
 })
 export class ContatoCadastroComponent implements OnInit {
-    private pessoa: SelectItem[];
+    public pessoa: SelectItem[];
     option: string = 'Selecione';
     titulo: string;
     data: string;
     configCalendario: any;
     optAutorizaEmail: string;
-    private categorias: Categoria[];
-    private idCategoria;
+    public categorias: Categoria[];
+    public idCategoria;
     msgs: Message[] = [];
     usuarioFuncao: string;
     usuarioAutorizado: string;
-    private contato: Contato = new Contato();
+    public contato: Contato = new Contato();
     public desbloquearCampos: boolean = false;
     public telaEdicao: boolean = false;
 
@@ -141,7 +141,6 @@ export class ContatoCadastroComponent implements OnInit {
                     this.contato.autorizaEmail = false;
                 }
 
-
                 this.confirmationService.confirm({
                     message: 'Deseja realmente salvar alterações ?',
                     header: 'Confirmation',
@@ -177,8 +176,6 @@ export class ContatoCadastroComponent implements OnInit {
             }
 
         }
-
-
     }
 
     excluir() {
@@ -194,7 +191,6 @@ export class ContatoCadastroComponent implements OnInit {
 
                     this.contatoService.listar().subscribe((res) => {
                         this.contato = res;
-
                     });
 
                 });

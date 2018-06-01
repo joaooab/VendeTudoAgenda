@@ -8,6 +8,8 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -77,6 +79,25 @@ public class ContatoController {
     @GetMapping("/contatoes")
     public ResponseEntity listarContatos() {
         return ResponseEntity.ok(contatoRepository.findAll());
+    }
+
+    @GetMapping("/contatosListagem")
+    public ResponseEntity listarContatosListagem() {
+        JSONArray body = new JSONArray();
+        List<Contato> contatos = contatoRepository.findAll();
+
+        for (Contato contato : contatos) {
+            JSONObject linha = new JSONObject();
+            linha.put("id", contato.getId());
+            linha.put("nome", contato.getNome());
+            linha.put("cpf", contato.getCpf());
+            linha.put("cnpj", contato.getCnpj());
+            linha.put("categoria", contato.getCategoria().getNome());
+            linha.put("ligacoes", chamadaRepository.quantidadeLigacoes(contato.getId()));
+            body.put(linha);
+        }
+
+        return ResponseEntity.ok(body.toList());
     }
 
     @PatchMapping("/contatoes/{id}")

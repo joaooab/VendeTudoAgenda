@@ -2,6 +2,7 @@ package VendeTudoAgenda.api.controller;
 
 import VendeTudoAgenda.api.exception.InvalidRequestException;
 import VendeTudoAgenda.core.repository.UsuarioRepository;
+import VendeTudoAgenda.core.services.EmailService;
 import VendeTudoAgenda.core.services.JwtService;
 import VendeTudoAgenda.core.services.UsuarioService;
 import VendeTudoAgenda.domain.usuario.Usuario;
@@ -11,18 +12,22 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AuthController {
 
     private UsuarioRepository usuarioRepository;
     private JwtService jwtService;
+    private EmailService emailService;
 
     @Autowired
-    public AuthController(UsuarioRepository usuarioRepository, JwtService jwtService) {
+    public AuthController(UsuarioRepository usuarioRepository, JwtService jwtService, EmailService emailService) {
         this.usuarioRepository = usuarioRepository;
         this.jwtService = jwtService;
+        this.emailService = emailService;
     }
 
     @PostMapping("/login")
@@ -45,21 +50,26 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/resetarSenha/{id}")
-    public ResponseEntity resetarSenha(@PathVariable Long id){
-        Usuario usuario = usuarioRepository.findOne(id);
+    @PostMapping("/resetarSenha")
+    public ResponseEntity resetarSenha(@RequestBody String email) {
+        Usuario usuario = usuarioRepository.findByEmail(email);
 
-        if(usuario != null){
+        if (usuario != null) {
             String senhaNova = UsuarioService.gerarSenhaAleatoria();
 
             usuario.setSenha(senhaNova);
             usuarioRepository.save(usuario);
 
+            StringBuilder corpoEmail = new StringBuilder();
+            corpoEmail.append("A sua nova senha gerada é: ").append(senhaNova);
+
+            emailService.enviarEmail(usuario.getEmail(), "Recuperação de senha",corpoEmail.toString());
+
             return new ResponseEntity(HttpStatus.OK);
 
         }
 
-        return new ResponseEntity(HttpStatus.FAILED_DEPENDENCY);
+        return ResponseEntity.notFound().build();
     }
 
     private boolean checarSenha(String senhaBanco, String senhaRequest) {

@@ -16,11 +16,11 @@ public class EmailService {
         this.javaMailSender = javaMailSender;
     }
 
-    public void enviarEmail(String to, String text) throws MailException{
+    public void enviarEmail(String to, String assunto, String text) throws MailException{
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(to);
         simpleMailMessage.setFrom("vendetudoagenda@gmail.com");
-        simpleMailMessage.setSubject("Feliz Aniversário!");
+        simpleMailMessage.setSubject(assunto);
         simpleMailMessage.setText(text);
 
         javaMailSender.send(simpleMailMessage);

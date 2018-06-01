@@ -5,10 +5,10 @@
             <div class="col-md-10">
                 <input type="text" id="valor" [(ngModel)]="valorPesquisa" class="form-control" name="nome" maxlength="255" minlength="8">
             </div>
-
-            <button type="button" pButton icon="fas fa-search" (click)="buscar()"></button>
-
-        </div>
+			<div class="col-md-2">
+            	<button type="button" pButton icon="fas fa-search" (click)="buscar()"></button>
+			</div>
+		</div>
         <br/>
         <div class="row">
             <p-dropdown [options]="tipo" id="op" [(ngModel)]="option" name="option" [style]="{'margin-left':'15px','margin-bottom':'10px', 'width':'430px'}"></p-dropdown>
@@ -18,8 +18,7 @@
         <br/>
         <br/>
         <div class="row">
-            <div class="col-md-9"></div>
-            <div class="col-md-3">
+            <div class="col-md-3 offset-9">
                 <button type="button" pButton (click)="display=false" label="Voltar"></button>
             </div>
         </div>
@@ -33,7 +32,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-4"></div>
-                <div class="col-md-8 ">
+                <div class="col-md-8">
                     <div class="row">
 
                         <a class=" homeIcon" (click)="alterarBack()" [routerLink]="['/cadastros/contato/novo']">

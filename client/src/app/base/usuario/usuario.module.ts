@@ -13,6 +13,8 @@ import {CadastroUsuarioComponent} from './cadastro/cadastro-usuario.component';
 import {ListagemUsuarioComponent} from './listagem/listagem-usuario.component';
 import {UsuarioService} from './usuario.service';
 import {DataTableModule} from 'primeng/datatable';
+import {CalendarModule} from 'primeng/calendar';
+import {RadioButtonModule} from 'primeng/radiobutton';
 
 //end prime ng
 
@@ -28,7 +30,9 @@ import {DataTableModule} from 'primeng/datatable';
         TableModule,
         AutoCompleteModule,
         GrowlModule,
-        DataTableModule
+        DataTableModule,
+        CalendarModule,
+        RadioButtonModule
     ],
     declarations: [
         CadastroUsuarioComponent,

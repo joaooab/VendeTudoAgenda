@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonRootName("usuario")
-@Table(name = "usuario")
+@Table(name = "usuario", uniqueConstraints = {@UniqueConstraint(columnNames = "cpf")})
 public class Usuario implements Serializable {
 
     @Id
@@ -24,8 +24,8 @@ public class Usuario implements Serializable {
     @Column(name = "nome", nullable = false)
     private String nome;
 
-    @Column(name = "cpf", nullable = false)
-    private Long cpf;
+    @Column(name = "cpf", nullable = false, unique = true)
+    private String cpf;
 
     @Column(name = "email", nullable = false)
     private String email;
@@ -48,7 +48,7 @@ public class Usuario implements Serializable {
     @Column(name = "senha", nullable = false)
     private String senha;
 
-    public Usuario(String nome, Long cpf, String email, Date dataNascimento, String endereco, String telefoneFixo, String celular, FuncaoUsuario funcao, String senha) {
+    public Usuario(String nome, String cpf, String email, Date dataNascimento, String endereco, String telefoneFixo, String celular, FuncaoUsuario funcao, String senha) {
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;

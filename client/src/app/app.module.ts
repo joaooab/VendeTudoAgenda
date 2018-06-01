@@ -8,7 +8,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {GrowlModule} from 'primeng/growl';
 import {MessageService} from 'primeng/components/common/messageservice';
 import {ClienteRoutes} from './app.routes';
-
+import {RadioButtonModule} from 'primeng/radiobutton';
 import {AppComponent} from './app.component';
 
 import {LoginComponent} from '../app/login/login.component';
@@ -41,7 +41,8 @@ import {LogoutService} from './login/logout.service';
         InputTextModule,
         ClienteRoutes,
         ChamadaModule,
-        CategoriaModule
+        CategoriaModule,
+        RadioButtonModule
     ],
     providers: [
         LoginGuard,

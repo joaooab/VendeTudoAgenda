@@ -27,9 +27,9 @@ public class PromocaoSchedule {
             if (contato.getAutorizaEmail()) {
 
                 StringBuilder corpoEmail = new StringBuilder();
-                corpoEmail.append("Testeeeeeeeeeeeeee");
+                corpoEmail.append("Aproveita a promoção cambada de pobre!");
 
-                emailService.enviarEmail(contato.getEmail(), corpoEmail.toString());
+                emailService.enviarEmail(contato.getEmail(), "Promoção", corpoEmail.toString());
             }
         }
     }

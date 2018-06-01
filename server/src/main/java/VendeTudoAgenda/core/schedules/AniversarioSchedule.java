@@ -33,7 +33,7 @@ public class AniversarioSchedule {
             if(isAniversario(usuario.getDataNascimento())){
                 StringBuilder corpoEmail = new StringBuilder(usuario.getNome());
                 corpoEmail.append(templateCorpoEmail);
-                emailService.enviarEmail(usuario.getEmail(), corpoEmail.toString());
+                emailService.enviarEmail(usuario.getEmail(), "Feliz Aniversário!", corpoEmail.toString());
             }
         }
     }

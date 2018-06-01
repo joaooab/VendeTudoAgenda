@@ -38,7 +38,7 @@ public class ChamadaController {
         return chamadaRepository.findById(id);
     }
 
-    @PutMapping("/chamadas/{id}")
+    @DeleteMapping("/chamadas/{id}")
     public void deletarChamada(@PathVariable Long id) {
         Chamada chamada = chamadaRepository.findById(id);
         chamadaRepository.delete(chamada);

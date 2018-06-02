@@ -18,7 +18,7 @@ export class ContatoCadastroComponent implements OnInit {
     configCalendario: any;
     optAutorizaEmail: string;
     public categorias: Categoria[];
-    public idCategoria;
+    public idCategoria: any;
     msgs: Message[] = [];
     usuarioFuncao: string;
     usuarioAutorizado: string;
@@ -44,6 +44,7 @@ export class ContatoCadastroComponent implements OnInit {
         if (this.usuarioFuncao == 'ADMINISTRADOR') {
             this.usuarioAutorizado = 'sim';
         }
+
     }
 
     ngOnInit() {
@@ -202,7 +203,7 @@ export class ContatoCadastroComponent implements OnInit {
     }
 
     voltar() {
-        this.router.navigate(['/principal']);
+        this.router.navigate(['/cadastros/contato']);
     }
 
     verificaDataNascimento(): boolean {
@@ -277,6 +278,5 @@ export class ContatoCadastroComponent implements OnInit {
             allDayText: 'Todo o Dia'
         };
     }
-
 
 }

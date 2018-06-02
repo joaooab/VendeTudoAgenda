@@ -55,7 +55,7 @@ export class CadastroUsuarioComponent implements OnInit {
     }
 
     voltar() {
-        this.router.navigate(['/principal']);
+        this.router.navigate(['/cadastros/usuario']);
     }
 
     private configCalander() {

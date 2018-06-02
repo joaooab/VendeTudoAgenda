@@ -19,7 +19,7 @@
     <div class="col-9">
         <div class="float-right">
             <button pButton (click)="voltarTelaPrincipal()" type="button" label="VOLTAR" class="ui-button-secondary" ></button>
-            <button pButton (click)="abrir()" type="button" label="ABRIR" class="ui-button-danger" ></button>
+            <button pButton (click)="abrir()" [disabled]="!chamadaSelecionada" type="button" label="ABRIR"></button>
         </div>
     </div>
 </div>

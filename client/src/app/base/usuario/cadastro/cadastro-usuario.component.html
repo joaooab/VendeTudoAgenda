@@ -7,7 +7,7 @@
 				<label for="nome" class="col-sm-1 col-form-label">
 					<p style="color: red;display: inline;">*</p>Nome</label>
 				<div class="col-sm-4">
-					<input type="text" [(ngModel)]="usuario.nome" name="nome" pInputText/>
+					<input pInputText type="text" [(ngModel)]="usuario.nome" name="nome" maxlength="256" minlength="8"/>
 				</div>
 			</div>
 
@@ -23,7 +23,7 @@
 				<label for="email" class="col-sm-1 col-form-label">
 					<p style="color: red;display: inline;">*</p>E-mail</label>
 				<div class="col-sm-4">
-					<input type="text" [(ngModel)]="usuario.email" id="email" name="email" pInputText/>
+					<input pInputText type="text" [(ngModel)]="usuario.email" id="email" name="email" maxlength="64" minlength="8"/>
 				</div>
 			</div>
 			<div class="form-group row">
@@ -39,7 +39,7 @@
 				<label for="endereco" class="col-sm-1 col-form-label">
 					<p style="color: red;display: inline;">*</p>Endereço</label>
 				<div class="col-sm-4">
-					<input type="text" [(ngModel)]="usuario.endereco" id="endereco" name="endereco" pInputText/>
+					<input type="text" [(ngModel)]="usuario.endereco" id="endereco" name="endereco" pInputText maxlength="64" minlength="8"/>
 				</div>
 			</div>
 
@@ -82,7 +82,8 @@
 			<div class="form-group hidden-xs-down">
 				<div class="col-sm-4 offset-7 text-right">
 					<button pButton (click)="voltar()" type="button" label="Voltar" class="ui-button-secondary" style="width:150px;"></button>
-					<button pButton (click)="salvar()" type="button" label="Salvar" style="width:150px;"></button>
+					<button pButton (click)="salvar()" [disabled]="!usuario.nome || !usuario.cpf || !usuario.email || !usuario.dataNascimento || !usuario.endereco || !usuario.telefoneFixo
+							|| !usuario.celular || !usuario.funcao || !usuario.senha || !usuario.confirmacaoSenha" type="button" label="Salvar" style="width:150px;"></button>
 				</div>
 			</div>
 
@@ -92,7 +93,8 @@
 						<button pButton (click)="voltar()" type="button" label="Voltar" class="ui-button-secondary" style="width:150px;"></button>
 					</div>
 					<div class="col-6">
-						<button pButton (click)="salvar()" type="button" label="Salvar" style="width:150px;"></button>
+						<button pButton (click)="salvar()" [disabled]="!usuario.nome || !usuario.cpf || !usuario.email || !usuario.dataNascimento || !usuario.endereco || !usuario.telefoneFixo
+							|| !usuario.celular || !usuario.funcao || !usuario.senha || !usuario.confirmacaoSenha" type="button" label="Salvar" style="width:150px;"></button>
 					</div>
 				</div>
 			</div>

@@ -7,7 +7,7 @@
 			<div class="form-group row">
 				<label for="nome" class="col-sm-2 col-form-label"><p style="color: red;display: inline;">*</p> Nome</label>
 				<div class="col-sm-4">
-					<input [disabled]="!desbloquearCampos" type="text" class="form-control" [(ngModel)]="contato.nome" id="nome" name="nome" maxlength="255" minlength="8">
+					<input [disabled]="!desbloquearCampos" type="text" class="form-control" [(ngModel)]="contato.nome" id="nome" name="nome" maxlength="256" minlength="8">
 				</div>
 			</div>
 
@@ -110,7 +110,8 @@
 					<button *ngIf="telaEdicao" style="background-color:gray; border: none;" (click)="registro()" pButton type="button" label="REGISTRO"></button>
 					<button *ngIf="telaEdicao" style="background-color:yellow; border: none;" (click)="editar()" pButton type="button" label="EDITAR"></button>
 					<button style="background-color:gray; border: none;" (click)="voltar()" pButton type="button" label="VOLTAR"></button>
-					<button (click)="salvar()" pButton type="button" label="SALVAR"></button>
+					<button [disabled]="!contato.nome || !(contato.cpf || contato.cnpj) || !contato.dataNascimento || !contato.celular || (idCategoria == undefined)"
+							(click)="salvar()" pButton type="button" label="SALVAR"></button>
 				</div>
 			</div>
 
@@ -121,11 +122,11 @@
 						<button style="background-color:gray; border: none;" (click)="voltar()" pButton type="button" label="VOLTAR"></button>
 					</div>
 					<div class="col-4">
-						<button (click)="salvar()" pButton type="button" label="SALVAR"></button>
+						<button [disabled]="!contato.nome || !(contato.cpf || contato.cnpj) || !contato.dataNascimento || !contato.celular || (idCategoria == undefined)"
+								(click)="salvar()" pButton type="button" label="SALVAR"></button>
 					</div>
 				</div>
 			</div>
-
 			<div *ngIf="telaEdicao" class="hidden-sm-up">
 				<div class="row justify-content-around">
 					<div class="col-4">
@@ -147,7 +148,8 @@
 				<br/>
 				<div class="row justify-content-around">
 					<div class="col-4">
-						<button (click)="salvar()" pButton type="button" label="SALVAR"></button>
+						<button [disabled]="!contato.nome || !(contato.cpf || contato.cnpj) || !contato.dataNascimento || !contato.celular || (idCategoria == undefined)"
+								(click)="salvar()" pButton type="button" label="SALVAR"></button>
 					</div>
 				</div>
 			</div>

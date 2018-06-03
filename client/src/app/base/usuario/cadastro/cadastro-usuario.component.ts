@@ -3,6 +3,7 @@ import {Usuario} from '../../modelo/usuario.model';
 import {UsuarioService} from '../usuario.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Message} from 'primeng/api';
+import {validarCPF} from '../../../arquitetura/Util';
 
 @Component({
     selector: 'app-cadastro-usuario',
@@ -35,22 +36,36 @@ export class CadastroUsuarioComponent implements OnInit {
 
     salvar() {
         this.msgs = [];
-        if (this.usuario.senha !== this.usuario.confirmacaoSenha) {
-            this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'As senhas não são iguais'}];
-            this.usuario.senha = '';
-            this.usuario.confirmacaoSenha = '';
-        } else {
-            this.usuario.cpf = String(this.usuario.cpf).replace(/\D/g, '');
-            let usuario = JSON.stringify({
-                usuario: this.usuario
-            });
-            this.usuarioService.salvar(usuario).subscribe(
-                result => {
-                    this.msgs.push({severity: 'success', summary: 'Service Message', detail: 'Usuário salvo com sucesso!'});
+        if (!validarCPF(this.usuario.cpf)) {
+            this.msgs.push({severity: 'info', summary: '', detail: 'O CPF digitado não é válido!'});
 
-                }, erro => {
-                    this.msgs.push({severity: 'info', summary: '', detail: 'Já existe um usuário cadastrado com esse CPF!'});
+        } else {
+
+            if (this.usuario.senha !== this.usuario.confirmacaoSenha) {
+                this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'As senhas não são iguais'}];
+                this.usuario.senha = '';
+                this.usuario.confirmacaoSenha = '';
+            } else {
+                this.usuario.cpf = String(this.usuario.cpf).replace(/\D/g, '');
+                let usuario = JSON.stringify({
+                    usuario: this.usuario
                 });
+                this.usuarioService.salvar(usuario).subscribe(
+                    result => {
+                        this.msgs.push({
+                            severity: 'success',
+                            summary: 'Service Message',
+                            detail: 'Usuário salvo com sucesso!'
+                        });
+
+                    }, erro => {
+                        this.msgs.push({
+                            severity: 'info',
+                            summary: '',
+                            detail: 'Já existe um usuário cadastrado com esse CPF!'
+                        });
+                    });
+            }
         }
     }
 

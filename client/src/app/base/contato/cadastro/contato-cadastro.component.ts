@@ -6,6 +6,7 @@ import {Categoria} from '../../modelo/categoria.model';
 import {CategoriaService} from '../../categoria/categoria.service';
 import {ContatoService} from '../contato.service';
 import {getFuncaoUsuarioLogado, getIdUsuarioLogado} from '../../../arquitetura/servico/base.service';
+import {validarCNPJ, validarCPF} from '../../../arquitetura/Util';
 
 @Component({
     templateUrl: './contato-cadastro.component.html'
@@ -95,6 +96,17 @@ export class ContatoCadastroComponent implements OnInit {
     }
 
     salvar() {
+
+        if (this.option === 'CPF' && this.contato.cpf && !validarCPF(this.contato.cpf)) {
+            this.msgs.push({severity: 'info', summary: '', detail: 'O CPF digitado não é válido!'});
+            return;
+        }
+
+        if (this.option === 'CNPJ' && this.contato.cnpj && !validarCNPJ(this.contato.cnpj)) {
+            this.msgs.push({severity: 'info', summary: '', detail: 'O CNPJ digitado não é válido!'});
+            return;
+        }
+
         if (!this.contato.nome || !this.contato.dataNascimento || !this.contato.endereco || !this.contato.celular || !this.optAutorizaEmail || !this.idCategoria) {
             this.msgs = [];
             this.msgs.push({severity: 'error', summary: 'Warn Message', detail: 'Campos obrigatórios não preenchidos'});
@@ -102,10 +114,13 @@ export class ContatoCadastroComponent implements OnInit {
         } else if (!this.verificaDataNascimento()) {
 
             this.msgs = [];
-            this.msgs.push({severity: 'error', summary: 'Warn Message', detail: 'O contato deve ter idade igual ou superior a 18 anos'});
+            this.msgs.push({
+                severity: 'error',
+                summary: 'Warn Message',
+                detail: 'O contato deve ter idade igual ou superior a 18 anos'
+            });
 
-        }
-        else {
+        } else {
 
             if (this.contato.id == undefined) {
 
@@ -127,7 +142,11 @@ export class ContatoCadastroComponent implements OnInit {
                 this.contatoService.salvar(this.montarBody()).subscribe(res => {
 
                     this.msgs = [];
-                    this.msgs.push({severity: 'success', summary: 'Service Message', detail: 'Dados salvos com sucesso!'});
+                    this.msgs.push({
+                        severity: 'success',
+                        summary: 'Service Message',
+                        detail: 'Dados salvos com sucesso!'
+                    });
 
                     this.contato = new Contato();
 
@@ -162,12 +181,14 @@ export class ContatoCadastroComponent implements OnInit {
 
                         }
 
-
                         this.contatoService.alterar(this.montarBody(), this.contato.id).subscribe(res => {
                             this.msgs = [];
-                            this.msgs.push({severity: 'success', summary: 'Service Message', detail: 'Dados alterados com sucesso!'});
+                            this.msgs.push({
+                                severity: 'success',
+                                summary: 'Service Message',
+                                detail: 'Dados alterados com sucesso!'
+                            });
                         });
-
 
                     },
                     reject: () => {
@@ -188,7 +209,11 @@ export class ContatoCadastroComponent implements OnInit {
             accept: () => {
                 this.contatoService.excluir(this.contato.id).subscribe(res => {
                     this.msgs = [];
-                    this.msgs.push({severity: 'success', summary: 'Service Message', detail: 'Dados excluidos com sucesso!'});
+                    this.msgs.push({
+                        severity: 'success',
+                        summary: 'Service Message',
+                        detail: 'Dados excluidos com sucesso!'
+                    });
 
                     this.contatoService.listar().subscribe((res) => {
                         this.contato = res;
@@ -218,7 +243,7 @@ export class ContatoCadastroComponent implements OnInit {
     }
 
     montarBody() {
-        let body = {
+        return {
             'contato':
                 {
                     'nome': this.contato.nome,
@@ -234,8 +259,6 @@ export class ContatoCadastroComponent implements OnInit {
                     'usuario': {'id': getIdUsuarioLogado()}
                 }
         };
-        return body;
-
     }
 
     removerMascara(valor) {

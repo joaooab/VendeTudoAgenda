@@ -32,7 +32,7 @@ public class ContatoTest {
     public void setUp() {
         categoria = new Categoria("PESSOA JURIDICA");
         entityManager.persist(categoria);
-        usuario = new Usuario("admin", 11111111111L, "vendetudoagenda@gmail.com", new Date(), "rua10", "38445654L", "985763251L", FuncaoUsuario.ADMINISTRADOR, "1234");
+        usuario = new Usuario("admin", "11111111111", "vendetudoagenda@gmail.com", new Date(), "rua10", "38445654L", "985763251L", FuncaoUsuario.ADMINISTRADOR, "1234");
         entityManager.persist(usuario);
         entityManager.flush();
     }

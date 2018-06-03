@@ -19,7 +19,6 @@ repositories {
 	mavenCentral()
 }
 
-
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-web')
@@ -40,4 +39,16 @@ dependencies {
     testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile 'com.h2database:h2:1.4.194'
+}
+
+jar {
+    doFirst {
+        manifest {
+            if (!configurations.compile.isEmpty()) {
+                attributes(
+                        'Class-Path': configurations.compile.collect{it.toURI().toString()}.join(' '),
+                        'Main-Class': 'VendeTudoAgenda.VendeTudoAgendaApplication')
+            }
+        }
+    }
 }

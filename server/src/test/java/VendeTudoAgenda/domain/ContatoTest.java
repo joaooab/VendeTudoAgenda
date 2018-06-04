@@ -52,20 +52,6 @@ public class ContatoTest {
     }
 
     @Test
-    public void deve_salvar_e_buscar_usuario_pelo_id() {
-        // given
-        Contato contato = new Contato(categoria, usuario, "TESTE", 11111111111L, null, "joao@email", new Date(), "rua12", "123132132L", "3522625L", true);
-        entityManager.persist(contato);
-        entityManager.flush();
-
-        // when
-        Contato contatoBanco = contatoRepository.findById(3L);
-
-        // then
-        assertTrue(contatoBanco.getNome().equals("TESTE"));
-    }
-
-    @Test
     public void deve_salver_e_deletar_contato() {
         Contato contato = new Contato(categoria, usuario, "TESTE", 11111111111L, null, "joao@email", new Date(), "rua12", "123132132L", "3522625L", true);
         entityManager.persist(contato);

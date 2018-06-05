@@ -4,7 +4,7 @@
 	<p-growl [(value)]="msgs"></p-growl>
 	<p-confirmDialog></p-confirmDialog>
 
-	<div class="col-10 text-center">
+	<div class="col-10 text-rigth">
 		<p-dataTable [rows]="10" selectionMode="single" [(selection)]="selectedCategoria" [value]="categorias" [resizableColumns]="true" [paginator]="true" emptyMessage="Nenhum registro encontrado."
 					 tableStyleClass="table user-list table-hover">
 			<p-column header="Nome" field="nome" [sortable]="true"></p-column>

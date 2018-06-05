@@ -108,7 +108,7 @@
 				<div>
 					<button pButton [disabled]="!usuarioFuncao || !usuarioAutorizado" *ngIf="telaEdicao" (click)="excluir()" type="button" label="EXCLUIR" class="ui-button-danger"></button>
 					<button *ngIf="telaEdicao" style="background-color:gray; border: none;" (click)="registro()" pButton type="button" label="REGISTRO"></button>
-					<button *ngIf="telaEdicao" style="background-color:yellow; border: none;" (click)="editar()" pButton type="button" label="EDITAR"></button>
+					<button *ngIf="telaEdicao" style="background-color:#a2a21d; border: none;" (click)="editar()" pButton type="button" label="EDITAR"></button>
 					<button style="background-color:gray; border: none;" (click)="voltar()" pButton type="button" label="VOLTAR"></button>
 					<button [disabled]="!contato.nome || !(contato.cpf || contato.cnpj) || !contato.dataNascimento || !contato.celular || (idCategoria == undefined)"
 							(click)="salvar()" pButton type="button" label="SALVAR"></button>

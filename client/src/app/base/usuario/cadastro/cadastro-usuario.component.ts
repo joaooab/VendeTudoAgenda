@@ -40,8 +40,11 @@ export class CadastroUsuarioComponent implements OnInit {
             this.msgs.push({severity: 'info', summary: '', detail: 'O CPF digitado não é válido!'});
 
         } else {
-
-            if (this.usuario.senha !== this.usuario.confirmacaoSenha) {
+            if(this.usuario.senha.length < 8 || this.usuario.senha.length > 16) {
+              this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'A senha deve conter entre 8 a 16 dígitos'}];
+              this.usuario.senha = '';
+              this.usuario.confirmacaoSenha = '';
+            } else  if (this.usuario.senha !== this.usuario.confirmacaoSenha) {
                 this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'As senhas não são iguais'}];
                 this.usuario.senha = '';
                 this.usuario.confirmacaoSenha = '';

@@ -42,13 +42,13 @@ public class ContatoController {
     }
 
     @GetMapping("/contatoes/cpf/{cpf}")
-    public ResponseEntity buscarContatosCpf(@PathVariable Long cpf) {
+    public ResponseEntity buscarContatosCpf(@PathVariable String cpf) {
         Contato contato = contatoRepository.findByCpf(cpf);
         return contato != null ? ResponseEntity.ok(contato) : ResponseEntity.notFound().build();
     }
 
     @GetMapping("/contatoes/cnpj/{cnpj}")
-    public ResponseEntity buscarContatosCnpj(@PathVariable Long cnpj) {
+    public ResponseEntity buscarContatosCnpj(@PathVariable String cnpj) {
         Contato contato = contatoRepository.findByCnpj(cnpj);
         return contato != null ? ResponseEntity.ok(contato) : ResponseEntity.notFound().build();
     }

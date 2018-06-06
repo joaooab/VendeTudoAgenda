@@ -36,7 +36,7 @@ public class ChamadaTest {
         Usuario usuario = new Usuario("admin", "11111111111", "vendetudoagenda@gmail.com", new Date(), "rua10", "38445654L", "985763251L", FuncaoUsuario.ADMINISTRADOR, "1234");
         entityManager.persist(usuario);
 
-        contato = new Contato(categoria, usuario, "Joao", 11111111111L, null, "joao@email", new Date(), "rua12", "123132132L", "3522625L", true);
+        contato = new Contato(categoria, usuario, "Joao", "11111111111", null, "joao@email", new Date(), "rua12", "123132132L", "3522625L", true);
         entityManager.persist(contato);
         entityManager.flush();
     }

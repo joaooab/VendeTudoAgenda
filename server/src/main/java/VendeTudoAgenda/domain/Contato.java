@@ -14,7 +14,13 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonRootName("contato")
-@Table(name = "contato", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
+@Table(
+        name = "contato",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "cpf"),
+                @UniqueConstraint(columnNames = "cnpj")
+        }
+)
 public class Contato {
 
     @Id
@@ -32,13 +38,14 @@ public class Contato {
     @Column(name = "nome", nullable = false)
     private String nome;
 
+
     @Column(name = "cpf")
-    private Long cpf;
+    private String cpf;
 
     @Column(name = "cnpj")
-    private Long cnpj;
+    private String cnpj;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email")
     private String email;
 
     @Column(name = "data_nascimento", nullable = false)
@@ -56,7 +63,7 @@ public class Contato {
     @Column(name = "autoriza_email", nullable = false)
     private Boolean autorizaEmail;
 
-    public Contato(Categoria categoria, Usuario usuario, String nome, Long cpf, Long cnpj, String email, Date dataNascimento, String endereco, String telefoneFixo, String celular, Boolean autorizaEmail) {
+    public Contato(Categoria categoria, Usuario usuario, String nome, String cpf, String cnpj, String email, Date dataNascimento, String endereco, String telefoneFixo, String celular, Boolean autorizaEmail) {
         this.categoria = categoria;
         this.usuario = usuario;
         this.nome = nome;
@@ -69,7 +76,4 @@ public class Contato {
         this.celular = celular;
         this.autorizaEmail = autorizaEmail;
     }
-
-
-
 }

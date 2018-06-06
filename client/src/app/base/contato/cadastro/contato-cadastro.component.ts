@@ -138,10 +138,8 @@ export class ContatoCadastroComponent implements OnInit {
                 if (this.contato.cnpj) {
                     this.contato.cnpj = this.removerMascara(this.contato.cnpj);
                 }
-
+                this.msgs = [];
                 this.contatoService.salvar(this.montarBody()).subscribe(res => {
-
-                    this.msgs = [];
                     this.msgs.push({
                         severity: 'success',
                         summary: 'Service Message',
@@ -150,8 +148,13 @@ export class ContatoCadastroComponent implements OnInit {
 
                     this.contato = new Contato();
 
-                });
-
+                }, erro => {
+                    this.msgs.push({
+                        severity: 'info',
+                        summary: '',
+                        detail: 'Já existe um contato cadastrado com esse CPF!'
+                    });
+              });
             } else {
 
                 if (this.optAutorizaEmail == 'autorizo') {
@@ -188,8 +191,14 @@ export class ContatoCadastroComponent implements OnInit {
                                 summary: 'Service Message',
                                 detail: 'Dados alterados com sucesso!'
                             });
-                        });
 
+                        }, erro => {
+                            this.msgs.push({
+                                severity: 'info',
+                                summary: '',
+                                detail: 'Já existe um contato cadastrado com esse CPF!'
+                            });
+                      });
                     },
                     reject: () => {
                         this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'You have rejected'}];

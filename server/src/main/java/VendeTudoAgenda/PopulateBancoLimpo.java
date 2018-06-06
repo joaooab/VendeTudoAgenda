@@ -30,7 +30,7 @@ public class PopulateBancoLimpo implements ApplicationRunner {
     * Observação 1: Colocar create-drop em application.properties
     * Observação 2: NÃO COLOCAR TRUE QUANDO ESTIVER USANDO O BANCO ONLINE
     * */
-    private static final boolean RODAR_POPULATE_LIMPO = false;
+    private static final boolean RODAR_POPULATE_LIMPO = true;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {

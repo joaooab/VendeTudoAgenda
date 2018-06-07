@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 import {Contato} from '../../modelo/contato.model';
 import {saveAs} from 'file-saver/FileSaver';
 import {ContatoService} from '../contato.service';
@@ -10,21 +10,43 @@ import {CategoriaService} from '../../categoria/categoria.service';
     templateUrl: './contato-listagem.component.html'
 })
 export class ContatoListagemComponent implements OnInit {
-    private contato: Contato[];
+    contato: Contato[];
     selectedContato: Contato;
     msgs: Message[] = [];
 
     constructor(
         protected contatoService: ContatoService,
         private categoriaService: CategoriaService,
-        private router: Router) {
+        private router: Router,
+        private activatedRoute: ActivatedRoute) {
     }
 
     ngOnInit(): void {
-        this.contatoService.listarContatos().subscribe((res) => {
-            let contatos = JSON.parse(res._body);
-            this.contato = contatos;
-        });
+
+        this.activatedRoute.params.subscribe(parametro =>{
+            if(parametro['id'] == undefined){
+
+                this.contatoService.listarContatos().subscribe((res) => {
+                    let contatos = JSON.parse(res._body);
+                    this.contato = contatos;
+                });
+
+                
+            }else{
+                this.contatoService.listarContatos().subscribe((res) => {
+                    let contatos = JSON.parse(res._body);
+                    this.contato = contatos;
+
+                    this.msgs = [];
+                        this.msgs.push({
+                            severity: 'success',
+                            summary: 'Service Message',
+                            detail: 'Dados alterados com sucesso!'
+                        });
+                });
+            }
+        })
+       
     }
 
     voltarTelaPrincipal(): void {

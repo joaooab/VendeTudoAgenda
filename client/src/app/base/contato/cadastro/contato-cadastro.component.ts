@@ -78,6 +78,7 @@ export class ContatoCadastroComponent implements OnInit {
                     } else if (!this.contato.autorizaEmail) {
                         this.optAutorizaEmail = 'naoAutorizo';
                     }
+
                 });
             }
         });
@@ -185,12 +186,9 @@ export class ContatoCadastroComponent implements OnInit {
                         }
 
                         this.contatoService.alterar(this.montarBody(), this.contato.id).subscribe(res => {
-                            this.msgs = [];
-                            this.msgs.push({
-                                severity: 'success',
-                                summary: 'Service Message',
-                                detail: 'Dados alterados com sucesso!'
-                            });
+                            
+                            this.router.navigate(['cadastros/contato/editado/'+ this.contato.id]);
+                            
 
                         }, erro => {
                             this.msgs.push({
@@ -199,6 +197,8 @@ export class ContatoCadastroComponent implements OnInit {
                                 detail: 'Já existe um contato cadastrado com esse CPF!'
                             });
                       });
+
+                      
                     },
                     reject: () => {
                         this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'You have rejected'}];
@@ -247,7 +247,14 @@ export class ContatoCadastroComponent implements OnInit {
         if (diferenca > 18) {
             return true;
         } else if (diferenca == 18) {
-            return (dataAtual.getMonth() > this.contato.dataNascimento.getMonth());
+            if(dataAtual.getMonth() > this.contato.dataNascimento.getMonth())
+            {
+                return true;
+                
+            }else if(dataAtual.getMonth() == this.contato.dataNascimento.getMonth()){
+
+                return(dataAtual.getDay() > this.contato.dataNascimento.getDay())
+            }
         }
     }
 

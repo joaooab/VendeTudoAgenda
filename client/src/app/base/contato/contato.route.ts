@@ -6,6 +6,7 @@ import{ContatoListagemComponent} from './listagem/contato-listagem.component';
 export const ContatoRoute: Route[] = [
 
     {path: 'cadastros/contato', component: ContatoListagemComponent },
+    {path: 'cadastros/contato/editado/:id', component: ContatoListagemComponent },
     {path: 'cadastros/contato/novo', component:ContatoCadastroComponent},
     {path: 'cadastros/contato/edicao/:id', component:ContatoCadastroComponent}
 ]

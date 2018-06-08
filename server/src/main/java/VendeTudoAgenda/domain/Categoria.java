@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonRootName("categoria")
-@Table(name="categoria", uniqueConstraints = {@UniqueConstraint(columnNames = "nome")})
+@Table(name = "categoria", uniqueConstraints = {@UniqueConstraint(columnNames = "nome")})
 public class Categoria {
 
     @Id

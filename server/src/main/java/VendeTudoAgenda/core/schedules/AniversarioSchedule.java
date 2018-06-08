@@ -27,10 +27,10 @@ public class AniversarioSchedule {
         List<Usuario> usuarios = usuarioRepository.findAll();
 
         StringBuilder templateCorpoEmail = new StringBuilder(", a Vende Tudo LTDA te deseja um Feliz Aniversário e muito sucesso em sua vida.")
-        .append(" Aproveite o seu dia e garanta as promoções exclusivas para aniversariantes!");
+                .append(" Aproveite o seu dia e garanta as promoções exclusivas para aniversariantes!");
 
-        for(Usuario usuario : usuarios){
-            if(isAniversario(usuario.getDataNascimento())){
+        for (Usuario usuario : usuarios) {
+            if (isAniversario(usuario.getDataNascimento())) {
                 StringBuilder corpoEmail = new StringBuilder(usuario.getNome());
                 corpoEmail.append(templateCorpoEmail);
                 emailService.enviarEmail(usuario.getEmail(), "Feliz Aniversário!", corpoEmail.toString());

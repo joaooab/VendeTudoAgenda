@@ -65,7 +65,7 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
-    public Usuario(String email){
+    public Usuario(String email) {
         this.email = email;
     }
 

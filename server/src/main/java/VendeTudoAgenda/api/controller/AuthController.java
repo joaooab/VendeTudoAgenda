@@ -63,7 +63,7 @@ public class AuthController {
             StringBuilder corpoEmail = new StringBuilder();
             corpoEmail.append("A sua nova senha gerada é: ").append(senhaNova);
 
-            emailService.enviarEmail(usuario.getEmail(), "Recuperação de senha",corpoEmail.toString());
+            emailService.enviarEmail(usuario.getEmail(), "Recuperação de senha", corpoEmail.toString());
 
             return new ResponseEntity(HttpStatus.OK);
 

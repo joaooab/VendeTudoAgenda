@@ -39,34 +39,34 @@ public class UsuarioController {
     }
 
     @PatchMapping("/usuarios/{id}")
-    public ResponseEntity alterarUsuario(@PathVariable Long id, @RequestBody Usuario usuario){
+    public ResponseEntity alterarUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
         Usuario usuarioDB = usuarioRepository.findById(id);
 
-        if(usuario.getNome() == null){
+        if (usuario.getNome() == null) {
             usuario.setNome(usuarioDB.getNome());
         }
-        if(usuario.getCpf() == null){
+        if (usuario.getCpf() == null) {
             usuario.setCpf(usuarioDB.getCpf());
         }
-        if(usuario.getEmail() == null){
+        if (usuario.getEmail() == null) {
             usuario.setEmail(usuarioDB.getEmail());
         }
-        if(usuario.getDataNascimento() == null){
+        if (usuario.getDataNascimento() == null) {
             usuario.setDataNascimento(usuarioDB.getDataNascimento());
         }
-        if(usuario.getEndereco() == null){
+        if (usuario.getEndereco() == null) {
             usuario.setEndereco(usuarioDB.getEndereco());
         }
-        if(usuario.getTelefoneFixo() == null){
+        if (usuario.getTelefoneFixo() == null) {
             usuario.setTelefoneFixo(usuarioDB.getTelefoneFixo());
         }
-        if(usuario.getCelular() == null){
+        if (usuario.getCelular() == null) {
             usuario.setCelular(usuarioDB.getCelular());
         }
-        if(usuario.getFuncao() == null){
+        if (usuario.getFuncao() == null) {
             usuario.setFuncao(usuarioDB.getFuncao());
         }
-        if(usuario.getSenha() == null){
+        if (usuario.getSenha() == null) {
             usuario.setSenha(usuarioDB.getSenha());
         }
 

@@ -1,9 +1,7 @@
 package VendeTudoAgenda.api.controller;
 
-import VendeTudoAgenda.core.repository.ChamadaRepository;
 import VendeTudoAgenda.core.repository.ContatoRepository;
 import VendeTudoAgenda.domain.Contato;
-import VendeTudoAgenda.domain.ContatoExcel;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -11,6 +9,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,19 +19,16 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class ContatoController {
 
     private ContatoRepository contatoRepository;
-    private ChamadaRepository chamadaRepository;
 
     @Autowired
-    public ContatoController(ContatoRepository contatoRepository, ChamadaRepository chamadaRepository) {
+    public ContatoController(ContatoRepository contatoRepository) {
         this.contatoRepository = contatoRepository;
-        this.chamadaRepository = chamadaRepository;
     }
 
     @GetMapping("/contatoes/nome/{nome}")
@@ -84,7 +80,7 @@ public class ContatoController {
     @GetMapping("/contatosListagem")
     public ResponseEntity listarContatosListagem() {
         JSONArray body = new JSONArray();
-        List<Contato> contatos = contatoRepository.findAll();
+        List<Contato> contatos = contatoRepository.findAll(new Sort(Sort.Direction.ASC, "nome"));
 
         for (Contato contato : contatos) {
             JSONObject linha = new JSONObject();
@@ -93,7 +89,7 @@ public class ContatoController {
             linha.put("cpf", contato.getCpf());
             linha.put("cnpj", contato.getCnpj());
             linha.put("categoria", contato.getCategoria().getNome());
-            linha.put("ligacoes", chamadaRepository.quantidadeLigacoes(contato.getId()));
+            linha.put("ligacoes", contato.getQuantidadeLigacoes());
             body.put(linha);
         }
 
@@ -146,11 +142,8 @@ public class ContatoController {
     @GetMapping(value = "/gerarRelatorio", produces = "application/xls")
     public ResponseEntity getExcel() {
         try {
-            List<Contato> contatos = contatoRepository.findAll();
-            List<ContatoExcel> contatosExcel = new ArrayList<ContatoExcel>();
-            for (Contato contato : contatos) {
-                contatosExcel.add(new ContatoExcel(contato.getNome(), contato.getCategoria().getNome(), chamadaRepository.quantidadeLigacoes(contato.getId())));
-            }
+
+            List<Contato> contatos = contatoRepository.findAll(new Sort(Sort.Direction.ASC, "nome"));
 
             HSSFWorkbook workbook = new HSSFWorkbook();
             HSSFSheet sheet = workbook.createSheet("Relatório de Contatos");
@@ -162,10 +155,10 @@ public class ContatoController {
 
             int rowCount = 1;
 
-            for (ContatoExcel contato : contatosExcel) {
+            for (Contato contato : contatos) {
                 Row userRow = sheet.createRow(rowCount++);
                 userRow.createCell(0).setCellValue(contato.getNome());
-                userRow.createCell(1).setCellValue(contato.getCategoria());
+                userRow.createCell(1).setCellValue(contato.getCategoria().getNome());
                 userRow.createCell(2).setCellValue(contato.getQuantidadeLigacoes());
 
             }

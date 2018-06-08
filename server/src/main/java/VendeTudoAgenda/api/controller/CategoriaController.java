@@ -40,7 +40,7 @@ public class CategoriaController {
     }
 
     @PatchMapping("/categorias/{id}")
-    public ResponseEntity alterarCategoria(@PathVariable Long id, @RequestBody Categoria categoria){
+    public ResponseEntity alterarCategoria(@PathVariable Long id, @RequestBody Categoria categoria) {
         categoria.setId(id);
         categoriaRepository.save(categoria);
         return new ResponseEntity(HttpStatus.OK);

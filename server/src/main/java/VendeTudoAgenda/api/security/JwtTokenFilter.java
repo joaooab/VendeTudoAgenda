@@ -35,7 +35,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 if (SecurityContextHolder.getContext().getAuthentication() == null) {
 
                     Usuario usuario = usuarioRepository.findOne(Long.valueOf(id));
-                    if(usuario != null){
+                    if (usuario != null) {
                         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                                 usuario,
                                 null,
@@ -52,7 +52,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     }
 
     private Optional<String> getTokenString(String header) {
-        if(!StringUtils.isEmpty(header)){
+        if (!StringUtils.isEmpty(header)) {
             return Optional.ofNullable(header);
         }
 

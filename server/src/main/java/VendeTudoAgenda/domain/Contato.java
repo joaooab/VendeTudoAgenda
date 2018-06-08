@@ -57,7 +57,10 @@ public class Contato {
     @Column(name = "autoriza_email", nullable = false)
     private Boolean autorizaEmail;
 
-    public Contato(Categoria categoria, Usuario usuario, String nome, String cpf, String cnpj, String email, Date dataNascimento, String endereco, String telefoneFixo, String celular, Boolean autorizaEmail) {
+    @Column(name = "quantidade_ligacoes")
+    private Integer quantidadeLigacoes;
+
+    public Contato(Categoria categoria, Usuario usuario, String nome, String cpf, String cnpj, String email, Date dataNascimento, String endereco, String telefoneFixo, String celular, Boolean autorizaEmail, Integer quantidadeLigacoes) {
         this.categoria = categoria;
         this.usuario = usuario;
         this.nome = nome;
@@ -69,5 +72,6 @@ public class Contato {
         this.telefoneFixo = telefoneFixo;
         this.celular = celular;
         this.autorizaEmail = autorizaEmail;
+        this.quantidadeLigacoes = quantidadeLigacoes;
     }
 }

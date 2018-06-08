@@ -22,7 +22,7 @@ public class Chamada {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="contato_id", nullable = false)
+    @JoinColumn(name = "contato_id", nullable = false)
     private Contato contato;
 
     @Column(name = "nome", nullable = false)

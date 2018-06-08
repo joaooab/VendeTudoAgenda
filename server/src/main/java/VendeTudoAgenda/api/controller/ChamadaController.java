@@ -25,10 +25,22 @@ public class ChamadaController {
     public ResponseEntity criarChamada(@RequestBody Chamada chamada) {
         Contato contato = contatoRepository.findByName(chamada.getNome());
 
-        if(contato == null){
+        if (contato == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
+
+        } else {
+
+            if (contato.getQuantidadeLigacoes() == null || contato.getQuantidadeLigacoes() == 0) {
+                contato.setQuantidadeLigacoes(1);
+            } else {
+                Integer quantidadeLigacoes = contato.getQuantidadeLigacoes();
+                contato.setQuantidadeLigacoes(++quantidadeLigacoes);
+            }
+
+            chamada.setContato(contato);
         }
-        chamada.setContato(contato);
+
+        contatoRepository.save(contato);
         chamadaRepository.save(chamada);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -41,6 +53,13 @@ public class ChamadaController {
     @DeleteMapping("/chamadas/{id}")
     public void deletarChamada(@PathVariable Long id) {
         Chamada chamada = chamadaRepository.findById(id);
+
+        Contato contato = contatoRepository.findById(chamada.getContato().getId());
+
+        Integer quantidadeLigacoes = contato.getQuantidadeLigacoes();
+        contato.setQuantidadeLigacoes(--quantidadeLigacoes);
+
+        contatoRepository.save(contato);
         chamadaRepository.delete(chamada);
     }
 
@@ -50,19 +69,19 @@ public class ChamadaController {
     }
 
     @PatchMapping("/chamadas/{id}")
-    public ResponseEntity alterarChamada(@PathVariable Long id, @RequestBody Chamada chamada){
+    public ResponseEntity alterarChamada(@PathVariable Long id, @RequestBody Chamada chamada) {
         Chamada chamadaDB = chamadaRepository.findById(id);
 
-        if(chamada.getNome() == null){
+        if (chamada.getNome() == null) {
             chamada.setNome(chamadaDB.getNome());
         }
-        if(chamada.getData() == null){
+        if (chamada.getData() == null) {
             chamada.setData(chamadaDB.getData());
         }
-        if (chamada.getDuracao() == null){
+        if (chamada.getDuracao() == null) {
             chamada.setDuracao(chamadaDB.getDuracao());
         }
-        if(chamada.getDescricao() == null){
+        if (chamada.getDescricao() == null) {
             chamada.setDescricao(chamadaDB.getDescricao());
         }
 

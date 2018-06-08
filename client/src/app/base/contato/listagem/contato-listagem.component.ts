@@ -1,52 +1,45 @@
 import {Component, OnInit} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Contato} from '../../modelo/contato.model';
 import {saveAs} from 'file-saver/FileSaver';
 import {ContatoService} from '../contato.service';
 import {Message} from 'primeng/api';
 import {CategoriaService} from '../../categoria/categoria.service';
+import {base64toBlob} from '../../../arquitetura/Util';
 
 @Component({
     templateUrl: './contato-listagem.component.html'
 })
 export class ContatoListagemComponent implements OnInit {
-    contato: Contato[];
-    selectedContato: Contato;
+    public contato: Contato[];
+    public selectedContato: Contato;
     msgs: Message[] = [];
 
     constructor(
         protected contatoService: ContatoService,
         private categoriaService: CategoriaService,
         private router: Router,
-        private activatedRoute: ActivatedRoute) {
+        private activateRoute: ActivatedRoute) {
     }
 
     ngOnInit(): void {
 
-        this.activatedRoute.params.subscribe(parametro =>{
-            if(parametro['id'] == undefined){
-
-                this.contatoService.listarContatos().subscribe((res) => {
-                    let contatos = JSON.parse(res._body);
-                    this.contato = contatos;
+        this.activateRoute.queryParams.subscribe(params => {
+            if (params['function'] && params['function'] === 'mensagemContatoAlterado') {
+                this.msgs = [];
+                this.msgs.push({
+                    severity: 'success',
+                    summary: 'Service Message',
+                    detail: 'Dados alterados com sucesso!'
                 });
 
-                
-            }else{
-                this.contatoService.listarContatos().subscribe((res) => {
-                    let contatos = JSON.parse(res._body);
-                    this.contato = contatos;
-
-                    this.msgs = [];
-                        this.msgs.push({
-                            severity: 'success',
-                            summary: 'Service Message',
-                            detail: 'Dados alterados com sucesso!'
-                        });
-                });
             }
-        })
-       
+
+            this.contatoService.listarContatos().subscribe((res) => {
+                this.contato = JSON.parse(res._body);
+            });
+        });
+
     }
 
     voltarTelaPrincipal(): void {
@@ -64,8 +57,8 @@ export class ContatoListagemComponent implements OnInit {
 
     gerarRelatorio() {
         this.contatoService.gerarRelatorio().subscribe(result => {
-            if(result['_body']){
-                let blob = this.b64toBlob(result['_body']);
+            if (result['_body']) {
+                let blob = base64toBlob(result['_body']);
                 saveAs(blob, 'contatos.xls');
             }
 
@@ -73,28 +66,6 @@ export class ContatoListagemComponent implements OnInit {
             this.msgs.push({severity: 'success', summary: 'Service Message', detail: 'Dados exportados com sucesso!'});
 
         });
-    }
-
-    b64toBlob(b64Data) {
-        var sliceSize = 512;
-
-        var byteCharacters = atob(b64Data);
-        var byteArrays = [];
-
-        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-            var slice = byteCharacters.slice(offset, offset + sliceSize);
-
-            var byteNumbers = new Array(slice.length);
-            for (var i = 0; i < slice.length; i++) {
-                byteNumbers[i] = slice.charCodeAt(i);
-            }
-
-            var byteArray = new Uint8Array(byteNumbers);
-
-            byteArrays.push(byteArray);
-        }
-
-        return new Blob(byteArrays, {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'});
     }
 
 }

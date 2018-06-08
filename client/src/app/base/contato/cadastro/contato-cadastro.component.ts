@@ -10,6 +10,7 @@ import {validarCNPJ, validarCPF} from '../../../arquitetura/Util';
 
 @Component({
     templateUrl: './contato-cadastro.component.html'
+
 })
 export class ContatoCadastroComponent implements OnInit {
     public pessoa: SelectItem[];
@@ -155,7 +156,7 @@ export class ContatoCadastroComponent implements OnInit {
                         summary: '',
                         detail: 'Já existe um contato cadastrado com esse CPF!'
                     });
-              });
+                });
             } else {
 
                 if (this.optAutorizaEmail == 'autorizo') {
@@ -185,20 +186,19 @@ export class ContatoCadastroComponent implements OnInit {
 
                         }
 
-                        this.contatoService.alterar(this.montarBody(), this.contato.id).subscribe(res => {
-                            
-                            this.router.navigate(['cadastros/contato/editado/'+ this.contato.id]);
-                            
+                        this.contatoService.alterar(this.montarBody(), this.contato.id).subscribe(() => {
 
-                        }, erro => {
+                            this.router.navigate(['cadastros/contato'], {queryParams: {function:'mensagemContatoAlterado'}});
+
+                        }, () => {
                             this.msgs.push({
                                 severity: 'info',
                                 summary: '',
                                 detail: 'Já existe um contato cadastrado com esse CPF!'
                             });
-                      });
+                        });
 
-                      
+
                     },
                     reject: () => {
                         this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'You have rejected'}];
@@ -247,13 +247,12 @@ export class ContatoCadastroComponent implements OnInit {
         if (diferenca > 18) {
             return true;
         } else if (diferenca == 18) {
-            if(dataAtual.getMonth() > this.contato.dataNascimento.getMonth())
-            {
+            if (dataAtual.getMonth() > this.contato.dataNascimento.getMonth()) {
                 return true;
-                
-            }else if(dataAtual.getMonth() == this.contato.dataNascimento.getMonth()){
 
-                return(dataAtual.getDay() > this.contato.dataNascimento.getDay())
+            } else if (dataAtual.getMonth() == this.contato.dataNascimento.getMonth()) {
+
+                return (dataAtual.getDay() > this.contato.dataNascimento.getDay())
             }
         }
     }
@@ -279,14 +278,6 @@ export class ContatoCadastroComponent implements OnInit {
 
     removerMascara(valor) {
         return valor.replace(/(\.|\/|\-)/g, '');
-    }
-
-    adicionarMascaraCpf(cpf) {
-        return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '\$1.\$2.\$3\-\$4');
-    }
-
-    adicionarMascaraCnpj(cnpj) {
-        return cnpj.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '\$1.\$2.\$3\-\$4');
     }
 
     private configCalander() {

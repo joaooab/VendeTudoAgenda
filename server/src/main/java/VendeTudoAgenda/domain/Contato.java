@@ -14,13 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonRootName("contato")
-@Table(
-        name = "contato",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = "cpf"),
-                @UniqueConstraint(columnNames = "cnpj")
-        }
-)
+@Table(name = "contato", uniqueConstraints = {@UniqueConstraint(columnNames = "cpf"), @UniqueConstraint(columnNames = "cnpj")})
 public class Contato {
 
     @Id
@@ -39,10 +33,10 @@ public class Contato {
     private String nome;
 
 
-    @Column(name = "cpf")
+    @Column(name = "cpf", unique = true)
     private String cpf;
 
-    @Column(name = "cnpj")
+    @Column(name = "cnpj", unique = true)
     private String cnpj;
 
     @Column(name = "email")

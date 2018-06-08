@@ -33,6 +33,7 @@ export class CadastroChamadaComponent implements OnInit {
         this.chamadaService.salvar(this.chamada).subscribe(result => {
             this.msgs = [];
             this.msgs.push({severity:'success', summary:'Service Message', detail:'Dados salvos com sucesso!'});
+            this.chamada = new Chamada();
         }, error => {
             this.msgs = [];
             this.msgs.push({severity:'error', summary:'Error Message', detail: 'Não possui contato cadastrado com esse nome!'});

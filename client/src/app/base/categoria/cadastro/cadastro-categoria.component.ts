@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {Categoria} from '../../modelo/categoria.model';
-import {Router, ActivatedRoute} from '@angular/router';
-import {CategoriaService} from '../categoria.service';
-import {Message, ConfirmationService} from 'primeng/api';
-import {RespostaRequisicao} from '../../../arquitetura/servico/requisicao';
+import { Component, OnInit } from '@angular/core';
+import { Categoria } from '../../modelo/categoria.model';
+import { Router, ActivatedRoute } from '@angular/router';
+import { CategoriaService } from '../categoria.service';
+import { Message, ConfirmationService } from 'primeng/api';
+import { RespostaRequisicao } from '../../../arquitetura/servico/requisicao';
 
 
 @Component({
@@ -18,9 +18,9 @@ export class CadastroCategoriaComponent implements OnInit {
     titulo: string;
 
     constructor(private router: Router,
-                private categoriaService: CategoriaService,
-                private activatedRoute: ActivatedRoute,
-                private confirmationService: ConfirmationService) {
+        private categoriaService: CategoriaService,
+        private activatedRoute: ActivatedRoute,
+        private confirmationService: ConfirmationService) {
     }
 
     ngOnInit() {
@@ -39,37 +39,44 @@ export class CadastroCategoriaComponent implements OnInit {
     }
 
     salvar() {
-        if (this.categoria.id == undefined) {
-            this.categoriaService.salvar(this.montarBody()).subscribe(
-                res => {
-                    this.msgs = [];
-                    this.msgs.push({severity: 'success', summary: 'Service Message', detail: 'Dados salvos com sucesso!'});
-                    this.categoria = new Categoria();
-                },
-                erro => {
-                    this.msgs = [];
-                    this.msgs.push({severity: 'info', summary: 'Rejected', detail: 'A categoria informada já existe!'});
-                });
-
-        } else {
-            this.confirmationService.confirm({
-                message: 'Deseja realmente salvar alterações ?',
-                header: 'Confirmation',
-                icon: 'fa fa-trash',
-                accept: () => {
-
-                    this.categoriaService.alterar(this.montarBody(), this.categoria.id).subscribe(res => {
-
+        if (!this.categoria.nome) {
+            this.msgs = [];
+            this.msgs.push({ severity: 'warn', summary: 'Warn Message', detail: 'Por favor preencha o nome da categoria' });
+        }
+        else {
+            if (this.categoria.id == undefined) {
+                this.categoriaService.salvar(this.montarBody()).subscribe(
+                    res => {
                         this.msgs = [];
-                        this.msgs.push({severity: 'success', summary: 'Service Message', detail: 'Dados alterados com sucesso!'});
+                        this.msgs.push({ severity: 'success', summary: 'Service Message', detail: 'Dados salvos com sucesso!' });
+                        this.categoria = new Categoria();
+                    },
+                    erro => {
+                        this.msgs = [];
+                        this.msgs.push({ severity: 'info', summary: 'Rejected', detail: 'A categoria informada já existe!' });
                     });
 
-                },
-                reject: () => {
-                    this.msgs = [{severity: 'info', detail: 'Alteração cancelada'}];
-                }
-            });
+            } else {
+                this.confirmationService.confirm({
+                    message: 'Deseja realmente salvar alterações ?',
+                    header: 'Confirmation',
+                    icon: 'fa fa-trash',
+                    accept: () => {
+
+                        this.categoriaService.alterar(this.montarBody(), this.categoria.id).subscribe(res => {
+
+                            this.msgs = [];
+                            this.msgs.push({ severity: 'success', summary: 'Service Message', detail: 'Dados alterados com sucesso!' });
+                        });
+
+                    },
+                    reject: () => {
+                        this.msgs = [{ severity: 'info', detail: 'Alteração cancelada' }];
+                    }
+                });
+            }
         }
+
     }
 
 
@@ -78,7 +85,7 @@ export class CadastroCategoriaComponent implements OnInit {
     }
 
     montarBody() {
-        return {'categoria': {'nome': this.categoria.nome}};
+        return { 'categoria': { 'nome': this.categoria.nome } };
     }
 
 }

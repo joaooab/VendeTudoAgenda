@@ -34,7 +34,7 @@ public class Chamada {
     @Column(name = "duracao", nullable = false)
     private Time duracao;
 
-    @Column(name = "descricao", nullable = false)
+    @Column(name = "descricao", length = 2048, nullable = false)
     private String descricao;
 
     @Override

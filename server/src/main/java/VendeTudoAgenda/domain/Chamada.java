@@ -47,6 +47,8 @@ public class Chamada {
     }
 
     public Chamada(Contato contato, String nome, Date data, Time duracao, String descricao) {
+        //olaaaaa
+        //teste conflito
         this.contato = contato;
         this.nome = nome;
         this.data = data;

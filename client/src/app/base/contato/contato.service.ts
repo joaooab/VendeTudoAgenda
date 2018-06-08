@@ -27,7 +27,7 @@ export class ContatoService extends Servico<Contato> {
     }
 
     listarNome(nome: any): Observable<any> {
-        return this.http.get(`${environment.baseUrl}/contatoes/nome/${nome}`, this.config())
+        return this.http.post(`${environment.baseUrl}/contatoes/nome`, nome, this.config())
             .map(this.mapper);
     }
 

@@ -31,8 +31,8 @@ public class ContatoController {
         this.contatoRepository = contatoRepository;
     }
 
-    @GetMapping("/contatoes/nome/{nome}")
-    public ResponseEntity buscarContatosNome(@PathVariable String nome) {
+    @PostMapping("/contatoes/nome")
+    public ResponseEntity buscarContatosNome(@RequestBody String nome) {
         Contato contato = contatoRepository.findByName(nome);
         return contato != null ? ResponseEntity.ok(contato) : ResponseEntity.notFound().build();
     }

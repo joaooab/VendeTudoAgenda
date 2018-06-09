@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Contato} from '../../modelo/contato.model';
-import {saveAs} from 'file-saver/FileSaver';
-import {ContatoService} from '../contato.service';
-import {Message} from 'primeng/api';
-import {CategoriaService} from '../../categoria/categoria.service';
-import {base64toBlob} from '../../../arquitetura/Util';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Contato } from '../../modelo/contato.model';
+import { saveAs } from 'file-saver/FileSaver';
+import { ContatoService } from '../contato.service';
+import { Message } from 'primeng/api';
+import { CategoriaService } from '../../categoria/categoria.service';
+import { base64toBlob } from '../../../arquitetura/Util';
 
 @Component({
     templateUrl: './contato-listagem.component.html'
@@ -24,20 +24,8 @@ export class ContatoListagemComponent implements OnInit {
 
     ngOnInit(): void {
 
-        this.activateRoute.queryParams.subscribe(params => {
-            if (params['function'] && params['function'] === 'mensagemContatoAlterado') {
-                this.msgs = [];
-                this.msgs.push({
-                    severity: 'success',
-                    summary: 'Service Message',
-                    detail: 'Dados alterados com sucesso!'
-                });
-
-            }
-
-            this.contatoService.listarContatos().subscribe((res) => {
-                this.contato = JSON.parse(res._body);
-            });
+        this.contatoService.listarContatos().subscribe((res) => {
+            this.contato = JSON.parse(res._body);
         });
 
     }
@@ -49,7 +37,7 @@ export class ContatoListagemComponent implements OnInit {
     detalhes() {
         this.msgs = [];
         if (!this.selectedContato) {
-            this.msgs.push({severity: 'error', summary: 'Error Message', detail: 'Selecione um contato da lista'});
+            this.msgs.push({ severity: 'error', summary: 'Error Message', detail: 'Selecione um contato da lista' });
         }
 
         this.router.navigate(['cadastros/contato/edicao/' + this.selectedContato.id]);
@@ -63,7 +51,7 @@ export class ContatoListagemComponent implements OnInit {
             }
 
             this.msgs = [];
-            this.msgs.push({severity: 'success', summary: 'Service Message', detail: 'Dados exportados com sucesso!'});
+            this.msgs.push({ severity: 'success', summary: 'Service Message', detail: 'Dados exportados com sucesso!' });
 
         });
     }

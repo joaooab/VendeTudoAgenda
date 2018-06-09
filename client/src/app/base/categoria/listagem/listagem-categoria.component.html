@@ -17,8 +17,8 @@
 	<div class="col-9 offset-1">
 		<div class="float-right">
 			<button pButton (click)="voltarTelaPrincipal()" type="button" label="VOLTAR" class="ui-button-secondary"></button>
-			<button pButton [disabled]="(!usuarioFuncao || !usuarioAutorizado) || !selectedCategoria" (click)="excluir()" type="button" label="EXCLUIR" class="ui-button-danger"></button>
-			<button pButton [disabled]="!selectedCategoria" (click)="editar()" type="button" label="EDITAR"></button>
+			<button pButton [disabled]="(!usuarioFuncao || !selectedCategoria)" (click)="excluir()" type="button" label="EXCLUIR" class="ui-button-danger"></button>
+			<button pButton [disabled]="(!selectedCategoria || !usuarioFuncao)" (click)="editar()" type="button" label="EDITAR"></button>
 		</div>
 	</div>
 </div>
@@ -30,7 +30,7 @@
 			<button pButton (click)="voltarTelaPrincipal()" type="button" label="VOLTAR" class="ui-button-secondary"></button>
 		</div>
 		<div class="col-xs-6">
-			<button pButton [disabled]="(!usuarioFuncao || !usuarioAutorizado) || !selectedCategoria" (click)="excluir()" type="button" label="EXCLUIR" class="ui-button-danger"></button>
+			<button pButton [disabled]="(!usuarioFuncao || !usuarioAutorizado || !selectedCategoria)" (click)="excluir()" type="button" label="EXCLUIR" class="ui-button-danger"></button>
 		</div>
 	</div>
 	<br>

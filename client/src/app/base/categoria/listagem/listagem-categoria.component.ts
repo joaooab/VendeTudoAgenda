@@ -17,7 +17,6 @@ export class ListagemCategoriaComponent implements OnInit {
     categorias: Categoria[];
     selectedCategoria: Categoria;
     usuarioFuncao: string;
-    usuarioAutorizado: string;
     msgs: Message[] = [];
 
     constructor(private router: Router,
@@ -25,9 +24,10 @@ export class ListagemCategoriaComponent implements OnInit {
                 private confirmationService: ConfirmationService) {
 
         this.usuarioFuncao = getFuncaoUsuarioLogado().replace(/['"]+/g, '');
-
-        if (this.usuarioFuncao == 'ADMINISTRADOR') {
-            this.usuarioAutorizado = 'sim';
+        
+        if (this.usuarioFuncao == "VENDEDOR") {
+           
+            this.usuarioFuncao = null;
         }
     }
 

@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Contato} from '../../modelo/contato.model';
-import {ConfirmationService, Message, SelectItem} from 'primeng/api';
-import {Categoria} from '../../modelo/categoria.model';
-import {CategoriaService} from '../../categoria/categoria.service';
-import {ContatoService} from '../contato.service';
-import {getFuncaoUsuarioLogado, getIdUsuarioLogado} from '../../../arquitetura/servico/base.service';
-import {validarCNPJ, validarCPF} from '../../../arquitetura/Util';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Contato } from '../../modelo/contato.model';
+import { ConfirmationService, Message, SelectItem } from 'primeng/api';
+import { Categoria } from '../../modelo/categoria.model';
+import { CategoriaService } from '../../categoria/categoria.service';
+import { ContatoService } from '../contato.service';
+import { getFuncaoUsuarioLogado, getIdUsuarioLogado } from '../../../arquitetura/servico/base.service';
+import { validarCNPJ, validarCPF } from '../../../arquitetura/Util';
 
 @Component({
     templateUrl: './contato-cadastro.component.html'
@@ -29,27 +29,29 @@ export class ContatoCadastroComponent implements OnInit {
     public telaEdicao: boolean = false;
 
     constructor(private router: Router,
-                private categoriaService: CategoriaService,
-                private activatedRoute: ActivatedRoute,
-                private contatoService: ContatoService,
-                private confirmationService: ConfirmationService) {
+        private categoriaService: CategoriaService,
+        private activatedRoute: ActivatedRoute,
+        private contatoService: ContatoService,
+        private confirmationService: ConfirmationService) {
 
         this.configCalendario = this.configCalander();
         this.pessoa = [
-            {label: 'Selecione', value: ''},
-            {label: 'CPF', value: 'CPF'},
-            {label: 'CNPJ', value: 'CNPJ'}
+            { label: 'Selecione', value: '' },
+            { label: 'CPF', value: 'CPF' },
+            { label: 'CNPJ', value: 'CNPJ' }
         ];
+
 
         this.usuarioFuncao = getFuncaoUsuarioLogado().replace(/['"]+/g, '');
 
-        if (this.usuarioFuncao == 'ADMINISTRADOR') {
-            this.usuarioAutorizado = 'sim';
+        if(this.usuarioFuncao == "VENDEDOR"){
+            this.usuarioFuncao = null;
         }
 
     }
 
     ngOnInit() {
+        
         this.activatedRoute.params.subscribe(parametro => {
             if (parametro['id'] == undefined) {
                 this.titulo = 'CADASTRO DE CONTATO';
@@ -64,6 +66,7 @@ export class ContatoCadastroComponent implements OnInit {
                     this.contato = res;
                     this.contato.dataNascimento = new Date(this.contato.dataNascimento);
                     this.idCategoria = this.contato.categoria.id;
+                    
                     this.telaEdicao = true;
 
                     if (this.contato.cpf) {
@@ -100,18 +103,18 @@ export class ContatoCadastroComponent implements OnInit {
     salvar() {
 
         if (this.option === 'CPF' && this.contato.cpf && !validarCPF(this.contato.cpf)) {
-            this.msgs.push({severity: 'info', summary: '', detail: 'O CPF digitado não é válido!'});
+            this.msgs.push({ severity: 'info', summary: '', detail: 'O CPF digitado não é válido!' });
             return;
         }
 
         if (this.option === 'CNPJ' && this.contato.cnpj && !validarCNPJ(this.contato.cnpj)) {
-            this.msgs.push({severity: 'info', summary: '', detail: 'O CNPJ digitado não é válido!'});
+            this.msgs.push({ severity: 'info', summary: '', detail: 'O CNPJ digitado não é válido!' });
             return;
         }
 
         if (!this.contato.nome || !this.contato.dataNascimento || !this.contato.endereco || !this.contato.celular || !this.optAutorizaEmail || !this.idCategoria) {
             this.msgs = [];
-            this.msgs.push({severity: 'error', summary: 'Warn Message', detail: 'Campos obrigatórios não preenchidos'});
+            this.msgs.push({ severity: 'error', summary: 'Warn Message', detail: 'Campos obrigatórios não preenchidos' });
 
         } else if (!this.verificaDataNascimento()) {
 
@@ -188,7 +191,12 @@ export class ContatoCadastroComponent implements OnInit {
 
                         this.contatoService.alterar(this.montarBody(), this.contato.id).subscribe(() => {
 
-                            this.router.navigate(['cadastros/contato'], {queryParams: {function:'mensagemContatoAlterado'}});
+                            this.msgs = [];
+                            this.msgs.push({
+                                severity: 'success',
+                                summary: 'Service Message',
+                                detail: 'Dados alterados com sucesso!'
+                            });
 
                         }, () => {
                             this.msgs.push({
@@ -201,7 +209,7 @@ export class ContatoCadastroComponent implements OnInit {
 
                     },
                     reject: () => {
-                        this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'You have rejected'}];
+                        this.msgs = [{ severity: 'info', summary: 'Rejected', detail: 'You have rejected' }];
                     }
                 });
             }
@@ -231,7 +239,7 @@ export class ContatoCadastroComponent implements OnInit {
                 });
             },
             reject: () => {
-                this.msgs = [{severity: 'info', summary: 'Rejected', detail: 'You have rejected'}];
+                this.msgs = [{ severity: 'info', summary: 'Rejected', detail: 'You have rejected' }];
             }
         });
     }
@@ -260,19 +268,19 @@ export class ContatoCadastroComponent implements OnInit {
     montarBody() {
         return {
             'contato':
-                {
-                    'nome': this.contato.nome,
-                    'autorizaEmail': this.contato.autorizaEmail,
-                    'celular': this.contato.celular,
-                    'cnpj': this.contato.cnpj,
-                    'cpf': this.contato.cpf,
-                    'dataNascimento': this.contato.dataNascimento,
-                    'email': this.contato.email,
-                    'endereco': this.contato.endereco,
-                    'telefoneFixo': this.contato.telefoneFixo,
-                    'categoria': {'id': this.idCategoria},
-                    'usuario': {'id': getIdUsuarioLogado()}
-                }
+            {
+                'nome': this.contato.nome,
+                'autorizaEmail': this.contato.autorizaEmail,
+                'celular': this.contato.celular,
+                'cnpj': this.contato.cnpj,
+                'cpf': this.contato.cpf,
+                'dataNascimento': this.contato.dataNascimento,
+                'email': this.contato.email,
+                'endereco': this.contato.endereco,
+                'telefoneFixo': this.contato.telefoneFixo,
+                'categoria': { 'id': this.idCategoria },
+                'usuario': { 'id': getIdUsuarioLogado() }
+            }
         };
     }
 
